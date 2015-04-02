@@ -1,6 +1,5 @@
 === Simple Facebook Page Widget & Shortcode ===
 Contributors: irkanu
-Donate link: http://example.com/
 Tags: facebook, widget, shortcode, facebook page, facebook widget, facebook page widget, facebook page shortcode, social media
 Requires at least: 3.0.0
 Tested up to: 4.1.1
