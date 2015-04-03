@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Simple Facebook Page Widget
-Plugin URI:
+Plugin URI: https://wordpress.org/plugins/simple-facebook-page-widget/
 Description: Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
 Version: 1.0.0
 Author: Dylan Ryan
-Author URI:
+Author URI: https://profiles.wordpress.org/irkanu
 License: GPL v3
 
 This program is free software: you can redistribute it and/or modify
@@ -129,7 +129,7 @@ class SFPP_Widget extends WP_Widget {
 		$output = '';
 
 		$output .= '<div class="fb-page" ';
-		$output .= 'data-href="https://facebook.com/' . esc_attr( $instance['href'] ) . '" ';
+		$output .= 'data-href="' . esc_attr( $instance['href'] ) . '" ';
 		$output .= 'data-width="' . esc_attr( $instance['width'] ) . '" ';
 		$output .= 'data-height="' . esc_attr( $instance['height'] ) . '" ';
 		$output .= 'data-hide-cover="' . esc_attr( $instance['show_cover'] ) . '" ';
@@ -225,13 +225,9 @@ class SFPP_Widget extends WP_Widget {
 
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Widget Title:', SFPP_LOCAL ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', SFPP_LOCAL ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
-
-		<p><strong><?php _e( 'Facebook Page Widget Settings', SFPP_LOCAL ); ?></strong></p>
-		<hr/>
-
 		<p>
 			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Facebook Page URL:', SFPP_LOCAL ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo esc_attr( $instance['href'] ); ?>" />
@@ -320,7 +316,7 @@ class SFPP_Widget extends WP_Widget {
 
 		$defaults = array(
 			'title'         => esc_attr__( 'Facebook Page Widget', SFPP_LOCAL ),
-			'href'          => 'facebook',
+			'href'          => 'https://www.facebook.com/facebook',
 			'width'         => '340',
 			'height'        => '500',
 			'show_cover'    => '0',

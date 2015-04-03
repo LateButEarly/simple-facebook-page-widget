@@ -1,5 +1,6 @@
 === Simple Facebook Page Widget & Shortcode ===
 Contributors: irkanu
+Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
 Tags: facebook, widget, shortcode, facebook page, facebook widget, facebook page widget, facebook page shortcode, social media
 Requires at least: 3.0.0
 Tested up to: 4.1.1
@@ -17,13 +18,13 @@ This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. Many 
 1. Add a customizable Facebook Page widget through `Appearance -> Widgets` and choose *Simple Facebook Page Widget*.
 2. Update your *Facebook Page URL* and click `Save`.
 
-**Note:** If your *Facebook Page URL* is https://facebook.com/facebook then please enter `facebook` as the *Facebook Page URL* widget option.
-
 = Simple Facebook Page Shortcode =
 
 Base Shortcode Example: `[facebook-page href="facebook"]`
 
 Custom Shortcode Example: `[facebook-page href="facebook" width="300" height="800" hide_cover="false" show_facepile="false" show_posts="true"]`
+
+**Note:** If your *Facebook Page URL* is https://facebook.com/facebook then please enter `facebook` as the href argument.
 
 == Installation ==
 
@@ -54,6 +55,10 @@ Email me directly at drryan@ncsu.edu with legitimate questions.
 = 1.0.0 =
 * Initial Release
 * Widget & Shortcode Fully Functional
+
+== Donations ==
+
+This plugin was developed to be used free of charge; however, if you do wish to donate, then you can visit the [donate page](https://donorbox.org/dylan-ryan-simple-facebook-page-widget).
 
 == Upgrade Notice ==
 
