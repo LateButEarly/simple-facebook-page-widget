@@ -3,9 +3,10 @@
 Plugin Name: Simple Facebook Page Widget
 Plugin URI: https://wordpress.org/plugins/simple-facebook-page-widget/
 Description: Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
-Version: 1.0.0
+Version: 1.1.0
 Author: Dylan Ryan
 Author URI: https://profiles.wordpress.org/irkanu
+Text Domain: simple-facebook-twitter-widget
 License: GPL v3
 
 This program is free software: you can redistribute it and/or modify
@@ -33,31 +34,32 @@ if ( ! defined( 'WPINC' ) ) {
  * Plugin Constants
  */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.0.0' );
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.1.0' );
 }
-
-/**
- * Directory Location Constants
- */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY', plugin_dir_url( __FILE__ ) );
+    define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY', plugin_dir_url( __FILE__ ) );
+}
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
+    define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-twitter-widget' );
 }
 
 /**
- * TODO: Localization
+ * Enqueue Facebook script required for the plugin.
+ *
+ * @since 1.0.0
  */
-if ( ! defined( 'SFPP_LOCAL' ) ) {
-	define( 'SFPP_LOCAL', 'sfpp_domain' );
-}
-
-/**
- * TODO: Send App ID to javascript for manipulation
- */
+add_action( 'wp_enqueue_scripts', 'sfpp_enqueue_scripts' );
 function sfpp_enqueue_scripts() {
 	wp_enqueue_script( 'sfpp-fb-root', SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'js/simple-facebook-page-root.js' , array( 'jquery' ) );
 }
-add_action( 'wp_enqueue_scripts', 'sfpp_enqueue_scripts' );
 
+/**
+ * Create the [facebook-page] shortcode.
+ *
+ * @since 1.0.0
+ * @param $atts array href, width, height, hide_cover, show_facepile, show_posts
+ * @return string Outputs the Facebook Page feed via shortcode.
+ */
 add_shortcode( 'facebook-page', 'sfpp_shortcode' );
 function sfpp_shortcode( $atts ) {
 
@@ -85,8 +87,11 @@ function sfpp_shortcode( $atts ) {
 
 }
 
+
 /**
- * Adds SFPP_Widget widget.
+ * Registers the SFPP_Widget widget class.
+ *
+ * @since 1.0.0
  */
 add_action( 'widgets_init', function () {
 	register_widget( 'SFPP_Widget' );
@@ -100,8 +105,8 @@ class SFPP_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'SFPP_Widget', // Base ID
-			__( 'Simple Facebook Page Widget', SFPP_LOCAL ), // Name
-			array( 'description' => __( 'Displays your Facebook Page in a simple way.', SFPP_LOCAL ), ) // Args
+			__( 'Simple Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ), // Name
+			array( 'description' => __( 'Easily display your Facebook Page feed.', SIMPLE_FACEBOOK_PAGE_I18N ), ) // Args
 		);
 	}
 
@@ -225,15 +230,15 @@ class SFPP_Widget extends WP_Widget {
 
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', SFPP_LOCAL ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Facebook Page URL:', SFPP_LOCAL ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Facebook Page URL:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo esc_attr( $instance['href'] ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'width' ); ?>"><?php _e( 'Facebook Page Width:', SFPP_LOCAL ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'width' ); ?>"><?php _e( 'Width:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'width' ); ?>" name="<?php echo $this->get_field_name( 'width' ); ?>">
 				<?php foreach ( $width as $val ): ?>
 					<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $instance['width'], $val ); ?>><?php echo esc_html( $val ); ?></option>
@@ -241,7 +246,7 @@ class SFPP_Widget extends WP_Widget {
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Facebook Page Height:', SFPP_LOCAL ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Height:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>">
 				<?php foreach ( $height as $val ): ?>
 					<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $instance['height'], $val ); ?>><?php echo esc_html( $val ); ?></option>
@@ -249,7 +254,7 @@ class SFPP_Widget extends WP_Widget {
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'show_cover' ); ?>"><?php _e( 'Show Cover Photo?', SFPP_LOCAL ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'show_cover' ); ?>"><?php _e( 'Show Cover Photo?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'show_cover' ); ?>" name="<?php echo $this->get_field_name( 'show_cover' ); ?>">
 				<?php foreach ( $reverse_boolean as $key => $val ): ?>
 					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['show_cover'], $key ); ?>><?php echo esc_html( $val ); ?></option>
@@ -257,7 +262,7 @@ class SFPP_Widget extends WP_Widget {
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'show_facepile' ); ?>"><?php _e( 'Show Facepile?', SFPP_LOCAL ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'show_facepile' ); ?>"><?php _e( 'Show Facepile?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'show_facepile' ); ?>" name="<?php echo $this->get_field_name( 'show_facepile' ); ?>">
 				<?php foreach ( $boolean as $key => $val ): ?>
 					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['show_facepile'], $key ); ?>><?php echo esc_html( $val ); ?></option>
@@ -265,7 +270,7 @@ class SFPP_Widget extends WP_Widget {
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'show_posts' ); ?>"><?php _e( 'Show Posts?', SFPP_LOCAL ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'show_posts' ); ?>"><?php _e( 'Show Posts?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'show_posts' ); ?>" name="<?php echo $this->get_field_name( 'show_posts' ); ?>">
 				<?php foreach ( $boolean as $key => $val ): ?>
 					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['show_posts'], $key ); ?>><?php echo esc_html( $val ); ?></option>
@@ -315,7 +320,7 @@ class SFPP_Widget extends WP_Widget {
 	function sfpp_defaults() {
 
 		$defaults = array(
-			'title'         => esc_attr__( 'Facebook Page Widget', SFPP_LOCAL ),
+			'title'         => esc_attr__( 'Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ),
 			'href'          => 'https://www.facebook.com/facebook',
 			'width'         => '340',
 			'height'        => '500',
@@ -403,13 +408,13 @@ function sfpp_create_admin_page(){
 		<form action="options.php" method="post">
 
 			<?php settings_fields('sfpp_options'); ?>
-			<?php $sfpp_options = get_option('sfpp_settings', SFPP_LOCAL); ?>
+			<?php $sfpp_options = get_option('sfpp_settings', SIMPLE_FACEBOOK_PAGE_I18N); ?>
 			<?php update_option('sfpp_settings', $sfpp_options); ?>
 
 			<table class="form-table">
-				<tr valign="top"><th scope="row"><label class="description" for="sfpp_settings[sfpp_app_id]"><?php _e('Enter App ID:', SFPP_LOCAL); ?></label></th></tr>
+				<tr valign="top"><th scope="row"><label class="description" for="sfpp_settings[sfpp_app_id]"><?php _e('Enter App ID:', SIMPLE_FACEBOOK_PAGE_I18N); ?></label></th></tr>
 				<tr valign="top"><th scope="row"><input type="text" id="sfpp_settings[sfpp_app_id]" name="sfpp_settings[sfpp_app_id]" value="<?php echo $sfpp_options['sfpp_app_id']; ?>"/></th></tr>
-				<tr valign="top"><th scope="row"><input type="submit" class="button-primary" value="<?php _e('Save Settings', SFPP_LOCAL); ?>"/></th></tr>
+				<tr valign="top"><th scope="row"><input type="submit" class="button-primary" value="<?php _e('Save Settings', SIMPLE_FACEBOOK_PAGE_I18N); ?>"/></th></tr>
 
 				<?php
 
