@@ -8,17 +8,17 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily display Facebook's new Page feed using a widget or shortcode. Facebook Like Boxes will be deprecated on June 23rd, 2015.
+Easily display Facebook's new Page feed using a widget or shortcode.
 
 == Description ==
 = Overview =
 This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. Many sites are currently running Facebook Like Boxes which will become **deprecated on June 23rd, 2015**. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
 
-= Simple Facebook Page Widget =
+= Widget Instructions =
 1. Add a customizable Facebook Page widget through `Appearance -> Widgets` and choose *Simple Facebook Page Widget*.
 2. Update your *Facebook Page URL* and click `Save`.
 
-= Simple Facebook Page Shortcode =
+= Shortcode Instructions =
 
 Base Shortcode Example: `[facebook-page href="facebook"]`
 
