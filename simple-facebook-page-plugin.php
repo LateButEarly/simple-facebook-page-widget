@@ -94,7 +94,7 @@ function sfpp_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-require_once ( SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'includes/class-simple-facebook-page-plugin-widget.php' );
+require_once( 'includes/class-simple-facebook-page-plugin-widget.php' );
 add_action( 'widgets_init', function () {
 	register_widget( 'SFPP_Widget' );
 } );
