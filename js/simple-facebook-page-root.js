@@ -1,8 +1,11 @@
-jQuery(document).ready( function($) {$('body').prepend('<div id="fb-root"></div>');} );
-(function(d, s, id) {
+jQuery(document).ready(function ($) {
+	$('body').prepend('<div id="fb-root"></div>');
+});
+(function (d, s, id) {
 	var js, fjs = d.getElementsByTagName(s)[0];
 	if (d.getElementById(id)) return;
-	js = d.createElement(s); js.id = id;
+	js = d.createElement(s);
+	js.id = id;
 	/**
 	 * TODO: Pass in User's appId from PHP Settings
 	 */
