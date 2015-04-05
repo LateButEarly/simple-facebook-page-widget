@@ -48,7 +48,10 @@ Email me directly at drryan@ncsu.edu with legitimate questions.
 
 == Screenshots ==
 
-[https://developers.facebook.com/docs/plugins/page-plugin](https://developers.facebook.com/docs/plugins/page-plugin)
+1. Frontend view of the Facebook Page widget.
+2. Backend view of the Facebook Page widget.
+3. Frontend view of the Facebook Page shortcode.
+4. Backend view of the Facebook Page shortcode.
 
 == Changelog ==
 
@@ -65,4 +68,5 @@ This plugin was developed to be used free of charge; however, if you do wish to 
 
 == Upgrade Notice ==
 
-There are currently no previous versions of this plugin.
+= 1.1.0 =
+* Added support for Spanish / Añadido soporte para español

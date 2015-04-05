@@ -1,11 +1,12 @@
 <?php
 /*
-Plugin Name:    Simple Facebook Page Widget
+Plugin Name:    Simple Facebook Page Widget & Shortcode
 Plugin URI:     https://wordpress.org/plugins/simple-facebook-page-widget/
 Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
 Version:        1.1.0
 Author:         Dylan Ryan
 Author URI:     https://profiles.wordpress.org/irkanu
+Domain Path:    /languages
 Text Domain:    simple-facebook-twitter-widget
 GitHub URI:     https://github.com/irkanu/simple-facebook-page-widget
 GitHub Branch:  master
@@ -37,6 +38,9 @@ if ( ! defined( 'WPINC' ) ) {
  */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.1.0' );
+}
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME' ) ) {
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME', 'Simple Facebook Page Widget & Shortcode' );
 }
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY', plugin_dir_url( __FILE__ ) );
@@ -108,6 +112,93 @@ add_action( 'widgets_init', function () {
  */
 load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'languages' );
 
+
+/**
+ * Setup friendly support nag.
+ *
+ * Thanks @chriswiegman on Twitter.
+ *
+ * @since 1.2.0
+ */
+/*
+	global $blog_id, $sfpp_globals;
+
+	if ( is_multisite() && ( $blog_id != 1 || ! current_user_can( 'manage_network_options' ) ) ) { //only display to network admin if in multisite
+		return;
+	}
+
+	//display the notification if they haven't turned it off and they've been using the plugin at least 30 days
+	if ( ( ! isset( $options['already_supported'] ) || $options['already_supported'] === false ) && $options['activation_timestamp'] < ( $sfpp_globals['current_time_gmt'] - 2592000 ) ) {
+
+		if ( ! function_exists( 'sfpp_plugin_support_notice' ) ) {
+
+			function sfpp_plugin_support_notice() {
+
+				global $sfpp_globals;
+
+				echo '<div class="updated" id="sfpp_support_notice">
+						<span class="itsec_notice_text">' . __( 'It looks like you\'ve been enjoying', SIMPLE_FACEBOOK_PAGE_I18N ) . ' ' . __( SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME, SIMPLE_FACEBOOK_PAGE_I18N ) . ' ' . __( "for at least 30 days. It's time to take the next step.", SIMPLE_FACEBOOK_PAGE_I18N ) . '</span>
+						<input type="button" class="sfpp-notice-button" value="' . __( 'Rate it 5★\'s', SIMPLE_FACEBOOK_PAGE_I18N ) . '" onclick="document.location.href=\'?sfpp_rate=yes&_wpnonce=' . wp_create_nonce( 'sfpp-nag' ) . '\';">
+						<input type="button" class="itsec-notice-button" value="' . __( 'Tell Your Followers', 'it-l10n-better-wp-security' ) . '" onclick="document.location.href=\'?sfpp_tweet=yes&_wpnonce=' . wp_create_nonce( 'sfpp-nag' ) . '\';">
+						<input type="button" class="sfpp-notice-hide" value="&times;" onclick="document.location.href=\'?sfpp_no_nag=off&_wpnonce=' . wp_create_nonce( 'sfpp-nag' ) . '\';">
+						</div>';
+
+			}
+
+		}
+
+		if ( is_multisite() ) {
+			add_action( 'network_admin_notices', 'sfpp_plugin_support_notice' ); //register notification
+		} else {
+			add_action( 'admin_notices', 'sfpp_plugin_support_notice' ); //register notification
+		}
+
+	}
+
+	//if they've clicked a button hide the notice
+	if ( ( isset( $_GET['sfpp_no_nag'] ) || isset( $_GET['sfpp_rate'] ) || isset( $_GET['sfpp_tweet'] ) || isset( $_GET['sfpp_donate'] ) ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'sfpp-nag' ) ) {
+
+		$options = $sfpp_globals['data'];
+
+		$options['already_supported'] = true;
+
+		update_site_option( 'sfpp_data', $options );
+
+		if ( is_multisite() ) {
+			remove_action( 'network_admin_notices', 'sfpp_plugin_support_notice' );
+		} else {
+			remove_action( 'admin_notices', 'sfpp_plugin_support_notice' );
+		}
+
+		//take the user to paypal if they've clicked donate
+		if ( isset( $_GET['sfpp_donate'] ) ) {
+			wp_redirect( 'http://ithemes.com/security', '302' );
+			exit();
+		}
+
+		//Go to the WordPress page to let them rate it.
+		if ( isset( $_GET['sfpp_rate'] ) ) {
+			wp_redirect( 'http://wordpress.org/plugins/simple-facebook-twitter-widget/', '302' );
+			exit();
+		}
+
+		//Compose a Tweet
+		if ( isset( $_GET['sfpp_tweet'] ) ) {
+			wp_redirect( 'http://twitter.com/home?status=' . urlencode( 'I use ' . $sfpp_globals['plugin_name'] . ' for WordPress by @iThemes and you should too - http://ithemes.com/security' ), '302' );
+			exit();
+		}
+
+		if ( sanitize_text_field( $_GET['sfpp_no_nag'] ) == 'off' && isset( $_SERVER['HTTP_REFERER'] ) ) {
+
+			wp_redirect( $_SERVER['HTTP_REFERER'], '302' );
+
+		} else {
+
+			wp_redirect( 'admin.php', '302' );
+
+		}
+	}
+*/
 
 /**
  * Register the Settings Page & Settings
