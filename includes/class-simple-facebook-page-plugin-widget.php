@@ -40,6 +40,7 @@ class SFPP_Widget extends WP_Widget {
 
 		$output = '';
 
+		$output .= '<!-- Begin Facebook Page Widget - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
 		$output .= '<div class="fb-page" ';
 		$output .= 'data-href="' . esc_attr( $instance['href'] ) . '" ';
 		$output .= 'data-width="' . esc_attr( $instance['width'] ) . '" ';
@@ -48,6 +49,7 @@ class SFPP_Widget extends WP_Widget {
 		$output .= 'data-show-facepile="' . esc_attr( $instance['show_facepile'] ) . '" ';
 		$output .= 'data-show-posts="' . esc_attr( $instance['show_posts'] ) . '">';
 		$output .= '</div>';
+		$output .= '<!-- End Facebook Page Widget -->';
 
 		echo $output;
 
