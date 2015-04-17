@@ -4,7 +4,7 @@ Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
 Tags: facebook, widget, plugin, page, feed, shortcode, facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social media
 Requires at least: 3.0.0
 Tested up to: 4.1.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -18,7 +18,8 @@ This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. Many 
 1. Add a customizable Facebook widget through Appearance -> Widgets.
 2. Choose *Simple Facebook Page Widget*.
 3. Update the *Facebook Page URL* and click Save.
-4. See the [screenshots](https://wordpress.org/plugins/simple-facebook-twitter-widget/screenshots/) for examples.
+
+See the [screenshots](https://wordpress.org/plugins/simple-facebook-twitter-widget/screenshots/) for examples.
 
 = Shortcode Instructions =
 Basic Shortcode Example:
@@ -31,7 +32,7 @@ Custom Shortcode Example:
 
 = Support =
 
-Support is offered on the [WordPress Support Forum](https://wordpress.org/support/plugin/simple-facebook-twitter-widget) for free, but please provide as much detail as possible as well as a link to where the issue is occurring. If you are comfortable with GitHub, then feel free to submit an [issue](https://github.com/irkanu/simple-facebook-page-widget/issues). I’ll do my best to answer all support threads and issues.
+Support is offered on the [WordPress Support Forum](https://wordpress.org/support/plugin/simple-facebook-twitter-widget) for free, but please provide as much detail as possible as well as a link to where the issue is occurring. If you are comfortable with GitHub, then feel free to submit an [issue](https://github.com/irkanu/simple-facebook-page-widget/issues). Iâ€™ll do my best to answer all support threads and issues.
 
 > <strong>Donations</strong><br>
 > This plugin was developed to be used free of charge; however, if you do wish to donate, then you can visit the [secure donation page](https://donorbox.org/dylan-ryan-simple-facebook-page-widget).
@@ -48,6 +49,18 @@ This section describes how to install the plugin and get it working.
 
 == Frequently Asked Questions ==
 
+= Can you make this plugin responsive? =
+
+Yes and no. The minimum width of this widget is 280px and the maximum is 500px. The minimum height is 130px. This is set by Facebook & I have no control over it. If you figure out a way to hack this, then please submit a [pull request](https://github.com/irkanu/simple-facebook-page-widget). :)
+
+= Is your plugin going to work if someone from another country visits my site? =
+
+It depends. Some countries block websites like Twitter & Facebook, so this widget may not work for international viewers. However, if there is interest in a fallback in the scenario in which this happens, then Iâ€™ll consider it.
+
+= Does the visitor have to be logged in to Facebook to see the widget? =
+
+Currently, yes. Please see this [support thread](https://wordpress.org/support/topic/unowned-facebook-pages-are-not-supported) to understand why. Again, if there is interest in a fallback in the scenario in which this happens, Iâ€™ll be happy to consider it.
+
 = Do I have to create my own custom Facebook App? =
 
 Currently, no. In the future, perhaps.
@@ -60,6 +73,9 @@ Currently, no. In the future, perhaps.
 4. Backend view of the Facebook Page shortcode.
 
 == Changelog ==
+
+= 1.2.1 =
+* Added PHP 5.2 Compatibility
 
 = 1.2.0 =
 * Added debugging tools
@@ -76,5 +92,8 @@ Currently, no. In the future, perhaps.
 
 == Upgrade Notice ==
 
+= 1.2.1 =
+* Added PHP 5.2 Compatibility
+
 = 1.1.0 =
-* Added support for Spanish / Añadido soporte para español
+* Added support for Spanish
