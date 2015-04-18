@@ -112,6 +112,6 @@ function sfpp_shortcode( $atts ) {
  * https://wordpress.org/support/topic/plugin-activation-error-9
  */
 require_once( 'includes/class-simple-facebook-page-plugin-widget.php' );
-add_action( 'widgets_init', function () {
-    create_function('', 'return register_widget("SFPP_Widget");');
-} );
+add_action( 'widgets_init',
+	create_function('', 'return register_widget("SFPP_Widget");')
+);
