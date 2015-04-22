@@ -3,7 +3,7 @@
 Plugin Name:    Simple Facebook Page Widget & Shortcode
 Plugin URI:     https://wordpress.org/plugins/simple-facebook-page-widget/
 Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
-Version:        1.2.1
+Version:        1.2.2
 Author:         Dylan Ryan
 Author URI:     https://profiles.wordpress.org/irkanu
 Domain Path:    /languages
@@ -37,7 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Plugin Constants
  */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.2.1' );
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.2.2' );
 }
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME' ) ) {
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME', 'Simple Facebook Page Widget & Shortcode' );
