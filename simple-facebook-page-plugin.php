@@ -3,7 +3,7 @@
 Plugin Name:    Simple Facebook Page Widget & Shortcode
 Plugin URI:     https://wordpress.org/plugins/simple-facebook-page-widget/
 Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
-Version:        1.2.2
+Version:        1.3.0
 Author:         Dylan Ryan
 Author URI:     https://profiles.wordpress.org/irkanu
 Domain Path:    /languages
@@ -26,18 +26,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * Deny Direct Access
- */
+/**********************
+ * Deny Direct Access *
+ **********************/
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-/**
- * Plugin Constants
- */
+/********************
+ * Plugin Constants *
+ ********************/
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.2.2' );
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.3.0' );
 }
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME' ) ) {
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME', 'Simple Facebook Page Widget & Shortcode' );
@@ -69,10 +69,14 @@ function sfpp_enqueue_scripts() {
 
 /**
  * Create the [facebook-page] shortcode.
- * Wrapped in comment @since 1.2.0
  *
  * @since 1.0.0
- * @param $atts array href, width, height, hide_cover, show_facepile, show_posts
+ *
+ * @modified 1.2.0 Wrapped shortcode in comment for debug/tracking.
+ * @modified 1.3.0 Added alignment parameter.
+ *
+ * @param $atts array href, width, height, hide_cover, show_facepile, show_posts, align
+ *
  * @return string Outputs the Facebook Page feed via shortcode.
  */
 add_shortcode( 'facebook-page', 'sfpp_shortcode' );
@@ -86,10 +90,16 @@ function sfpp_shortcode( $atts ) {
 		'height'        => '500',
 		'hide_cover'    => 'false',
 		'show_facepile' => 'false',
-		'show_posts'    => 'true'
+		'show_posts'    => 'true',
+		'align'         => 'initial',
 	), $atts );
 
 	$output .= '<!-- Begin Facebook Page Shortcode - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
+
+	//* Wrapper for alignment
+	$output .= '<div id="simple-facebook-widget" style="text-align:' . wp_kses_post( $facebook_page_atts['align'] ) . ';">';
+
+	//* Main Facebook Feed
 	$output .= '<div class="fb-page" ';
 	$output .= 'data-href="https://facebook.com/' . wp_kses_post( $facebook_page_atts['href'] ) . '" ';
 	$output .= 'data-width="' . wp_kses_post( $facebook_page_atts['width'] ) . '" ';
@@ -98,6 +108,9 @@ function sfpp_shortcode( $atts ) {
 	$output .= 'data-show-facepile="' . wp_kses_post( $facebook_page_atts['show_facepile'] ) . '" ';
 	$output .= 'data-show-posts="' . wp_kses_post( $facebook_page_atts['show_posts'] ) . '">';
 	$output .= '</div>';
+
+	$output .= '</div>';
+
 	$output .= '<!-- End Facebook Page Shortcode -->';
 
 	return $output;
@@ -108,6 +121,7 @@ function sfpp_shortcode( $atts ) {
  * Registers the SFPP_Widget widget class.
  *
  * @since 1.0.0
+ *
  * @modified 1.2.1 Added compatibility for PHP 5.2 with create_function
  * https://wordpress.org/support/topic/plugin-activation-error-9
  */
