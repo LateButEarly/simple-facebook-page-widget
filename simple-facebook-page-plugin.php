@@ -6,7 +6,7 @@ Description:    Shows the Facebook Page feed in a sidebar widget and/or via shor
 Version:        1.3.1
 Author:         Dylan Ryan
 Author URI:     https://profiles.wordpress.org/irkanu
-Domain Path:    languages
+Domain Path:    /languages
 Text Domain:    simple-facebook-widget
 GitHub URI:     https://github.com/irkanu/simple-facebook-page-widget
 GitHub Branch:  master
