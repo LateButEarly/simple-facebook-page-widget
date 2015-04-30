@@ -27,20 +27,26 @@ class SFPP_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-		/**
-		 * Apply any styles before the widget.
-		 */
+
+		//* Apply any styles before the widget.
 		if ( array_key_exists( 'before_widget', $args ) ) {
 			echo $args['before_widget'];
 		}
 
+		//* Apply any styles before & after widget title.
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
 
 		$output = '';
 
+		//* Comment for tracking/debugging
 		$output .= '<!-- Begin Facebook Page Widget - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
+
+		//* Wrapper for alignment
+		$output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $instance['align'] ) . ';">';
+
+		//* Main Facebook Feed
 		$output .= '<div class="fb-page" ';
 		$output .= 'data-href="' . esc_attr( $instance['href'] ) . '" ';
 		$output .= 'data-width="' . esc_attr( $instance['width'] ) . '" ';
@@ -49,6 +55,11 @@ class SFPP_Widget extends WP_Widget {
 		$output .= 'data-show-facepile="' . esc_attr( $instance['show_facepile'] ) . '" ';
 		$output .= 'data-show-posts="' . esc_attr( $instance['show_posts'] ) . '">';
 		$output .= '</div>';
+
+		//end wrapper
+		$output .= '</div>';
+
+		//end comment
 		$output .= '<!-- End Facebook Page Widget -->';
 
 		echo $output;
@@ -127,8 +138,15 @@ class SFPP_Widget extends WP_Widget {
 
 		/**
 		 * Show posts from the Page's timeline.
-		 **/
+		 */
 		$show_posts = array( 'true' => 'Yes', 'false' => 'No' );
+
+		/**
+		 * Alignment of the widget.
+		 *
+		 * @var $align array Allows initial, left, center, and right text-align.
+		 */
+		$align = array( 'initial' => 'None', 'left' => 'Left', 'center' => 'Center', 'right' => 'Right' );
 
 		/**
 		 * Facebook wants to be difficult and use the term "Hide Cover" instead of show cover.
@@ -186,6 +204,14 @@ class SFPP_Widget extends WP_Widget {
 				<?php endforeach; ?>
 			</select>
 		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'align' ); ?>"><?php _e( 'Alignment:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'align' ); ?>" name="<?php echo $this->get_field_name( 'align' ); ?>">
+				<?php foreach ( $align as $val ): ?>
+					<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $instance['align'], $val ); ?>><?php echo esc_html( $val ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
 	<?php
 	}
 
@@ -235,7 +261,8 @@ class SFPP_Widget extends WP_Widget {
 			'height'        => '500',
 			'show_cover'    => '0',
 			'show_facepile' => '0',
-			'show_posts'    => '1'
+			'show_posts'    => '1',
+			'align'         => 'initial',
 		);
 
 		return $defaults;
