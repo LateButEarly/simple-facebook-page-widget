@@ -3,7 +3,7 @@
 Plugin Name:    Simple Facebook Page Widget & Shortcode
 Plugin URI:     https://wordpress.org/plugins/simple-facebook-page-widget/
 Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
-Version:        1.3.0
+Version:        1.4.0
 Author:         Dylan Ryan
 Author URI:     https://profiles.wordpress.org/irkanu
 Domain Path:    /languages
@@ -26,6 +26,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 /**********************
  * Deny Direct Access *
  **********************/
@@ -33,11 +34,12 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+
 /********************
  * Plugin Constants *
  ********************/
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.3.0' );
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.3.1' );
 }
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME' ) ) {
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME', 'Simple Facebook Page Widget & Shortcode' );
@@ -49,6 +51,13 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-twitter-widget' );
 }
 
+
+/********************
+ * Global Variables *
+ ********************/
+$sfpp_options = get_option( 'sfpp_settings' );
+
+
 /**
  * Load the translation PO files.
  * http://codex.wordpress.org/I18n_for_WordPress_Developers
@@ -57,15 +66,30 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
  */
 load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'languages' );
 
+
 /**
  * Enqueue Facebook script required for the plugin.
  *
  * @since 1.0.0
+ *
+ * @modified 1.4.0 Localized the script for language option
  */
 add_action( 'wp_enqueue_scripts', 'sfpp_enqueue_scripts' );
 function sfpp_enqueue_scripts() {
+
+	global $sfpp_options;
+
+	//* Prepare the javascript for manipulation.
 	wp_enqueue_script( 'sfpp-fb-root', SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'js/simple-facebook-page-root.js' , array( 'jquery' ) );
+
+	//* Pass the language option from the database to javascript.
+	wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', array(
+			'language'  =>  ( $sfpp_options['language'] )
+		)
+	);
+
 }
+
 
 /**
  * Create the [facebook-page] shortcode.
@@ -117,6 +141,7 @@ function sfpp_shortcode( $atts ) {
 
 }
 
+
 /**
  * Registers the SFPP_Widget widget class.
  *
@@ -127,5 +152,128 @@ function sfpp_shortcode( $atts ) {
  */
 require_once( 'includes/class-simple-facebook-page-plugin-widget.php' );
 add_action( 'widgets_init',
-	create_function('', 'return register_widget("SFPP_Widget");')
+	create_function( '', 'return register_widget("SFPP_Widget");' )
 );
+
+
+/**
+ * Registers the admin settings menu
+ * https://developer.wordpress.org/plugins/settings/custom-settings-page/#creating-the-menu-item
+ *
+ * @since 1.4.0
+ */
+add_action( 'admin_menu', 'sfpp_admin_settings_menu' );
+function sfpp_admin_settings_menu() {
+
+	add_options_page(
+		'Simple Facebook Page Options',
+		'Simple Facebook Page Options',
+		'manage_options',
+		'sfpp-settings',        //slug
+		'sfpp_options_page'     //callback function to display the page
+	);
+
+}
+
+/**
+ * Registers the settings, sections, and fields.
+ * https://developer.wordpress.org/plugins/settings/creating-and-using-options/
+ *
+ * @since 1.4.0
+ */
+add_action( 'admin_init', 'sfpp_register_settings' );
+function sfpp_register_settings() {
+
+	register_setting(
+		'sfpp_settings_group',      // settings section (group) - used on the admin page itself to setup fields
+		'sfpp_settings'             // setting name - get_option() to retrieve from database - retrieve it and store it in global variable
+	);
+
+	add_settings_section(
+		'sfpp_language_section',
+		'Language Settings',
+		'sfpp_language_section_callback',
+		'sfpp-settings'
+	);
+
+	add_settings_field(
+		'sfpp_settings',
+		'Select a language:',
+		'sfpp_language_select_callback',
+		'sfpp-settings',
+		'sfpp_language_section'
+	);
+
+}
+
+/**
+ * Function that echos out any content at the top of the section (between heading and fields).
+ *
+ * @since 1.4.0
+ */
+function sfpp_language_section_callback() {
+
+}
+
+/**
+ * Function that fills the field with the desired form inputs. The function should echo its output.
+ *
+ * @since 1.4.0
+ */
+function sfpp_language_select_callback() {
+
+	global $sfpp_options;
+
+	?>
+
+	<select id="sfpp_settings[language]" name="sfpp_settings[language]">
+		<option value="en_EN" <?php selected( $sfpp_options['language'], 'English' ); ?>>English</option>
+		<option value="de_DE" <?php selected( $sfpp_options['language'], 'German' ); ?>>German</option>
+	</select>
+
+	<?php
+
+}
+
+
+/**
+ * Displays the settings page
+ * https://developer.wordpress.org/plugins/settings/custom-settings-page/#creating-the-page
+ *
+ * @since 1.4.0
+ */
+function sfpp_options_page() {
+
+	global $sfpp_options;
+
+	ob_start();
+
+?>
+
+	<div class="wrap">
+
+		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+
+		<form method="post" action="options.php">
+
+			<?php
+
+			settings_fields( 'sfpp_settings_group' );
+
+			do_settings_sections( 'sfpp-settings' );
+
+			submit_button();
+
+			echo $sfpp_options['language'];
+
+			?>
+
+		</form>
+
+	</div>
+
+<?php
+
+	echo ob_get_clean();
+
+}
