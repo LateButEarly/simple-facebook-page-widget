@@ -86,6 +86,11 @@ Currently, no. In the future, perhaps.
 
 == Changelog ==
 
+= 1.4.0 =
+* Added settings page
+* Added Language option
+* Added 135 languages
+
 = 1.3.1 =
 * Added German i18n
 
@@ -112,6 +117,9 @@ Currently, no. In the future, perhaps.
 * Widget & Shortcode Fully Functional
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+* This update allows you to change the language output of your widget/shortcode.
 
 = 1.3.1 =
 * Added alignment feature (see plugin repo for examples) & German i18n support
