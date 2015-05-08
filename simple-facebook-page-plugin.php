@@ -103,7 +103,7 @@ function sfpp_enqueue_scripts() {
  * @since 1.4.0
  */
 add_action( 'admin_enqueue_scripts', 'sfpp_admin_enqueue_scripts_chosen' );
-function sfpp_admin_enqueue_scripts_chosen( $hook ) {
+function sfpp_admin_enqueue_scripts_chosen() {
 
     /*
     //* Check to see if we're on the settings page.
@@ -256,7 +256,7 @@ function sfpp_language_select_callback() {
 
 	?>
 
-	<select id="sfpp_settings[language]" class="chosen-select" name="sfpp_settings[language]">
+	<select id="sfpp_settings[language]" class="chosen-select" name="sfpp_settings[language]" title="<?php esc_attr__( 'Select language', SIMPLE_FACEBOOK_PAGE_I18N ) ?>">
         <option value="af_ZA" <?php selected( $sfpp_options['language'], 'af_ZA' ); ?>>Afrikaans</option>
         <option value="ak_GH" <?php selected( $sfpp_options['language'], 'ak_GH' ); ?>>Akan</option>
         <option value="am_ET" <?php selected( $sfpp_options['language'], 'am_ET' ); ?>>Amharic</option>
@@ -407,8 +407,6 @@ function sfpp_language_select_callback() {
  */
 function sfpp_options_page() {
 
-	global $sfpp_options;
-
 	ob_start();
 
 ?>
@@ -426,8 +424,6 @@ function sfpp_options_page() {
 			do_settings_sections( 'sfpp-settings' );
 
 			submit_button();
-
-			echo $sfpp_options['language'];
 
 			?>
 
