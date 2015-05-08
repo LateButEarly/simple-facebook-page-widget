@@ -151,16 +151,16 @@ function sfpp_shortcode( $atts ) {
 	$output .= '<!-- Begin Facebook Page Shortcode - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
 
 	//* Wrapper for alignment
-	$output .= '<div id="simple-facebook-widget" style="text-align:' . wp_kses_post( $facebook_page_atts['align'] ) . ';">';
+	$output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $facebook_page_atts['align'] ) . ';">';
 
 	//* Main Facebook Feed
 	$output .= '<div class="fb-page" ';
-	$output .= 'data-href="https://facebook.com/' . wp_kses_post( $facebook_page_atts['href'] ) . '" ';
-	$output .= 'data-width="' . wp_kses_post( $facebook_page_atts['width'] ) . '" ';
-	$output .= 'data-height="' . wp_kses_post( $facebook_page_atts['height'] ) . '" ';
-	$output .= 'data-hide-cover="' . wp_kses_post( $facebook_page_atts['hide_cover'] ) . '" ';
-	$output .= 'data-show-facepile="' . wp_kses_post( $facebook_page_atts['show_facepile'] ) . '" ';
-	$output .= 'data-show-posts="' . wp_kses_post( $facebook_page_atts['show_posts'] ) . '">';
+	$output .= 'data-href="https://facebook.com/' . esc_attr( $facebook_page_atts['href'] ) . '" ';
+	$output .= 'data-width="' . esc_attr( $facebook_page_atts['width'] ) . '" ';
+	$output .= 'data-height="' . esc_attr( $facebook_page_atts['height'] ) . '" ';
+	$output .= 'data-hide-cover="' . esc_attr( $facebook_page_atts['hide_cover'] ) . '" ';
+	$output .= 'data-show-facepile="' . esc_attr( $facebook_page_atts['show_facepile'] ) . '" ';
+	$output .= 'data-show-posts="' . esc_attr( $facebook_page_atts['show_posts'] ) . '">';
 	$output .= '</div>';
 
 	$output .= '</div>';
@@ -257,142 +257,142 @@ function sfpp_language_select_callback() {
 	?>
 
 	<select id="sfpp_settings[language]" class="chosen-select" name="sfpp_settings[language]">
-        <option value="af_ZA" <?php selected( $sfpp_options['language'], 'Afrikaans' ); ?>>Afrikaans</option>
-        <option value="ak_GH" <?php selected( $sfpp_options['language'], 'Akan' ); ?>>Akan</option>
-        <option value="am_ET" <?php selected( $sfpp_options['language'], 'Amharic' ); ?>>Amharic</option>
-        <option value="ar_AR" <?php selected( $sfpp_options['language'], 'Arabic' ); ?>>Arabic</option>
-        <option value="as_IN" <?php selected( $sfpp_options['language'], 'Assamese' ); ?>>Assamese</option>
-        <option value="ay_BO" <?php selected( $sfpp_options['language'], 'Aymara' ); ?>>Aymara</option>
-        <option value="az_AZ" <?php selected( $sfpp_options['language'], 'Azerbaijani' ); ?>>Azerbaijani</option>
-        <option value="be_BY" <?php selected( $sfpp_options['language'], 'Belarusian' ); ?>>Belarusian</option>
-        <option value="bg_BG" <?php selected( $sfpp_options['language'], 'Bulgarian' ); ?>>Bulgarian</option>
-        <option value="bn_IN" <?php selected( $sfpp_options['language'], 'Bengali' ); ?>>Bengali</option>
-        <option value="br_FR" <?php selected( $sfpp_options['language'], 'Breton' ); ?>>Breton</option>
-        <option value="bs_BA" <?php selected( $sfpp_options['language'], 'Bosnian' ); ?>>Bosnian</option>
-        <option value="ca_ES" <?php selected( $sfpp_options['language'], 'Catalan' ); ?>>Catalan</option>
-        <option value="cb_IQ" <?php selected( $sfpp_options['language'], 'Sorani Kurdish' ); ?>>Sorani Kurdish</option>
-        <option value="ck_US" <?php selected( $sfpp_options['language'], 'Cherokee' ); ?>>Cherokee</option>
-        <option value="co_FR" <?php selected( $sfpp_options['language'], 'Corsican' ); ?>>Corsican</option>
-        <option value="cs_CZ" <?php selected( $sfpp_options['language'], 'Czech' ); ?>>Czech</option>
-        <option value="cx_PH" <?php selected( $sfpp_options['language'], 'Cebuano' ); ?>>Cebuano</option>
-        <option value="cy_GB" <?php selected( $sfpp_options['language'], 'Welsh' ); ?>>Welsh</option>
-        <option value="da_DK" <?php selected( $sfpp_options['language'], 'Danish' ); ?>>Danish</option>
-        <option value="de_DE" <?php selected( $sfpp_options['language'], 'German' ); ?>>German</option>
-        <option value="el_GR" <?php selected( $sfpp_options['language'], 'Greek' ); ?>>Greek</option>
-        <option value="en_GB" <?php selected( $sfpp_options['language'], 'English (UK)' ); ?>>English (UK)</option>
-        <option value="en_IN" <?php selected( $sfpp_options['language'], 'English (India)' ); ?>>English (India)</option>
-        <option value="en_PI" <?php selected( $sfpp_options['language'], 'English (Pirate)' ); ?>>English (Pirate)</option>
-        <option value="en_UD" <?php selected( $sfpp_options['language'], 'English (Upside Down)' ); ?>>English (Upside Down)</option>
-        <option value="en_US" <?php selected( $sfpp_options['language'], 'English (US)' ); ?>>English (US)</option>
-        <option value="eo_EO" <?php selected( $sfpp_options['language'], 'Esperanto' ); ?>>Esperanto</option>
-        <option value="es_CO" <?php selected( $sfpp_options['language'], 'Spanish (Colombia)' ); ?>>Spanish (Colombia)</option>
-        <option value="es_ES" <?php selected( $sfpp_options['language'], 'Spanish (Spain)' ); ?>>Spanish (Spain)</option>
-        <option value="es_LA" <?php selected( $sfpp_options['language'], 'Spanish' ); ?>>Spanish</option>
-        <option value="et_EE" <?php selected( $sfpp_options['language'], 'Estonian' ); ?>>Estonian</option>
-        <option value="eu_ES" <?php selected( $sfpp_options['language'], 'Basque' ); ?>>Basque</option>
-        <option value="fa_IR" <?php selected( $sfpp_options['language'], 'Persian' ); ?>>Persian</option>
-        <option value="fb_LT" <?php selected( $sfpp_options['language'], 'Leet Speak' ); ?>>Leet Speak</option>
-        <option value="ff_NG" <?php selected( $sfpp_options['language'], 'Fulah' ); ?>>Fulah</option>
-        <option value="fi_FI" <?php selected( $sfpp_options['language'], 'Finnish' ); ?>>Finnish</option>
-        <option value="fo_FO" <?php selected( $sfpp_options['language'], 'Faroese' ); ?>>Faroese</option>
-        <option value="fr_CA" <?php selected( $sfpp_options['language'], 'French (Canada)' ); ?>>French (Canada)</option>
-        <option value="fr_FR" <?php selected( $sfpp_options['language'], 'French (France)' ); ?>>French (France)</option>
-        <option value="fy_NL" <?php selected( $sfpp_options['language'], 'Frisian' ); ?>>Frisian</option>
-        <option value="ga_IE" <?php selected( $sfpp_options['language'], 'Irish' ); ?>>Irish</option>
-        <option value="gl_ES" <?php selected( $sfpp_options['language'], 'Galician' ); ?>>Galician</option>
-        <option value="gn_PY" <?php selected( $sfpp_options['language'], 'Guarani' ); ?>>Guarani</option>
-        <option value="gu_IN" <?php selected( $sfpp_options['language'], 'Gujarati' ); ?>>Gujarati</option>
-        <option value="gx_GR" <?php selected( $sfpp_options['language'], 'Classical Greek' ); ?>>Classical Greek</option>
-        <option value="ha_NG" <?php selected( $sfpp_options['language'], 'Hausa' ); ?>>Hausa</option>
-        <option value="he_IL" <?php selected( $sfpp_options['language'], 'Hebrew' ); ?>>Hebrew</option>
-        <option value="hi_IN" <?php selected( $sfpp_options['language'], 'Hindi' ); ?>>Hindi</option>
-        <option value="hr_HR" <?php selected( $sfpp_options['language'], 'Croatian' ); ?>>Croatian</option>
-        <option value="hu_HU" <?php selected( $sfpp_options['language'], 'Hungarian' ); ?>>Hungarian</option>
-        <option value="hy_AM" <?php selected( $sfpp_options['language'], 'Armenian' ); ?>>Armenian</option>
-        <option value="id_ID" <?php selected( $sfpp_options['language'], 'Indonesian' ); ?>>Indonesian</option>
-        <option value="ig_NG" <?php selected( $sfpp_options['language'], 'Igbo' ); ?>>Igbo</option>
-        <option value="is_IS" <?php selected( $sfpp_options['language'], 'Icelandic' ); ?>>Icelandic</option>
-        <option value="it_IT" <?php selected( $sfpp_options['language'], 'Italian' ); ?>>Italian</option>
-        <option value="ja_JP" <?php selected( $sfpp_options['language'], 'Japanese' ); ?>>Japanese</option>
-        <option value="ja_KS" <?php selected( $sfpp_options['language'], 'Japanese (Kansai)' ); ?>>Japanese (Kansai)</option>
-        <option value="jv_ID" <?php selected( $sfpp_options['language'], 'Javanese' ); ?>>Javanese</option>
-        <option value="ka_GE" <?php selected( $sfpp_options['language'], 'Georgian' ); ?>>Georgian</option>
-        <option value="kk_KZ" <?php selected( $sfpp_options['language'], 'Kazakh' ); ?>>Kazakh</option>
-        <option value="km_KH" <?php selected( $sfpp_options['language'], 'Khmer' ); ?>>Khmer</option>
-        <option value="kn_IN" <?php selected( $sfpp_options['language'], 'Kannada' ); ?>>Kannada</option>
-        <option value="ko_KR" <?php selected( $sfpp_options['language'], 'Korean' ); ?>>Korean</option>
-        <option value="ku_TR" <?php selected( $sfpp_options['language'], 'Kurdish (Kurmanji)' ); ?>>Kurdish (Kurmanji)</option>
-        <option value="la_VA" <?php selected( $sfpp_options['language'], 'Latin' ); ?>>Latin</option>
-        <option value="lg_UG" <?php selected( $sfpp_options['language'], 'Ganda' ); ?>>Ganda</option>
-        <option value="li_NL" <?php selected( $sfpp_options['language'], 'Limburgish' ); ?>>Limburgish</option>
-        <option value="ln_CD" <?php selected( $sfpp_options['language'], 'Lingala' ); ?>>Lingala</option>
-        <option value="lo_LA" <?php selected( $sfpp_options['language'], 'Lao' ); ?>>Lao</option>
-        <option value="lt_LT" <?php selected( $sfpp_options['language'], 'Lithuanian' ); ?>>Lithuanian</option>
-        <option value="lv_LV" <?php selected( $sfpp_options['language'], 'Latvian' ); ?>>Latvian</option>
-        <option value="mg_MG" <?php selected( $sfpp_options['language'], 'Malagasy' ); ?>>Malagasy</option>
-        <option value="mk_MK" <?php selected( $sfpp_options['language'], 'Macedonian' ); ?>>Macedonian</option>
-        <option value="ml_IN" <?php selected( $sfpp_options['language'], 'Malayalam' ); ?>>Malayalam</option>
-        <option value="mn_MN" <?php selected( $sfpp_options['language'], 'Mongolian' ); ?>>Mongolian</option>
-        <option value="mr_IN" <?php selected( $sfpp_options['language'], 'Marathi' ); ?>>Marathi</option>
-        <option value="ms_MY" <?php selected( $sfpp_options['language'], 'Malay' ); ?>>Malay</option>
-        <option value="mt_MT" <?php selected( $sfpp_options['language'], 'Maltese' ); ?>>Maltese</option>
-        <option value="my_MM" <?php selected( $sfpp_options['language'], 'Burmese' ); ?>>Burmese</option>
-        <option value="nb_NO" <?php selected( $sfpp_options['language'], 'Norwegian (bokmal)' ); ?>>Norwegian (bokmal)</option>
-        <option value="nd_ZW" <?php selected( $sfpp_options['language'], 'Ndebele' ); ?>>Ndebele</option>
-        <option value="ne_NP" <?php selected( $sfpp_options['language'], 'Nepali' ); ?>>Nepali</option>
-        <option value="nl_BE" <?php selected( $sfpp_options['language'], 'Dutch (België)' ); ?>>Dutch (België)</option>
-        <option value="nl_NL" <?php selected( $sfpp_options['language'], 'Dutch' ); ?>>Dutch</option>
-        <option value="nn_NO" <?php selected( $sfpp_options['language'], 'Norwegian (nynorsk)' ); ?>>Norwegian (nynorsk)</option>
-        <option value="ny_MW" <?php selected( $sfpp_options['language'], 'Chewa' ); ?>>Chewa</option>
-        <option value="or_IN" <?php selected( $sfpp_options['language'], 'Oriya' ); ?>>Oriya</option>
-        <option value="pa_IN" <?php selected( $sfpp_options['language'], 'Punjabi' ); ?>>Punjabi</option>
-        <option value="pl_PL" <?php selected( $sfpp_options['language'], 'Polish' ); ?>>Polish</option>
-        <option value="ps_AF" <?php selected( $sfpp_options['language'], 'Pashto' ); ?>>Pashto</option>
-        <option value="pt_BR" <?php selected( $sfpp_options['language'], 'Portuguese (Brazil)' ); ?>>Portuguese (Brazil)</option>
-        <option value="pt_PT" <?php selected( $sfpp_options['language'], 'Portuguese (Portugal)' ); ?>>Portuguese (Portugal)</option>
-        <option value="qu_PE" <?php selected( $sfpp_options['language'], 'Quechua' ); ?>>Quechua</option>
-        <option value="rm_CH" <?php selected( $sfpp_options['language'], 'Romansh' ); ?>>Romansh</option>
-        <option value="ro_RO" <?php selected( $sfpp_options['language'], 'Romanian' ); ?>>Romanian</option>
-        <option value="ru_RU" <?php selected( $sfpp_options['language'], 'Russian' ); ?>>Russian</option>
-        <option value="rw_RW" <?php selected( $sfpp_options['language'], 'Kinyarwanda' ); ?>>Kinyarwanda</option>
-        <option value="sa_IN" <?php selected( $sfpp_options['language'], 'Sanskrit' ); ?>>Sanskrit</option>
-        <option value="sc_IT" <?php selected( $sfpp_options['language'], 'Sardinian' ); ?>>Sardinian</option>
-        <option value="se_NO" <?php selected( $sfpp_options['language'], 'Northern Sámi' ); ?>>Northern Sámi</option>
-        <option value="si_LK" <?php selected( $sfpp_options['language'], 'Sinhala' ); ?>>Sinhala</option>
-        <option value="sk_SK" <?php selected( $sfpp_options['language'], 'Slovak' ); ?>>Slovak</option>
-        <option value="sl_SI" <?php selected( $sfpp_options['language'], 'Slovenian' ); ?>>Slovenian</option>
-        <option value="sn_ZW" <?php selected( $sfpp_options['language'], 'Shona' ); ?>>Shona</option>
-        <option value="so_SO" <?php selected( $sfpp_options['language'], 'Somali' ); ?>>Somali</option>
-        <option value="sq_AL" <?php selected( $sfpp_options['language'], 'Albanian' ); ?>>Albanian</option>
-        <option value="sr_RS" <?php selected( $sfpp_options['language'], 'Serbian' ); ?>>Serbian</option>
-        <option value="sv_SE" <?php selected( $sfpp_options['language'], 'Swedish' ); ?>>Swedish</option>
-        <option value="sw_KE" <?php selected( $sfpp_options['language'], 'Swahili' ); ?>>Swahili</option>
-        <option value="sy_SY" <?php selected( $sfpp_options['language'], 'Syriac' ); ?>>Syriac</option>
-        <option value="sz_PL" <?php selected( $sfpp_options['language'], 'Silesian' ); ?>>Silesian</option>
-        <option value="ta_IN" <?php selected( $sfpp_options['language'], 'Tamil' ); ?>>Tamil</option>
-        <option value="te_IN" <?php selected( $sfpp_options['language'], 'Telugu' ); ?>>Telugu</option>
-        <option value="tg_TJ" <?php selected( $sfpp_options['language'], 'Tajik' ); ?>>Tajik</option>
-        <option value="th_TH" <?php selected( $sfpp_options['language'], 'Thai' ); ?>>Thai</option>
-        <option value="tk_TM" <?php selected( $sfpp_options['language'], 'Turkmen' ); ?>>Turkmen</option>
-        <option value="tl_PH" <?php selected( $sfpp_options['language'], 'Filipino' ); ?>>Filipino</option>
-        <option value="tl_ST" <?php selected( $sfpp_options['language'], 'Klingon' ); ?>>Klingon</option>
-        <option value="tr_TR" <?php selected( $sfpp_options['language'], 'Turkish' ); ?>>Turkish</option>
-        <option value="tt_RU" <?php selected( $sfpp_options['language'], 'Tatar' ); ?>>Tatar</option>
-        <option value="tz_MA" <?php selected( $sfpp_options['language'], 'Tamazight' ); ?>>Tamazight</option>
-        <option value="uk_UA" <?php selected( $sfpp_options['language'], 'Ukrainian' ); ?>>Ukrainian</option>
-        <option value="ur_PK" <?php selected( $sfpp_options['language'], 'Urdu' ); ?>>Urdu</option>
-        <option value="uz_UZ" <?php selected( $sfpp_options['language'], 'Uzbek' ); ?>>Uzbek</option>
-        <option value="vi_VN" <?php selected( $sfpp_options['language'], 'Vietnamese' ); ?>>Vietnamese</option>
-        <option value="wo_SN" <?php selected( $sfpp_options['language'], 'Wolof' ); ?>>Wolof</option>
-        <option value="xh_ZA" <?php selected( $sfpp_options['language'], 'Xhosa' ); ?>>Xhosa</option>
-        <option value="yi_DE" <?php selected( $sfpp_options['language'], 'Yiddish' ); ?>>Yiddish</option>
-        <option value="yo_NG" <?php selected( $sfpp_options['language'], 'Yoruba' ); ?>>Yoruba</option>
-        <option value="zh_CN" <?php selected( $sfpp_options['language'], 'Simplified Chinese (China)' ); ?>>Simplified Chinese (China)</option>
-        <option value="zh_HK" <?php selected( $sfpp_options['language'], 'Traditional Chinese (Hong Kong)' ); ?>>Traditional Chinese (Hong Kong)</option>
-        <option value="zh_TW" <?php selected( $sfpp_options['language'], 'Traditional Chinese (Taiwan)' ); ?>>Traditional Chinese (Taiwan)</option>
-        <option value="zu_ZA" <?php selected( $sfpp_options['language'], 'Zulu' ); ?>>Zulu</option>
-        <option value="zz_TR" <?php selected( $sfpp_options['language'], 'Zazaki' ); ?>>Zazaki</option>
-	</select>
+        <option value="af_ZA" <?php selected( $sfpp_options['language'], 'af_ZA' ); ?>>Afrikaans</option>
+        <option value="ak_GH" <?php selected( $sfpp_options['language'], 'ak_GH' ); ?>>Akan</option>
+        <option value="am_ET" <?php selected( $sfpp_options['language'], 'am_ET' ); ?>>Amharic</option>
+        <option value="ar_AR" <?php selected( $sfpp_options['language'], 'ar_AR' ); ?>>Arabic</option>
+        <option value="as_IN" <?php selected( $sfpp_options['language'], 'as_IN' ); ?>>Assamese</option>
+        <option value="ay_BO" <?php selected( $sfpp_options['language'], 'ay_BO' ); ?>>Aymara</option>
+        <option value="az_AZ" <?php selected( $sfpp_options['language'], 'az_AZ' ); ?>>Azerbaijani</option>
+        <option value="be_BY" <?php selected( $sfpp_options['language'], 'be_BY' ); ?>>Belarusian</option>
+        <option value="bg_BG" <?php selected( $sfpp_options['language'], 'bg_BG' ); ?>>Bulgarian</option>
+        <option value="bn_IN" <?php selected( $sfpp_options['language'], 'bn_IN' ); ?>>Bengali</option>
+        <option value="br_FR" <?php selected( $sfpp_options['language'], 'br_FR' ); ?>>Breton</option>
+        <option value="bs_BA" <?php selected( $sfpp_options['language'], 'bs_BA' ); ?>>Bosnian</option>
+        <option value="ca_ES" <?php selected( $sfpp_options['language'], 'ca_ES' ); ?>>Catalan</option>
+        <option value="cb_IQ" <?php selected( $sfpp_options['language'], 'cb_IQ' ); ?>>Sorani Kurdish</option>
+        <option value="ck_US" <?php selected( $sfpp_options['language'], 'ck_US' ); ?>>Cherokee</option>
+        <option value="co_FR" <?php selected( $sfpp_options['language'], 'co_FR' ); ?>>Corsican</option>
+        <option value="cs_CZ" <?php selected( $sfpp_options['language'], 'cs_CZ' ); ?>>Czech</option>
+        <option value="cx_PH" <?php selected( $sfpp_options['language'], 'cx_PH' ); ?>>Cebuano</option>
+        <option value="cy_GB" <?php selected( $sfpp_options['language'], 'cy_GB' ); ?>>Welsh</option>
+        <option value="da_DK" <?php selected( $sfpp_options['language'], 'da_DK' ); ?>>Danish</option>
+        <option value="de_DE" <?php selected( $sfpp_options['language'], 'de_DE' ); ?>>German</option>
+        <option value="el_GR" <?php selected( $sfpp_options['language'], 'el_GR' ); ?>>Greek</option>
+        <option value="en_GB" <?php selected( $sfpp_options['language'], 'en_GB' ); ?>>English (UK)</option>
+        <option value="en_IN" <?php selected( $sfpp_options['language'], 'en_IN' ); ?>>English (India)</option>
+        <option value="en_PI" <?php selected( $sfpp_options['language'], 'en_PI' ); ?>>English (Pirate)</option>
+        <option value="en_UD" <?php selected( $sfpp_options['language'], 'en_UD' ); ?>>English (Upside Down)</option>
+        <option value="en_US" <?php selected( $sfpp_options['language'], 'en_US' ); ?>>English (US)</option>
+        <option value="eo_EO" <?php selected( $sfpp_options['language'], 'eo_EO' ); ?>>Esperanto</option>
+        <option value="es_CO" <?php selected( $sfpp_options['language'], 'es_CO' ); ?>>Spanish (Colombia)</option>
+        <option value="es_ES" <?php selected( $sfpp_options['language'], 'es_ES' ); ?>>Spanish (Spain)</option>
+        <option value="es_LA" <?php selected( $sfpp_options['language'], 'es_LA' ); ?>>Spanish</option>
+        <option value="et_EE" <?php selected( $sfpp_options['language'], 'et_EE' ); ?>>Estonian</option>
+        <option value="eu_ES" <?php selected( $sfpp_options['language'], 'eu_ES' ); ?>>Basque</option>
+        <option value="fa_IR" <?php selected( $sfpp_options['language'], 'fa_IR' ); ?>>Persian</option>
+        <option value="fb_LT" <?php selected( $sfpp_options['language'], 'fb_LT' ); ?>>Leet Speak</option>
+        <option value="ff_NG" <?php selected( $sfpp_options['language'], 'ff_NG' ); ?>>Fulah</option>
+        <option value="fi_FI" <?php selected( $sfpp_options['language'], 'fi_FI' ); ?>>Finnish</option>
+        <option value="fo_FO" <?php selected( $sfpp_options['language'], 'fo_FO' ); ?>>Faroese</option>
+        <option value="fr_CA" <?php selected( $sfpp_options['language'], 'fr_CA' ); ?>>French (Canada)</option>
+        <option value="fr_FR" <?php selected( $sfpp_options['language'], 'fr_FR' ); ?>>French (France)</option>
+        <option value="fy_NL" <?php selected( $sfpp_options['language'], 'fy_NL' ); ?>>Frisian</option>
+        <option value="ga_IE" <?php selected( $sfpp_options['language'], 'ga_IE' ); ?>>Irish</option>
+        <option value="gl_ES" <?php selected( $sfpp_options['language'], 'gl_ES' ); ?>>Galician</option>
+        <option value="gn_PY" <?php selected( $sfpp_options['language'], 'gn_PY' ); ?>>Guarani</option>
+        <option value="gu_IN" <?php selected( $sfpp_options['language'], 'gu_IN' ); ?>>Gujarati</option>
+        <option value="gx_GR" <?php selected( $sfpp_options['language'], 'gx_GR' ); ?>>Classical Greek</option>
+        <option value="ha_NG" <?php selected( $sfpp_options['language'], 'ha_NG' ); ?>>Hausa</option>
+        <option value="he_IL" <?php selected( $sfpp_options['language'], 'he_IL' ); ?>>Hebrew</option>
+        <option value="hi_IN" <?php selected( $sfpp_options['language'], 'hi_IN' ); ?>>Hindi</option>
+        <option value="hr_HR" <?php selected( $sfpp_options['language'], 'hr_HR' ); ?>>Croatian</option>
+        <option value="hu_HU" <?php selected( $sfpp_options['language'], 'hu_HU' ); ?>>Hungarian</option>
+        <option value="hy_AM" <?php selected( $sfpp_options['language'], 'hy_AM' ); ?>>Armenian</option>
+        <option value="id_ID" <?php selected( $sfpp_options['language'], 'id_ID' ); ?>>Indonesian</option>
+        <option value="ig_NG" <?php selected( $sfpp_options['language'], 'ig_NG' ); ?>>Igbo</option>
+        <option value="is_IS" <?php selected( $sfpp_options['language'], 'is_IS' ); ?>>Icelandic</option>
+        <option value="it_IT" <?php selected( $sfpp_options['language'], 'it_IT' ); ?>>Italian</option>
+        <option value="ja_JP" <?php selected( $sfpp_options['language'], 'ja_JP' ); ?>>Japanese</option>
+        <option value="ja_KS" <?php selected( $sfpp_options['language'], 'ja_KS' ); ?>>Japanese (Kansai)</option>
+        <option value="jv_ID" <?php selected( $sfpp_options['language'], 'jv_ID' ); ?>>Javanese</option>
+        <option value="ka_GE" <?php selected( $sfpp_options['language'], 'ka_GE' ); ?>>Georgian</option>
+        <option value="kk_KZ" <?php selected( $sfpp_options['language'], 'kk_KZ' ); ?>>Kazakh</option>
+        <option value="km_KH" <?php selected( $sfpp_options['language'], 'km_KH' ); ?>>Khmer</option>
+        <option value="kn_IN" <?php selected( $sfpp_options['language'], 'kn_IN' ); ?>>Kannada</option>
+        <option value="ko_KR" <?php selected( $sfpp_options['language'], 'ko_KR' ); ?>>Korean</option>
+        <option value="ku_TR" <?php selected( $sfpp_options['language'], 'ku_TR' ); ?>>Kurdish (Kurmanji)</option>
+        <option value="la_VA" <?php selected( $sfpp_options['language'], 'la_VA' ); ?>>Latin</option>
+        <option value="lg_UG" <?php selected( $sfpp_options['language'], 'lg_UG' ); ?>>Ganda</option>
+        <option value="li_NL" <?php selected( $sfpp_options['language'], 'li_NL' ); ?>>Limburgish</option>
+        <option value="ln_CD" <?php selected( $sfpp_options['language'], 'ln_CD' ); ?>>Lingala</option>
+        <option value="lo_LA" <?php selected( $sfpp_options['language'], 'lo_LA' ); ?>>Lao</option>
+        <option value="lt_LT" <?php selected( $sfpp_options['language'], 'lt_LT' ); ?>>Lithuanian</option>
+        <option value="lv_LV" <?php selected( $sfpp_options['language'], 'lv_LV' ); ?>>Latvian</option>
+        <option value="mg_MG" <?php selected( $sfpp_options['language'], 'mg_MG' ); ?>>Malagasy</option>
+        <option value="mk_MK" <?php selected( $sfpp_options['language'], 'mk_MK' ); ?>>Macedonian</option>
+        <option value="ml_IN" <?php selected( $sfpp_options['language'], 'ml_IN' ); ?>>Malayalam</option>
+        <option value="mn_MN" <?php selected( $sfpp_options['language'], 'mn_MN' ); ?>>Mongolian</option>
+        <option value="mr_IN" <?php selected( $sfpp_options['language'], 'mr_IN' ); ?>>Marathi</option>
+        <option value="ms_MY" <?php selected( $sfpp_options['language'], 'ms_MY' ); ?>>Malay</option>
+        <option value="mt_MT" <?php selected( $sfpp_options['language'], 'mt_MT' ); ?>>Maltese</option>
+        <option value="my_MM" <?php selected( $sfpp_options['language'], 'my_MM' ); ?>>Burmese</option>
+        <option value="nb_NO" <?php selected( $sfpp_options['language'], 'nb_NO' ); ?>>Norwegian (bokmal)</option>
+        <option value="nd_ZW" <?php selected( $sfpp_options['language'], 'nd_ZW' ); ?>>Ndebele</option>
+        <option value="ne_NP" <?php selected( $sfpp_options['language'], 'ne_NP' ); ?>>Nepali</option>
+        <option value="nl_BE" <?php selected( $sfpp_options['language'], 'nl_BE' ); ?>>Dutch (België)</option>
+        <option value="nl_NL" <?php selected( $sfpp_options['language'], 'nl_NL' ); ?>>Dutch</option>
+        <option value="nn_NO" <?php selected( $sfpp_options['language'], 'nn_NO' ); ?>>Norwegian (nynorsk)</option>
+        <option value="ny_MW" <?php selected( $sfpp_options['language'], 'ny_MW' ); ?>>Chewa</option>
+        <option value="or_IN" <?php selected( $sfpp_options['language'], 'or_IN' ); ?>>Oriya</option>
+        <option value="pa_IN" <?php selected( $sfpp_options['language'], 'pa_IN' ); ?>>Punjabi</option>
+        <option value="pl_PL" <?php selected( $sfpp_options['language'], 'pl_PL' ); ?>>Polish</option>
+        <option value="ps_AF" <?php selected( $sfpp_options['language'], 'ps_AF' ); ?>>Pashto</option>
+        <option value="pt_BR" <?php selected( $sfpp_options['language'], 'pt_BR' ); ?>>Portuguese (Brazil)</option>
+        <option value="pt_PT" <?php selected( $sfpp_options['language'], 'pt_PT' ); ?>>Portuguese (Portugal)</option>
+        <option value="qu_PE" <?php selected( $sfpp_options['language'], 'qu_PE' ); ?>>Quechua</option>
+        <option value="rm_CH" <?php selected( $sfpp_options['language'], 'rm_CH' ); ?>>Romansh</option>
+        <option value="ro_RO" <?php selected( $sfpp_options['language'], 'ro_RO' ); ?>>Romanian</option>
+        <option value="ru_RU" <?php selected( $sfpp_options['language'], 'ru_RU' ); ?>>Russian</option>
+        <option value="rw_RW" <?php selected( $sfpp_options['language'], 'rw_RW' ); ?>>Kinyarwanda</option>
+        <option value="sa_IN" <?php selected( $sfpp_options['language'], 'sa_IN' ); ?>>Sanskrit</option>
+        <option value="sc_IT" <?php selected( $sfpp_options['language'], 'sc_IT' ); ?>>Sardinian</option>
+        <option value="se_NO" <?php selected( $sfpp_options['language'], 'se_NO' ); ?>>Northern Sámi</option>
+        <option value="si_LK" <?php selected( $sfpp_options['language'], 'si_LK' ); ?>>Sinhala</option>
+        <option value="sk_SK" <?php selected( $sfpp_options['language'], 'sk_SK' ); ?>>Slovak</option>
+        <option value="sl_SI" <?php selected( $sfpp_options['language'], 'sl_SI' ); ?>>Slovenian</option>
+        <option value="sn_ZW" <?php selected( $sfpp_options['language'], 'sn_ZW' ); ?>>Shona</option>
+        <option value="so_SO" <?php selected( $sfpp_options['language'], 'so_SO' ); ?>>Somali</option>
+        <option value="sq_AL" <?php selected( $sfpp_options['language'], 'sq_AL' ); ?>>Albanian</option>
+        <option value="sr_RS" <?php selected( $sfpp_options['language'], 'sr_RS' ); ?>>Serbian</option>
+        <option value="sv_SE" <?php selected( $sfpp_options['language'], 'sv_SE' ); ?>>Swedish</option>
+        <option value="sw_KE" <?php selected( $sfpp_options['language'], 'sw_KE' ); ?>>Swahili</option>
+        <option value="sy_SY" <?php selected( $sfpp_options['language'], 'sy_SY' ); ?>>Syriac</option>
+        <option value="sz_PL" <?php selected( $sfpp_options['language'], 'sz_PL' ); ?>>Silesian</option>
+        <option value="ta_IN" <?php selected( $sfpp_options['language'], 'ta_IN' ); ?>>Tamil</option>
+        <option value="te_IN" <?php selected( $sfpp_options['language'], 'te_IN' ); ?>>Telugu</option>
+        <option value="tg_TJ" <?php selected( $sfpp_options['language'], 'tg_TJ' ); ?>>Tajik</option>
+        <option value="th_TH" <?php selected( $sfpp_options['language'], 'th_TH' ); ?>>Thai</option>
+        <option value="tk_TM" <?php selected( $sfpp_options['language'], 'tk_TM' ); ?>>Turkmen</option>
+        <option value="tl_PH" <?php selected( $sfpp_options['language'], 'tl_PH' ); ?>>Filipino</option>
+        <option value="tl_ST" <?php selected( $sfpp_options['language'], 'tl_ST' ); ?>>Klingon</option>
+        <option value="tr_TR" <?php selected( $sfpp_options['language'], 'tr_TR' ); ?>>Turkish</option>
+        <option value="tt_RU" <?php selected( $sfpp_options['language'], 'tt_RU' ); ?>>Tatar</option>
+        <option value="tz_MA" <?php selected( $sfpp_options['language'], 'tz_MA' ); ?>>Tamazight</option>
+        <option value="uk_UA" <?php selected( $sfpp_options['language'], 'uk_UA' ); ?>>Ukrainian</option>
+        <option value="ur_PK" <?php selected( $sfpp_options['language'], 'ur_PK' ); ?>>Urdu</option>
+        <option value="uz_UZ" <?php selected( $sfpp_options['language'], 'uz_UZ' ); ?>>Uzbek</option>
+        <option value="vi_VN" <?php selected( $sfpp_options['language'], 'vi_VN' ); ?>>Vietnamese</option>
+        <option value="wo_SN" <?php selected( $sfpp_options['language'], 'wo_SN' ); ?>>Wolof</option>
+        <option value="xh_ZA" <?php selected( $sfpp_options['language'], 'xh_ZA' ); ?>>Xhosa</option>
+        <option value="yi_DE" <?php selected( $sfpp_options['language'], 'yi_DE' ); ?>>Yiddish</option>
+        <option value="yo_NG" <?php selected( $sfpp_options['language'], 'yo_NG' ); ?>>Yoruba</option>
+        <option value="zh_CN" <?php selected( $sfpp_options['language'], 'zh_CN' ); ?>>Simplified Chinese (China)</option>
+        <option value="zh_HK" <?php selected( $sfpp_options['language'], 'zh_HK' ); ?>>Traditional Chinese (Hong Kong)</option>
+        <option value="zh_TW" <?php selected( $sfpp_options['language'], 'zh_TW' ); ?>>Traditional Chinese (Taiwan)</option>
+        <option value="zu_ZA" <?php selected( $sfpp_options['language'], 'zu_ZA' ); ?>>Zulu</option>
+        <option value="zz_TR" <?php selected( $sfpp_options['language'], 'zz_TR' ); ?>>Zazaki</option>
+    </select>
 
 	<?php
 
