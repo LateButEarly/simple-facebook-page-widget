@@ -1,10 +1,10 @@
 <?php
 /**
- * Class SFPP_Widget
+ * Class Simple_Facebook_Page_Feed_Widget
  *
  * @since 1.0.0
  */
-class SFPP_Widget extends WP_Widget {
+class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 
 	/**
 	 * Register widget with WordPress.
