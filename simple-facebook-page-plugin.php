@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name:    Simple Facebook Page Widget & Shortcode
-Plugin URI:     https://wordpress.org/plugins/simple-facebook-page-widget/
+Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
 Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
-Version:        1.4.1
+Version:        1.5.0
 Author:         Dylan Ryan
 Author URI:     https://profiles.wordpress.org/irkanu
 Domain Path:    /languages
@@ -95,33 +95,6 @@ function sfpp_enqueue_scripts() {
 
 
 /**
- * Enqueue Chosen scripts and styles for easier language selection.
- * https://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts
- *
- * http://harvesthq.github.io/chosen/
- *
- * @since 1.4.0
- */
-add_action( 'admin_enqueue_scripts', 'sfpp_admin_enqueue_scripts_chosen' );
-function sfpp_admin_enqueue_scripts_chosen() {
-
-    /*
-    //* Check to see if we're on the settings page.
-    if ( 'options-general.php?page=sfpp-settings' != $hook ) {
-        return;
-    }
-    */
-
-    //* Enqueue scripts if we are.
-    wp_enqueue_script( 'chosen-js', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.jquery.js', array( 'jquery' ) );
-    wp_enqueue_script( 'chosen-custom', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.js', array( 'jquery' ) );
-
-    wp_enqueue_style( 'chosen-css', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.css' );
-
-}
-
-
-/**
  * Create the [facebook-page] shortcode.
  *
  * @since 1.0.0
@@ -129,9 +102,9 @@ function sfpp_admin_enqueue_scripts_chosen() {
  * @modified 1.2.0 Wrapped shortcode in comment for debug/tracking.
  * @modified 1.3.0 Added alignment parameter.
  *
- * @param $atts array href, width, height, hide_cover, show_facepile, show_posts, align
+ * @param   $atts   array   href, width, height, hide_cover, show_facepile, show_posts, align
  *
- * @return string Outputs the Facebook Page feed via shortcode.
+ * @return  string  Outputs the Facebook Page feed via shortcode.
  */
 add_shortcode( 'facebook-page', 'sfpp_shortcode' );
 function sfpp_shortcode( $atts ) {
@@ -187,23 +160,84 @@ add_action( 'widgets_init',
 
 
 /**
- * Registers the admin settings menu
+ * Registers the admin settings menu.
  * https://developer.wordpress.org/plugins/settings/custom-settings-page/#creating-the-menu-item
+ *
+ * Only loads libraries required on the settings page.
+ * http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
  *
  * @since 1.4.0
  */
 add_action( 'admin_menu', 'sfpp_admin_settings_menu' );
 function sfpp_admin_settings_menu() {
 
-	add_options_page(
+	$page = add_options_page(
 		'Simple Facebook Page Options',
-		'Simple Facebook Page Options',
+		'Simple Facebook Page',
 		'manage_options',
 		'sfpp-settings',        //slug
 		'sfpp_options_page'     //callback function to display the page
 	);
 
+
+    /**
+     * Only loads libraries required on the settings page.
+     * http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
+     *
+     * @since 1.5.0
+     */
+    add_action( 'admin_print_scripts-' . $page, 'sfpp_admin_enqueue_scripts_chosen' );
+
 }
+
+
+/**
+ * Enqueue Chosen scripts and styles for easier language selection.
+ * https://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts
+ *
+ * http://harvesthq.github.io/chosen/
+ *
+ * @since 1.4.0
+ */
+function sfpp_admin_enqueue_scripts_chosen() {
+
+    wp_enqueue_script( 'chosen-js', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.jquery.js', array( 'jquery' ) );
+    wp_enqueue_script( 'chosen-custom', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.js', array( 'jquery' ) );
+
+    wp_enqueue_style( 'chosen-css', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.css' );
+
+}
+
+
+/**
+ * Creates a quick link to the settings page.
+ *
+ * @since 1.5.0
+ *
+ * @param   $actions
+ * @param   $plugin_file
+ * @return  string      Outputs a settings link to the settings page.
+ */
+add_filter( 'plugin_action_links', 'sfpp_quick_settings_link', 10, 5 );
+function sfpp_quick_settings_link( $actions, $plugin_file ) {
+
+    static $plugin;
+
+    if ( ! isset( $plugin ) )
+        $plugin = plugin_basename( __FILE__ );
+
+    if ( $plugin == $plugin_file ) {
+
+        $settings = array( 'settings' => '<a href="options-general.php?page=sfpp-settings">' . esc_attr__( 'Settings', SIMPLE_FACEBOOK_PAGE_I18N ) . '</a>');
+
+        $actions = array_merge( $settings, $actions );
+
+    }
+
+    return $actions;
+
+}
+
 
 /**
  * Registers the settings, sections, and fields.
