@@ -1,14 +1,14 @@
 === Simple Facebook Page Widget & Shortcode ===
 Contributors: irkanu
 Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
-Tags: facebook, widget, plugin, page, feed, shortcode, facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social media
+Tags: facebook, social, widget, plugin, page, feed, shortcode, facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social media, social widget, social shortcode, free, wordpress
 Requires at least: 3.0.0
 Tested up to: 4.2.2
 Stable tag: 1.4.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
-Easily display Facebook's new Page feed using a widget or shortcode.
+Easily display Facebook's new Page feed using a customizable widget or shortcode - now supports 130+ languages!
 
 == Description ==
 = Overview =
@@ -16,10 +16,6 @@ This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. Many 
 
 > <strong>Food For Thought:</strong><br>
 > Imagine the WordPress plugin repository was like iTunes & each plugin only cost $1.29. If you feel like this plugin or I have helped you, then why not [drop $1.29](https://donorbox.org/dylan-ryan-simple-facebook-page-widget) for my efforts. All proceeds go to continued support and development of this plugin and future plugins.
-
-= Support =
-
-Support is offered on the [WordPress Support Forum](https://wordpress.org/support/plugin/simple-facebook-twitter-widget) for free, but please provide as much detail as possible as well as a link to where the issue is occurring. If you are comfortable with GitHub, then feel free to submit an [issue](https://github.com/irkanu/simple-facebook-page-widget/issues). I'll do my best to answer all support threads and issues.
 
 = Widget Instructions =
 1. Add a customizable Facebook widget through Appearance -> Widgets.
@@ -38,6 +34,10 @@ Custom Shortcode Example:
 `[facebook-page href="facebook" width="300" height="800" align="left" hide_cover="false" show_facepile="false" show_posts="true"]`
 
 **Note:** If your *Facebook Page URL* is https://facebook.com/facebook then please enter `facebook` as the href argument.
+
+= Support =
+
+Support is offered on the [WordPress Support Forum](https://wordpress.org/support/plugin/simple-facebook-twitter-widget) for free, but please provide as much detail as possible as well as a link to where the issue is occurring. If you are comfortable with GitHub, then feel free to submit an [issue](https://github.com/irkanu/simple-facebook-page-widget/issues). I'll do my best to answer all support threads and issues.
 
 == Installation ==
 
@@ -75,7 +75,7 @@ Currently, yes. Please see this [support thread](https://wordpress.org/support/t
 
 = Do I have to create my own custom Facebook App? =
 
-Currently, no. In the future, perhaps.
+Nope, but you can if you'd like.
 
 == Screenshots ==
 
