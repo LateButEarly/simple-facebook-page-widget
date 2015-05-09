@@ -39,10 +39,13 @@ if ( ! defined( 'WPINC' ) ) {
  * Plugin Constants *
  ********************/
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.4.1' );
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.5.0' );
 }
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME' ) ) {
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME', 'Simple Facebook Page Widget & Shortcode' );
+}
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_KEY' ) ) {
+    define( 'SIMPLE_FACEBOOK_PAGE_KEY', 'simple-facebook-page-plugin' );
 }
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY', plugin_dir_url( __FILE__ ) );
@@ -53,6 +56,12 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB' ) ) {
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-twitter-widget' );
 }
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE' ) ) {
+    define( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE', 'sfpp-install-date' );
+}
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_NOTICE_KEY' ) ) {
+    define( 'SIMPLE_FACEBOOK_PAGE_NOTICE_KEY', 'sfpp-hide-notice' );
+}
 
 
 /********************
@@ -60,6 +69,19 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
  ********************/
 $sfpp_options = get_option( 'sfpp_settings' );
 
+
+/**
+ * Set the current version into the options table.
+ * http://www.smashingmagazine.com/2011/03/08/ten-things-every-wordpress-plugin-developer-should-know/
+ *
+ * @since 1.5.0
+ */
+register_activation_hook( __FILE__, 'sfpp_insert_install_date' );
+function sfpp_set_current_version() {
+
+    add_option( SIMPLE_FACEBOOK_PAGE_KEY, SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION );
+
+}
 
 /**
  * Load the translation PO files.
@@ -75,7 +97,7 @@ load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, SIMPLE_FACEBOOK_PAGE_W
  *
  * @since 1.0.0
  *
- * @modified 1.4.0 Localized the script for language option
+ * @modified 1.4.0 Localized the script for language option.
  */
 add_action( 'wp_enqueue_scripts', 'sfpp_enqueue_scripts' );
 function sfpp_enqueue_scripts() {
@@ -90,7 +112,6 @@ function sfpp_enqueue_scripts() {
 			'language'  =>  ( $sfpp_options['language'] )
 		)
 	);
-
 }
 
 
@@ -141,7 +162,6 @@ function sfpp_shortcode( $atts ) {
 	$output .= '<!-- End Facebook Page Shortcode -->';
 
 	return $output;
-
 }
 
 
@@ -171,14 +191,13 @@ add_action( 'widgets_init',
 add_action( 'admin_menu', 'sfpp_admin_settings_menu' );
 function sfpp_admin_settings_menu() {
 
-	$page = add_options_page(
-		'Simple Facebook Page Options',
-		'Simple Facebook Page',
-		'manage_options',
-		'sfpp-settings',        //slug
-		'sfpp_options_page'     //callback function to display the page
-	);
+    $page_title = 'Simple Facebook Page Options';
+    $menu_title = 'Simple Facebook Page';
+    $capability = 'manage_options';
+    $menu_slug  = 'sfpp-settings';
+    $function   = 'sfpp_options_page';
 
+	$admin_settings_page = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
 
     /**
      * Only loads libraries required on the settings page.
@@ -186,8 +205,7 @@ function sfpp_admin_settings_menu() {
      *
      * @since 1.5.0
      */
-    add_action( 'admin_print_scripts-' . $page, 'sfpp_admin_enqueue_scripts_chosen' );
-
+    add_action( 'admin_print_scripts-' . $admin_settings_page, 'sfpp_admin_enqueue_scripts_chosen' );
 }
 
 
@@ -201,11 +219,14 @@ function sfpp_admin_settings_menu() {
  */
 function sfpp_admin_enqueue_scripts_chosen() {
 
+    //* Chosen main script
     wp_enqueue_script( 'chosen-js', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.jquery.js', array( 'jquery' ) );
+
+    //* Chosen custom script
     wp_enqueue_script( 'chosen-custom', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.js', array( 'jquery' ) );
 
+    //* Chosen stylesheet
     wp_enqueue_style( 'chosen-css', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.css' );
-
 }
 
 
@@ -219,23 +240,21 @@ function sfpp_admin_enqueue_scripts_chosen() {
  * @return  string      Outputs a settings link to the settings page.
  */
 add_filter( 'plugin_action_links', 'sfpp_quick_settings_link', 10, 5 );
-function sfpp_quick_settings_link( $actions, $plugin_file ) {
+function sfpp_quick_settings_link( $links, $plugin_file ) {
 
-    static $plugin;
+    static $this_plugin;
 
-    if ( ! isset( $plugin ) )
-        $plugin = plugin_basename( __FILE__ );
+    if ( ! isset( $this_plugin ) )
+        $this_plugin = plugin_basename( __FILE__ );
 
-    if ( $plugin == $plugin_file ) {
+    if ( $this_plugin == $plugin_file ) {
 
-        $settings = array( 'settings' => '<a href="options-general.php?page=sfpp-settings">' . esc_attr__( 'Settings', SIMPLE_FACEBOOK_PAGE_I18N ) . '</a>');
+        $settings = array( 'settings' => '<a href="' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=sfpp-settings">' . esc_attr__( 'Settings', SIMPLE_FACEBOOK_PAGE_I18N ) . '</a>');
 
-        $actions = array_merge( $settings, $actions );
-
+        $links = array_merge( $settings, $links );
     }
 
-    return $actions;
-
+    return $links;
 }
 
 
@@ -267,7 +286,6 @@ function sfpp_register_settings() {
 		'sfpp-settings',
 		'sfpp_language_section'
 	);
-
 }
 
 /**
@@ -429,7 +447,6 @@ function sfpp_language_select_callback() {
     </select>
 
 	<?php
-
 }
 
 
@@ -438,8 +455,14 @@ function sfpp_language_select_callback() {
  * https://developer.wordpress.org/plugins/settings/custom-settings-page/#creating-the-page
  *
  * @since 1.4.0
+ *
+ * @modified 1.5.0 Check if current user can manage_options.
  */
 function sfpp_options_page() {
+
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_die( 'You do not have sufficient permissions to access this page.' );
+    }
 
 	ob_start();
 
@@ -468,5 +491,141 @@ function sfpp_options_page() {
 <?php
 
 	echo ob_get_clean();
+}
 
+
+/**
+ * @todo Write PHPDoc
+ *
+ * @since 1.5.0
+ */
+register_activation_hook( __FILE__, 'sfpp_insert_install_date' );
+function sfpp_insert_install_date() {
+
+    $datetime_now = new DateTime();
+    $date_string  = $datetime_now->format( 'Y-m-d' );
+
+    add_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, $date_string, '', 'no' );
+
+    return $date_string;
+}
+
+
+/**
+ * @todo Write PHPDoc
+ *
+ * @since 1.5.0
+ */
+function sfpp_get_install_date() {
+
+    $date_string = get_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, '' );
+
+    if ( $date_string == '' ) {
+        // There is no install date, plugin was installed before version 1.2.0. Add it now.
+        $date_string = sfpp_insert_install_date();
+    }
+
+    return new DateTime( $date_string );
+}
+
+
+/**
+ * @todo Write PHPDoc
+ *
+ * @since 1.5.0
+ */
+add_action( 'plugins_loaded', 'sfpp_admin_notices' );
+function sfpp_admin_notices() {
+
+    // Check if user is an administrator
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return false;
+    }
+
+    // Admin notice hide catch
+    add_action( 'admin_init', 'sfpp_catch_hide_notice' );
+
+    // Is admin notice hidden?
+    $current_user = wp_get_current_user();
+    $hide_notice  = get_user_meta( $current_user->ID, SIMPLE_FACEBOOK_PAGE_NOTICE_KEY, true );
+
+    if ( current_user_can( 'install_plugins' ) && $hide_notice == '' ) {
+        // Get installation date
+        $datetime_install = sfpp_get_install_date();
+        $datetime_past    = new DateTime( '-10 days' );
+
+        if ( $datetime_past >= $datetime_install ) {
+            // 10 or more days ago, show admin notice
+            add_action( 'admin_notices', 'sfpp_display_admin_notice' );
+        }
+    }
+}
+
+
+/**
+ * @todo Write PHPDoc
+ *
+ * @since 1.5.0
+ */
+function sfpp_catch_hide_notice() {
+
+    if ( isset( $_GET[SIMPLE_FACEBOOK_PAGE_NOTICE_KEY] ) && current_user_can( 'install_plugins' ) ) {
+
+        // Add user meta
+        global $current_user;
+
+        add_user_meta( $current_user->ID, SIMPLE_FACEBOOK_PAGE_NOTICE_KEY, '1', true );
+
+        // Build redirect URL
+        $query_params = sfpp_get_admin_querystring_array();
+
+        unset( $query_params[SIMPLE_FACEBOOK_PAGE_NOTICE_KEY] );
+
+        $query_string = http_build_query( $query_params );
+
+        if ( $query_string != '' ) {
+            $query_string = '?' . $query_string;
+        }
+
+        $redirect_url = 'http';
+        if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) {
+            $redirect_url .= 's';
+        }
+
+        $redirect_url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . $query_string;
+
+        // Redirect
+        wp_redirect( $redirect_url );
+        exit;
+    }
+}
+
+
+/**
+ * @todo Write PHPDoc
+ *
+ * @since 1.5.0
+ *
+ * @return mixed
+ */
+function sfpp_get_admin_querystring_array() {
+    parse_str( $_SERVER['QUERY_STRING'], $params );
+
+    return $params;
+}
+
+
+/**
+ * @todo Write PHPDoc
+ *
+ * @since 1.5.0
+ */
+function sfpp_display_admin_notice() {
+
+    $query_params = sfpp_get_admin_querystring_array();
+    $query_string = '?' . http_build_query( array_merge( $query_params, array( SIMPLE_FACEBOOK_PAGE_NOTICE_KEY => '1' ) ) );
+
+    echo '<div class="updated"><p>';
+    printf( __( "You've been using <b>Simple Facebook Page Plugin & Shortcode</b> for some time now, could you please give it a review at wordpress.org? <br /><br /> <a href='%s' target='_blank'>Yes, take me there!</a> - <a href='%s'>I've already done this!</a>" ), 'https://wordpress.org/support/view/plugin-reviews/simple-facebook-twitter-widget', $query_string );
+    echo "</p></div>";
 }
