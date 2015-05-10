@@ -42,9 +42,9 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Define plugin constants.
  *
- * @modified 1.5.0 Organized definitions.
- *
  * @since 1.0.0
+ *
+ * @modified 1.5.0 Organized definitions.
  */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME' ) ) {
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME', 'Simple Facebook Page Widget & Shortcode' );
@@ -57,9 +57,9 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
 /**
  * Define plugin directory constants.
  *
- * @modified 1.5.0 Organized definitions.
- *
  * @since 1.0.0
+ *
+ * @modified 1.5.0 Organized definitions.
  */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY', plugin_dir_url( __FILE__ ) );
@@ -72,9 +72,9 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB' ) ) {
 /**
  * Define plugin language constants.
  *
- * @modified 1.5.0 Organized definitions.
- *
  * @since 1.1.0
+ *
+ * @modified 1.5.0 Organized definitions.
  */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-twitter-widget' );
@@ -691,11 +691,11 @@ function sfpp_display_admin_notice() {
 /**
  * Class Simple_Facebook_Page_Feed_Widget
  *
+ * @since 1.0.0
+ *
  * @modified 1.2.0 Wrapped shortcode in comment for debug/tracking.
  * @modified 1.3.0 Added alignment parameter.
  * @modified 1.5.0 Added version to debug comment.
- *
- * @since 1.0.0
  */
 class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 
