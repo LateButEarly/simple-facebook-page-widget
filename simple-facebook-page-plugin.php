@@ -27,46 +27,83 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-/**********************
- * Deny Direct Access *
- **********************/
+/**
+ * Deny direct access.
+ *
+ * Do not allow anyone to access the plugin's directory - no need for an empty index.php.
+ *
+ * @since 1.0.0
+ */
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 
-/********************
- * Plugin Constants *
- ********************/
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.5.0' );
-}
+/**
+ * Define plugin constants.
+ *
+ * @modified 1.5.0 Organized definitions.
+ *
+ * @since 1.0.0
+ */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME' ) ) {
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME', 'Simple Facebook Page Widget & Shortcode' );
 }
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_KEY' ) ) {
-    define( 'SIMPLE_FACEBOOK_PAGE_KEY', 'simple-facebook-page-plugin' );
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.5.0' );
 }
+
+
+/**
+ * Define plugin directory constants.
+ *
+ * @modified 1.5.0 Organized definitions.
+ *
+ * @since 1.0.0
+ */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY', plugin_dir_url( __FILE__ ) );
 }
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB', SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'lib/' );
 }
+
+
+/**
+ * Define plugin language constants.
+ *
+ * @modified 1.5.0 Organized definitions.
+ *
+ * @since 1.1.0
+ */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-twitter-widget' );
 }
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE' ) ) {
-    define( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE', 'sfpp-install-date' );
+
+
+/**
+ * Define plugin key constants.
+ *
+ * Keys are used in add_option & add_site_option.
+ *
+ * @since 1.5.0
+ */
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_KEY' ) ) {
+	define( 'SIMPLE_FACEBOOK_PAGE_KEY', 'simple-facebook-page-plugin' );
 }
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_NOTICE_KEY' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_NOTICE_KEY', 'sfpp-hide-notice' );
 }
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE' ) ) {
+	define( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE', 'sfpp-install-date' );
+}
 
 
-/********************
- * Global Variables *
- ********************/
+/**
+ * Define global variables.
+ *
+ * @since 1.4.0
+ */
 $sfpp_options = get_option( 'sfpp_settings' );
 
 
@@ -712,10 +749,10 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
         $output .= 'data-show-posts="' . esc_attr( $instance['show_posts'] ) . '">';
         $output .= '</div>';
 
-        //end wrapper
+        // end wrapper
         $output .= '</div>';
 
-        //end comment
+        // end comment
 	    $output .= '<!-- End Simple Facebook Page Plugin (Widget) -->';
 
         echo $output;
@@ -922,7 +959,6 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
         );
 
         return $defaults;
-
     }
 
 }
