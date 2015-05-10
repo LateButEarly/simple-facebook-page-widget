@@ -77,7 +77,7 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB' ) ) {
  * @modified 1.5.0 Organized definitions.
  */
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
-    define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-twitter-widget' );
+    define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-page-plugin-language' );
 }
 
 
