@@ -249,11 +249,50 @@ function sfpp_admin_settings_menu() {
     $page_title = 'Simple Facebook Page Plugin Settings';
     $menu_title = 'Simple Facebook Page Plugin Options';
     $capability = 'manage_options';
-    $menu_slug  = 'sfpp-settings';
+    $menu_slug  = 'sfpp_dashboard';
     $function   = 'sfpp_options_page';
 
 	$admin_settings_page = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
 
+	/*
+
+	$icon       = 'dashicons-facebook';
+	$position   = '95.1337';
+
+	// Sub menu pages
+	$submenu_pages = array(
+		array(
+			$menu_slug,
+			'',
+			__( 'Page Plugin', SIMPLE_FACEBOOK_PAGE_I18N ),
+			$capability,
+			'sfpp_page_plugin',
+			$function,
+		)
+	);
+*/
+
+
+	/**
+	 * Thanks Yoast SEO. <3
+	 */
+	// Loop through submenu pages and add them
+	/*
+	if ( count( $submenu_pages ) ) {
+		foreach ( $submenu_pages as $submenu_page ) {
+
+			// Add submenu page
+			$admin_page = add_submenu_page( $submenu_page[0], $submenu_page[2] . ' - ' . __( 'by Simple Facebook', SIMPLE_FACEBOOK_PAGE_I18N ), $submenu_page[2], $submenu_page[3], $submenu_page[4], $submenu_page[5] );
+
+			// Check if we need to hook
+			if ( isset( $submenu_page[6] ) && ( is_array( $submenu_page[6] ) && $submenu_page[6] !== array() ) ) {
+				foreach ( $submenu_page[6] as $submenu_page_action ) {
+					add_action( 'load-' . $admin_page, $submenu_page_action );
+				}
+			}
+		}
+	}
+	*/
 
     /**
      * Only loads libraries required on the settings page.
@@ -301,7 +340,7 @@ function sfpp_admin_enqueue_scripts_chosen() {
 add_filter( 'plugin_action_links_' . plugin_basename( SIMPLE_FACEBOOK_PAGE_FILE ), 'sfpp_quick_settings_link' );
 function sfpp_quick_settings_link( $actions ) {
 
-	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=sfpp-settings' ), __( 'Settings' ) ) );
+	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=sfpp_dashboard' ), __( 'Settings' ) ) );
 
 	return $actions;
 }
@@ -317,8 +356,8 @@ add_action( 'admin_init', 'sfpp_register_settings' );
 function sfpp_register_settings() {
 
 	$settings = 'sfpp_settings';
-	$settings_page = 'sfpp-settings';
-	$language_section = 'sfpp_language_section';
+	$settings_page = 'sfpp_dashboard';
+	$basic_section = 'sfpp_basic_section';
 
 	register_setting(
 		'sfpp_settings_group',      // settings section (group) - used on the admin page itself to setup fields
@@ -326,18 +365,18 @@ function sfpp_register_settings() {
 	);
 
 	add_settings_section(
-		$language_section,                  // setup language section
-		'Language Settings',                // title of section
-		'sfpp_language_section_callback',   // display after the title & before the settings
-		$settings_page                      // setting page
+		$basic_section,                  // setup language section
+		'Basic Settings',                // title of section
+		'sfpp_basic_section_callback',   // display after the title & before the settings
+		$settings_page                   // setting page
 	);
 
 	add_settings_field(
-		$settings,                          // setting name
+		$settings,                       // setting name
 		__( 'Select a language:', SIMPLE_FACEBOOK_PAGE_I18N ), // text before the display
-		'sfpp_language_select_callback',    // displays the setting
-		$settings_page,                     // setting page
-		$language_section                   // setting section
+		'sfpp_language_select_callback', // displays the setting
+		$settings_page,                  // setting page
+		$basic_section                   // setting section
 	);
 }
 
@@ -346,7 +385,7 @@ function sfpp_register_settings() {
  *
  * @since 1.4.0
  */
-function sfpp_language_section_callback() {
+function sfpp_basic_section_callback() {
 
 }
 
@@ -540,7 +579,7 @@ function sfpp_options_page() {
 
 				<?php settings_fields( 'sfpp_settings_group' );   // settings group name. This should match the group name used in register_setting(). ?>
 
-				<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( 'sfpp-settings' ); ?></div>
+				<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( 'sfpp_dashboard' ); ?></div>
 
 				<div class="sfpp-tab" id="tab_extras"><?php do_settings_sections( 'sfpp-extras' ); ?></div>
 
