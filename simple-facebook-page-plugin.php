@@ -123,6 +123,7 @@ function sfpp_enqueue_scripts() {
  *
  * @modified 1.2.0 Wrapped shortcode in comment for debug/tracking.
  * @modified 1.3.0 Added alignment parameter.
+ * @modified 1.5.0 Added version to debug comment.
  *
  * @param   $atts   array   href, width, height, hide_cover, show_facepile, show_posts, align
  *
@@ -143,7 +144,7 @@ function sfpp_shortcode( $atts ) {
 		'align'         => 'initial',
 	), $atts );
 
-	$output .= '<!-- Begin Facebook Page Shortcode - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
+	$output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
 
 	//* Wrapper for alignment
 	$output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $facebook_page_atts['align'] ) . ';">';
@@ -160,7 +161,7 @@ function sfpp_shortcode( $atts ) {
 
 	$output .= '</div>';
 
-	$output .= '<!-- End Facebook Page Shortcode -->';
+	$output .= '<!-- End Simple Facebook Page Plugin (Shortcode) -->';
 
 	return $output;
 }
@@ -268,24 +269,28 @@ function sfpp_quick_settings_link( $links, $plugin_file ) {
 add_action( 'admin_init', 'sfpp_register_settings' );
 function sfpp_register_settings() {
 
+	$settings = 'sfpp_settings';
+	$settings_page = 'sfpp-settings';
+	$language_section = 'sfpp_language_section';
+
 	register_setting(
 		'sfpp_settings_group',      // settings section (group) - used on the admin page itself to setup fields
-		'sfpp_settings'             // setting name - get_option() to retrieve from database - retrieve it and store it in global variable
+		$settings                   // setting name - get_option() to retrieve from database - retrieve it and store it in global variable
 	);
 
 	add_settings_section(
-		'sfpp_language_section',
-		'Language Settings',
-		'sfpp_language_section_callback',
-		'sfpp-settings'
+		$language_section,                  // setup language section
+		'Language Settings',                // title of section
+		'sfpp_language_section_callback',   // display after the title & before the settings
+		$settings_page                      // setting page
 	);
 
 	add_settings_field(
-		'sfpp_settings',
-		'Select a language:',
-		'sfpp_language_select_callback',
-		'sfpp-settings',
-		'sfpp_language_section'
+		$settings,                          // setting name
+		'Select a language:',               // text before the display
+		'sfpp_language_select_callback',    // displays the setting
+		$settings_page,                     // setting page
+		$language_section                   // setting section
 	);
 }
 
@@ -305,7 +310,7 @@ function sfpp_language_section_callback() {
  */
 function sfpp_language_select_callback() {
 
-	global $sfpp_options;
+	global $sfpp_options;   // get_option( 'sfpp_settings' );
 
 	?>
 
@@ -477,9 +482,9 @@ function sfpp_options_page() {
 
 			<?php
 
-			settings_fields( 'sfpp_settings_group' );
+			settings_fields( 'sfpp_settings_group' );   // settings group name. This should match the group name used in register_setting().
 
-			do_settings_sections( 'sfpp-settings' );
+			do_settings_sections( 'sfpp-settings' );    // iterate over all settings sections
 
 			submit_button();
 
@@ -496,75 +501,87 @@ function sfpp_options_page() {
 
 
 /**
- * @todo Write PHPDoc
+ * Insert plugin activation date into the site options.
  *
  * @since 1.5.0
  */
 register_activation_hook( __FILE__, 'sfpp_insert_install_date' );
 function sfpp_insert_install_date() {
 
-    $datetime_now = new DateTime();
-    $date_string  = $datetime_now->format( 'Y-m-d' );
+    $datetime_now = new DateTime();     // get the current date
+    $date_string  = $datetime_now->format( 'Y-m-d' );   // make it pretty
 
-    add_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, $date_string, '', 'no' );
+    add_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, $date_string, '', 'no' );   // add the install date into the site options
 
-    return $date_string;
+    return $date_string;    // insert install date on plugin activation
 }
 
 
 /**
- * @todo Write PHPDoc
+ * Retrieve plugin activation date from site options.
  *
  * @since 1.5.0
  */
 function sfpp_get_install_date() {
 
-    $date_string = get_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, '' );
+    $date_string = get_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, '' );    // retrieve activation date
 
     if ( $date_string == '' ) {
-        // There is no install date, plugin was installed before version 1.2.0. Add it now.
-        $date_string = sfpp_insert_install_date();
+
+        $date_string = sfpp_insert_install_date();  // there is no install date, plugin was installed before version 1.2.0. add it now.
+
     }
 
-    return new DateTime( $date_string );
+    return new DateTime( $date_string );    // return plugin activation date
 }
 
 
 /**
- * @todo Write PHPDoc
+ * Check current user for admin & notice hide catch.
+ *
+ * @see sfpp_display_admin_notice()
  *
  * @since 1.5.0
  */
 add_action( 'plugins_loaded', 'sfpp_admin_notices' );
 function sfpp_admin_notices() {
 
-    // Check if user is an administrator
+	/**
+	 * Check if current user is an admin & abort if they are not.
+	 */
     if ( ! current_user_can( 'manage_options' ) ) {
         return false;
     }
 
-    // Admin notice hide catch
-    add_action( 'admin_init', 'sfpp_catch_hide_notice' );
+    add_action( 'admin_init', 'sfpp_catch_hide_notice' );  // admin notice hide catch
 
-    // Is admin notice hidden?
+	/**
+	 * Check if admin notice has already been hidden.
+	 */
     $current_user = wp_get_current_user();
     $hide_notice  = get_user_meta( $current_user->ID, SIMPLE_FACEBOOK_PAGE_NOTICE_KEY, true );
 
     if ( current_user_can( 'install_plugins' ) && $hide_notice == '' ) {
-        // Get installation date
-        $datetime_install = sfpp_get_install_date();
-        $datetime_past    = new DateTime( '-10 days' );
+
+        $datetime_install = sfpp_get_install_date();    // get installation date
+        $datetime_past    = new DateTime( '-10 days' ); // set 10 day difference
 
         if ( $datetime_past >= $datetime_install ) {
-            // 10 or more days ago, show admin notice
+
+	        /**
+	         * Display admin notice 10 days after activation.
+	         */
             add_action( 'admin_notices', 'sfpp_display_admin_notice' );
-        }
-    }
+
+        } // end install date check
+
+    } // end admin check & hidden notice check
+
 }
 
 
 /**
- * @todo Write PHPDoc
+ * Find out if the admin notice has been hidden.
  *
  * @since 1.5.0
  */
@@ -572,12 +589,12 @@ function sfpp_catch_hide_notice() {
 
     if ( isset( $_GET[SIMPLE_FACEBOOK_PAGE_NOTICE_KEY] ) && current_user_can( 'install_plugins' ) ) {
 
-        // Add user meta
+        //* Add user meta
         global $current_user;
 
         add_user_meta( $current_user->ID, SIMPLE_FACEBOOK_PAGE_NOTICE_KEY, '1', true );
 
-        // Build redirect URL
+        //* Build redirect URL
         $query_params = sfpp_get_admin_querystring_array();
 
         unset( $query_params[SIMPLE_FACEBOOK_PAGE_NOTICE_KEY] );
@@ -595,7 +612,7 @@ function sfpp_catch_hide_notice() {
 
         $redirect_url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . $query_string;
 
-        // Redirect
+        //* Redirect
         wp_redirect( $redirect_url );
         exit;
     }
@@ -603,7 +620,7 @@ function sfpp_catch_hide_notice() {
 
 
 /**
- * @todo Write PHPDoc
+ * Admin query string helper function.
  *
  * @since 1.5.0
  *
@@ -617,7 +634,9 @@ function sfpp_get_admin_querystring_array() {
 
 
 /**
- * @todo Write PHPDoc
+ * Displays admin notice.
+ *
+ * This admin notice is only displayed once 10 days after plugin activation.
  *
  * @since 1.5.0
  */
@@ -634,6 +653,10 @@ function sfpp_display_admin_notice() {
 
 /**
  * Class Simple_Facebook_Page_Feed_Widget
+ *
+ * @modified 1.2.0 Wrapped shortcode in comment for debug/tracking.
+ * @modified 1.3.0 Added alignment parameter.
+ * @modified 1.5.0 Added version to debug comment.
  *
  * @since 1.0.0
  */
@@ -674,7 +697,7 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
         $output = '';
 
         //* Comment for tracking/debugging
-        $output .= '<!-- Begin Facebook Page Widget - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
+	    $output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
 
         //* Wrapper for alignment
         $output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $instance['align'] ) . ';">';
@@ -693,7 +716,7 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
         $output .= '</div>';
 
         //end comment
-        $output .= '<!-- End Facebook Page Widget -->';
+	    $output .= '<!-- End Simple Facebook Page Plugin (Widget) -->';
 
         echo $output;
 
