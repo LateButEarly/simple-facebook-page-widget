@@ -111,7 +111,6 @@ function sfpp_activation() {
 
 	//* Last constants
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME',  'Simple Facebook Page Widget & Shortcode' );
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_SLUG',   sanitize_key( SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME ) );
 
 	add_option( SIMPLE_FACEBOOK_PAGE_KEY, SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION );
 }
