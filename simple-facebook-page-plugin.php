@@ -44,14 +44,13 @@ if ( ! defined( 'WPINC' ) ) {
 
 
 /**
- * Define plugin constants.
+ * Define plugin version constants.
  *
  * @since 1.0.0
  *
  * @modified 1.5.0 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME',  'Simple Facebook Page Widget & Shortcode' );
-define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION',      '1.5.0' );
+define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.5.0' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LAST_VERSION' ) ) {
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LAST_VERSION', '1.4.1' );
 }
@@ -64,8 +63,8 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LAST_VERSION' ) ) {
  *
  * @modified 1.5.0 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_PLUGIN_FILE',         __FILE__ );
-define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY',    plugin_dir_url( SIMPLE_FACEBOOK_PAGE_PLUGIN_FILE ) );
+define( 'SIMPLE_FACEBOOK_PAGE_FILE',         __FILE__ );
+define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY',    plugin_dir_url( SIMPLE_FACEBOOK_PAGE_FILE ) );
 define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB',          SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'lib/' );
 
 
@@ -100,15 +99,21 @@ $sfpp_options = get_option( 'sfpp_settings' );
 
 
 /**
- * Set the current version into the options table.
+ * Tell WordPress what to do when this plugin is activated.
+ *
+ * Sets the current version into the options table.
  * http://www.smashingmagazine.com/2011/03/08/ten-things-every-wordpress-plugin-developer-should-know/
  *
  * @since 1.5.0
  */
-register_activation_hook( __FILE__, 'sfpp_insert_install_date' );
-function sfpp_set_current_version() {
+register_activation_hook( __FILE__, 'sfpp_activation' );
+function sfpp_activation() {
 
-    add_option( SIMPLE_FACEBOOK_PAGE_KEY, SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION );
+	//* Last constants
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME',  'Simple Facebook Page Widget & Shortcode' );
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_SLUG',   sanitize_key( SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME ) );
+
+	add_option( SIMPLE_FACEBOOK_PAGE_KEY, SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION );
 }
 
 
@@ -134,7 +139,7 @@ function sfpp_textdomain() {
  *
  * @since 1.5.0
  */
-register_uninstall_hook( SIMPLE_FACEBOOK_PAGE_PLUGIN_FILE, 'sfpp_uninstall' );
+register_uninstall_hook( SIMPLE_FACEBOOK_PAGE_FILE, 'sfpp_uninstall' );
 function sfpp_uninstall() {
 
 	delete_option( SIMPLE_FACEBOOK_PAGE_KEY ); // remove footprint
