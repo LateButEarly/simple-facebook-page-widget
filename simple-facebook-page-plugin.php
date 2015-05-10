@@ -1,30 +1,34 @@
 <?php
-/*
-Plugin Name:    Simple Facebook Page Widget & Shortcode
-Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
-Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
-Version:        1.5.0
-Author:         Dylan Ryan
-Author URI:     https://profiles.wordpress.org/irkanu
-Domain Path:    /languages
-Text Domain:    simple-facebook-twitter-widget
-GitHub URI:     https://github.com/irkanu/simple-facebook-page-widget
-GitHub Branch:  master
-License:        GPL v3
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+/**
+ * Plugin Name:    Simple Facebook Page Widget & Shortcode
+ * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
+ * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
+ * Version:        1.5.0
+ * Author:         Dylan Ryan
+ * Author URI:     https://profiles.wordpress.org/irkanu
+ * Domain Path:    /lang
+ * Text Domain:    simple-facebook-page-plugin
+ * GitHub URI:     https://github.com/irkanu/simple-facebook-page-widget
+ * GitHub Branch:  master
+ * License:        GPL v3
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package SFPP
+ * @author  Dylan Ryan
+ * @version 1.5.0
+ */
 
 
 /**
@@ -127,7 +131,12 @@ function sfpp_set_current_version() {
  *
  * @since 1.1.0
  */
-load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
+add_action( 'init', 'sfpp_textdomain' );
+function sfpp_textdomain() {
+
+	load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
+
+}
 
 
 /**
@@ -288,7 +297,7 @@ function sfpp_quick_settings_link( $links, $plugin_file ) {
 
     if ( $this_plugin == $plugin_file ) {
 
-        $settings = array( 'settings' => '<a href="' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=sfpp-settings">' . esc_attr__( 'Settings', SIMPLE_FACEBOOK_PAGE_I18N ) . '</a>');
+        $settings = array( 'settings' => '<a href="' . get_bloginfo( 'wpurl' ) . '/wp-admin/options-general.php?page=sfpp-settings">' . esc_attr__( 'Settings', SIMPLE_FACEBOOK_PAGE_I18N ) . '</a>');
 
         $links = array_merge( $settings, $links );
     }
