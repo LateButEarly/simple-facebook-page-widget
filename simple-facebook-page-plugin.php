@@ -50,9 +50,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.5.0 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.5.0' );
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LAST_VERSION', '1.4.1' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.5.0' );
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.1' );
 }
 
 
@@ -63,9 +63,9 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LAST_VERSION' ) ) {
  *
  * @modified 1.5.0 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_FILE',         __FILE__ );
-define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY',    plugin_dir_url( SIMPLE_FACEBOOK_PAGE_FILE ) );
-define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB',          SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'lib/' );
+define( 'SIMPLE_FACEBOOK_PAGE_FILE',    __FILE__ );
+define( 'SIMPLE_FACEBOOK_PAGE_DIR',     plugin_dir_url( SIMPLE_FACEBOOK_PAGE_FILE ) );
+define( 'SIMPLE_FACEBOOK_PAGE_LIB',     SIMPLE_FACEBOOK_PAGE_DIR . 'lib/' );
 
 
 /**
@@ -112,7 +112,7 @@ function sfpp_activation() {
 	//* Last constants
 	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME',  'Simple Facebook Page Widget & Shortcode' );
 
-	add_option( SIMPLE_FACEBOOK_PAGE_KEY, SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION );
+	add_option( SIMPLE_FACEBOOK_PAGE_KEY, SIMPLE_FACEBOOK_PAGE_VERSION );
 }
 
 
@@ -159,7 +159,7 @@ function sfpp_enqueue_scripts() {
 	global $sfpp_options;
 
 	//* Prepare the javascript for manipulation.
-	wp_enqueue_script( 'sfpp-fb-root', SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'js/simple-facebook-page-root.js' , array( 'jquery' ) );
+	wp_enqueue_script( 'sfpp-fb-root', SIMPLE_FACEBOOK_PAGE_DIR . 'js/simple-facebook-page-root.js' , array( 'jquery' ) );
 
 	//* Pass the language option from the database to javascript.
 	wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', array(
@@ -197,7 +197,7 @@ function sfpp_shortcode( $atts ) {
 		'align'         => 'initial',
 	), $atts );
 
-	$output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
+	$output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
 
 	//* Wrapper for alignment
 	$output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $facebook_page_atts['align'] ) . ';">';
@@ -276,13 +276,13 @@ function sfpp_admin_settings_menu() {
 function sfpp_admin_enqueue_scripts_chosen() {
 
     //* Chosen script
-    wp_enqueue_script( 'chosen-js', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.jquery.min.js', array( 'jquery' ) );
+    wp_enqueue_script( 'chosen-js',     SIMPLE_FACEBOOK_PAGE_LIB .  'chosen/chosen.jquery.min.js', array( 'jquery' ) );
 
     //* Chosen stylesheet
-    wp_enqueue_style( 'chosen-style', SIMPLE_FACEBOOK_PAGE_WIDGET_LIB . 'chosen/chosen.min.css' );
+    wp_enqueue_style( 'chosen-style',   SIMPLE_FACEBOOK_PAGE_LIB .  'chosen/chosen.min.css' );
 
     //* Custom admin javascript
-    wp_enqueue_script( 'admin-js', SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'js/admin.js', array( 'jquery' ) );
+    wp_enqueue_script( 'admin-js',      SIMPLE_FACEBOOK_PAGE_DIR .  'js/admin.js', array( 'jquery' ) );
 }
 
 
@@ -295,22 +295,12 @@ function sfpp_admin_enqueue_scripts_chosen() {
  * @param   $plugin_file
  * @return  string      Outputs a settings link to the settings page.
  */
-add_filter( 'plugin_action_links', 'sfpp_quick_settings_link', 10, 5 );
-function sfpp_quick_settings_link( $links, $plugin_file ) {
+add_filter( 'plugin_action_links_' . plugin_basename( SIMPLE_FACEBOOK_PAGE_FILE ), 'sfpp_quick_settings_link' );
+function sfpp_quick_settings_link( $actions ) {
 
-    static $this_plugin;
+	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=sfpp-settings' ), __( 'Settings' ) ) );
 
-    if ( ! isset( $this_plugin ) )
-        $this_plugin = plugin_basename( __FILE__ );
-
-    if ( $this_plugin == $plugin_file ) {
-
-        $settings = array( 'settings' => '<a href="' . get_bloginfo( 'wpurl' ) . '/wp-admin/options-general.php?page=sfpp-settings">' . esc_attr__( 'Settings', SIMPLE_FACEBOOK_PAGE_I18N ) . '</a>');
-
-        $links = array_merge( $settings, $links );
-    }
-
-    return $links;
+	return $actions;
 }
 
 
@@ -756,7 +746,7 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
         $output = '';
 
         //* Comment for tracking/debugging
-	    $output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
+	    $output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
 
         //* Wrapper for alignment
         $output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $instance['align'] ) . ';">';
