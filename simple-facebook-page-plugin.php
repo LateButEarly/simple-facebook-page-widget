@@ -7,7 +7,7 @@
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /lang
- * Text Domain:    simple-facebook-page-plugin
+ * Text Domain:    sfpp-lang
  * GitHub URI:     https://github.com/irkanu/simple-facebook-page-widget
  * GitHub Branch:  master
  * License:        GPL v3
@@ -50,11 +50,10 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.5.0 Organized definitions.
  */
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME', 'Simple Facebook Page Widget & Shortcode' );
-}
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION', '1.5.0' );
+define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME',  'Simple Facebook Page Widget & Shortcode' );
+define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION',      '1.5.0' );
+if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LAST_VERSION' ) ) {
+	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LAST_VERSION', '1.4.1' );
 }
 
 
@@ -65,12 +64,9 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION' ) ) {
  *
  * @modified 1.5.0 Organized definitions.
  */
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY' ) ) {
-    define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY', plugin_dir_url( __FILE__ ) );
-}
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB' ) ) {
-    define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB', SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'lib/' );
-}
+define( 'SIMPLE_FACEBOOK_PAGE_PLUGIN_FILE',         __FILE__ );
+define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY',    plugin_dir_url( SIMPLE_FACEBOOK_PAGE_PLUGIN_FILE ) );
+define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB',          SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'lib/' );
 
 
 /**
@@ -80,9 +76,7 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB' ) ) {
  *
  * @modified 1.5.0 Organized definitions.
  */
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
-    define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-page-plugin-language' );
-}
+define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'sfpp-lang' );
 
 
 /**
@@ -92,15 +86,9 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
  *
  * @since 1.5.0
  */
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_KEY' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_KEY', 'simple-facebook-page-plugin' );
-}
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_NOTICE_KEY' ) ) {
-    define( 'SIMPLE_FACEBOOK_PAGE_NOTICE_KEY', 'sfpp-hide-notice' );
-}
-if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE', 'sfpp-install-date' );
-}
+define( 'SIMPLE_FACEBOOK_PAGE_KEY',             'simple-facebook-page-plugin' );
+define( 'SIMPLE_FACEBOOK_PAGE_NOTICE_KEY',      'sfpp-hide-notice' );
+define( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE',    'sfpp-install-date' );
 
 
 /**
@@ -121,7 +109,6 @@ register_activation_hook( __FILE__, 'sfpp_insert_install_date' );
 function sfpp_set_current_version() {
 
     add_option( SIMPLE_FACEBOOK_PAGE_KEY, SIMPLE_FACEBOOK_PAGE_WIDGET_VERSION );
-
 }
 
 
@@ -130,14 +117,30 @@ function sfpp_set_current_version() {
  * http://codex.wordpress.org/I18n_for_WordPress_Developers
  *
  * @since 1.1.0
+ *
+ * @modified 1.5.0 Wrapped in function and hooked into init.
  */
 add_action( 'init', 'sfpp_textdomain' );
 function sfpp_textdomain() {
 
 	load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
-
 }
 
+
+/**
+ * Delete options on uninstall.
+ *
+ * This function makes sure we clean up after ourselves.
+ *
+ * @since 1.5.0
+ */
+register_uninstall_hook( SIMPLE_FACEBOOK_PAGE_PLUGIN_FILE, 'sfpp_uninstall' );
+function sfpp_uninstall() {
+
+	delete_option( SIMPLE_FACEBOOK_PAGE_KEY ); // remove footprint
+
+	delete_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE ); // remove install date
+}
 
 /**
  * Enqueue Facebook script required for the plugin.
@@ -222,6 +225,7 @@ function sfpp_shortcode( $atts ) {
  * https://wordpress.org/support/topic/plugin-activation-error-9
  */
 add_action( 'widgets_init',
+
 	create_function( '', 'return register_widget("Simple_Facebook_Page_Feed_Widget");' )
 );
 
@@ -238,8 +242,8 @@ add_action( 'widgets_init',
 add_action( 'admin_menu', 'sfpp_admin_settings_menu' );
 function sfpp_admin_settings_menu() {
 
-    $page_title = 'Simple Facebook Page Options';
-    $menu_title = 'Simple Facebook Page';
+    $page_title = 'Simple Facebook Page Plugin Settings';
+    $menu_title = 'Simple Facebook Page Plugin Options';
     $capability = 'manage_options';
     $menu_slug  = 'sfpp-settings';
     $function   = 'sfpp_options_page';
@@ -353,10 +357,14 @@ function sfpp_language_section_callback() {
  * Function that fills the field with the desired form inputs. The function should echo its output.
  *
  * @since 1.4.0
+ *
+ * @modified 1.5.0 Set default language to English US.
  */
 function sfpp_language_select_callback() {
 
 	global $sfpp_options;   // get_option( 'sfpp_settings' );
+
+	$sfpp_options['language'] = isset( $sfpp_options['language'] ) && ! empty( $sfpp_options['language'] ) ? $sfpp_options['language'] : 'en_US';
 
 	?>
 
@@ -524,7 +532,7 @@ function sfpp_options_page() {
 
 		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
-		<form method="post" action="options.php">
+		<form name="sfpp-form" method="post" action="options.php" enctype="multipart/form-data">
 
 			<?php
 
@@ -673,6 +681,7 @@ function sfpp_catch_hide_notice() {
  * @return mixed
  */
 function sfpp_get_admin_querystring_array() {
+
     parse_str( $_SERVER['QUERY_STRING'], $params );
 
     return $params;
