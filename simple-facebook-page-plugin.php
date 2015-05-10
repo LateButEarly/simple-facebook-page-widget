@@ -572,7 +572,7 @@ function sfpp_options_page() {
 
 			<h2 class="nav-tab-wrapper hide-if-no-js">
 				<a href="#tab_basic" class="nav-tab"><?php _e( 'Basic', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a>
-				<a href="#tab_extras" class="nav-tab"><?php _e( 'Extras', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a>
+				<!-- <a href="#tab_extras" class="nav-tab"><?php //_e( 'Extras', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a> -->
 			</h2>
 
 			<div id="sfpptabs">
@@ -581,7 +581,7 @@ function sfpp_options_page() {
 
 				<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( 'sfpp_dashboard' ); ?></div>
 
-				<div class="sfpp-tab" id="tab_extras"><?php do_settings_sections( 'sfpp-extras' ); ?></div>
+				<div class="sfpp-tab" id="tab_extras"><?php //do_settings_sections( 'sfpp-extras' ); ?></div>
 
 			</div>
 
