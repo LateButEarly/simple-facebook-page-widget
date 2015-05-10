@@ -1,0 +1,17 @@
+input[type=number].small-text{height:28px}
+#sfpptabs{background-color:#fff;
+	padding: 5px;
+	border-top-width: 0;
+	border-right: 1px solid rgb(204, 204, 204);
+	border-bottom: 1px solid rgb(204, 204, 204);
+	border-left: 1px solid rgb(204, 204, 204);
+}
+.sfpp-tab{padding:0 10px}
+.sfpp-tab-txt h2{font-size:20px}
+.sfpp-tab-txt ul{list-style-type:disc;padding-left:1em}
+#tab_faq th{display:none}
+.sfpp-move-deferred{cursor:move}
+.sfpp-tab-txt ol li{line-height:0.5em}
+.sfpp-tab-txt ol li h2{line-height:0.5em}
+.sfpp-tab-txt ol li h2 a{font-size:0.8em}
+.button-link:after{content:" \f310";font-size:1.1em;padding-left:3px}

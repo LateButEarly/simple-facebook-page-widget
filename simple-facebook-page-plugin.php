@@ -283,6 +283,9 @@ function sfpp_admin_enqueue_scripts_chosen() {
 
     //* Custom admin javascript
     wp_enqueue_script( 'admin-js',      SIMPLE_FACEBOOK_PAGE_DIR .  'js/admin.js', array( 'jquery' ) );
+
+	//* Custom admin stylesheet
+	wp_enqueue_style( 'admin-style',    SIMPLE_FACEBOOK_PAGE_DIR .  'css/admin.css' );
 }
 
 
@@ -331,7 +334,7 @@ function sfpp_register_settings() {
 
 	add_settings_field(
 		$settings,                          // setting name
-		'Select a language:',               // text before the display
+		__( 'Select a language:', SIMPLE_FACEBOOK_PAGE_I18N ), // text before the display
 		'sfpp_language_select_callback',    // displays the setting
 		$settings_page,                     // setting page
 		$language_section                   // setting section
@@ -524,19 +527,26 @@ function sfpp_options_page() {
 
 	<div class="wrap">
 
-		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+		<h2><?php echo esc_html( get_admin_page_title() ); ?> &mdash; <small>v<?php echo SIMPLE_FACEBOOK_PAGE_VERSION; ?></small></h2>
 
 		<form name="sfpp-form" method="post" action="options.php" enctype="multipart/form-data">
 
-			<?php
+			<h2 class="nav-tab-wrapper hide-if-no-js">
+				<a href="#tab_basic" class="nav-tab"><?php _e( 'Basic', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a>
+				<a href="#tab_extras" class="nav-tab"><?php _e( 'Extras', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a>
+			</h2>
 
-			settings_fields( 'sfpp_settings_group' );   // settings group name. This should match the group name used in register_setting().
+			<div id="sfpptabs">
 
-			do_settings_sections( 'sfpp-settings' );    // iterate over all settings sections
+				<?php settings_fields( 'sfpp_settings_group' );   // settings group name. This should match the group name used in register_setting(). ?>
 
-			submit_button();
+				<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( 'sfpp-settings' ); ?></div>
 
-			?>
+				<div class="sfpp-tab" id="tab_extras"><?php do_settings_sections( 'sfpp-extras' ); ?></div>
+
+			</div>
+
+			<?php submit_button(); ?>
 
 		</form>
 
