@@ -230,7 +230,7 @@ function sfpp_shortcode( $atts ) {
  */
 add_action( 'widgets_init',
 
-	create_function( '', 'return register_widget("Simple_Facebook_Page_Feed_Widget");' )
+	create_function( '', 'return register_widget("Simple_Facebook_Page_Plugin_Widget");' )
 );
 
 
@@ -758,14 +758,14 @@ function sfpp_display_admin_notice() {
  * @modified 1.3.0 Added alignment parameter.
  * @modified 1.5.0 Added version to debug comment.
  */
-class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
+class Simple_Facebook_Page_Plugin_Widget extends WP_Widget {
 
     /**
      * Register widget with WordPress.
      */
     function __construct() {
         parent::__construct(
-            'SFPP_Widget',
+            'Simple_Facebook_Page_Plugin_Widget',
             __( 'Simple Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ),
             array( 'description' => __( 'Easily display your Facebook Page feed.', SIMPLE_FACEBOOK_PAGE_I18N ), )
         );
