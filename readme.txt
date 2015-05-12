@@ -86,7 +86,7 @@ Nope, but you can if you'd like.
 = 1.4.2 =
 * Bug fix translations
 * Performance tweaks on settings page
-*
+* Feedback initiative
 
 = 1.4.1 =
 * Bug fix lib folder
