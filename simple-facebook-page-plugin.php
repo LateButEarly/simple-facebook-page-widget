@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:    Simple Facebook Page Widget & Shortcode
+ * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
  * Version:        1.4.2
