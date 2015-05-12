@@ -14,9 +14,6 @@ Easily display Facebook's new Page feed using a customizable widget or shortcode
 = Overview =
 This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. Many sites are currently running Facebook Like Boxes which will become **deprecated on June 23rd, 2015**. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
 
-> <strong>Food For Thought:</strong><br>
-> Imagine the WordPress plugin repository was like iTunes & each plugin only cost $1.29. If you feel like this plugin or I have helped you, then why not [drop $1.29](https://donorbox.org/dylan-ryan-simple-facebook-page-widget) for my efforts. All proceeds go to continued support and development of this plugin and future plugins.
-
 = Widget Instructions =
 1. Add a customizable Facebook widget through Appearance -> Widgets.
 2. Choose *Simple Facebook Page Widget*.
@@ -87,7 +84,8 @@ Nope, but you can if you'd like.
 == Changelog ==
 
 = 1.4.2 =
-* Bug fix i18n
+* Bug fix translations
+* Performance tweaks on settings page
 *
 
 = 1.4.1 =
@@ -124,6 +122,9 @@ Nope, but you can if you'd like.
 * Widget & Shortcode Fully Functional
 
 == Upgrade Notice ==
+
+= 1.4.2 =
+* Fixes Spanish & German translations
 
 = 1.4.1 =
 * Fixes missing chosen library on backend
