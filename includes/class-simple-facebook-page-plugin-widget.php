@@ -1,17 +1,17 @@
 <?php
 /**
- * Class Simple_Facebook_Page_Feed_Widget
+ * Class Simple_Facebook_Page_Plugin_Widget
  *
  * @since 1.0.0
  */
-class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
+class Simple_Facebook_Page_Plugin_Widget extends WP_Widget {
 
 	/**
 	 * Register widget with WordPress.
 	 */
 	function __construct() {
 		parent::__construct(
-			'SFPP_Widget',
+			'Simple_Facebook_Page_Plugin_Widget',
 			__( 'Simple Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ),
 			array( 'description' => __( 'Easily display your Facebook Page feed.', SIMPLE_FACEBOOK_PAGE_I18N ), )
 		);

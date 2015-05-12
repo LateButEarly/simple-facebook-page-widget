@@ -3,11 +3,11 @@
 Plugin Name:    Simple Facebook Page Widget & Shortcode
 Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
 Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
-Version:        1.5.0
+Version:        1.4.2
 Author:         Dylan Ryan
 Author URI:     https://profiles.wordpress.org/irkanu
 Domain Path:    /languages
-Text Domain:    simple-facebook-twitter-widget
+Text Domain:    simple-facebook-widget
 GitHub URI:     https://github.com/irkanu/simple-facebook-page-widget
 GitHub Branch:  master
 License:        GPL v3
@@ -51,7 +51,7 @@ if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB' ) ) {
     define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_LIB', SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'lib/' );
 }
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_I18N' ) ) {
-    define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-twitter-widget' );
+    define( 'SIMPLE_FACEBOOK_PAGE_I18N', 'simple-facebook-widget' );
 }
 
 
@@ -66,8 +66,13 @@ $sfpp_options = get_option( 'sfpp_settings' );
  * http://codex.wordpress.org/I18n_for_WordPress_Developers
  *
  * @since 1.1.0
+ *
+ * @modified 1.4.2 Fixed bug - wrapped in function - hooked init
  */
-load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'languages' );
+add_action( 'init', 'sfpp_load_textdomain' );
+function sfpp_load_textdomain() {
+	load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, SIMPLE_FACEBOOK_PAGE_WIDGET_DIRECTORY . 'languages' );
+}
 
 
 /**
@@ -155,7 +160,7 @@ function sfpp_shortcode( $atts ) {
  */
 require_once( 'includes/class-simple-facebook-page-plugin-widget.php' );
 add_action( 'widgets_init',
-	create_function( '', 'return register_widget("Simple_Facebook_Page_Feed_Widget");' )
+	create_function( '', 'return register_widget("Simple_Facebook_Page_Plugin_Widget");' )
 );
 
 
