@@ -44,7 +44,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 
-class Page_Plugin {
+class Simple_Facebook_Page_Plugin {
 
 	protected $plugin_name = 'Simple Facebook Page Plugin';
 
@@ -72,39 +72,43 @@ class Page_Plugin {
 
 	protected $i18n = 'sfpp-lang';
 
+	public static $instance;
 
-	public static function register() {
+	public static function init() {
 
-		$plugin = new self();
-
-		add_action( 'admin_init', array( $plugin, 'register_settings' ) );
-
-		add_action( 'admin_init', array( $plugin, 'maybe_hide_notice' ) );
-
-		add_action( 'admin_menu', array( $plugin, 'admin_settings_menu') );
-
-		add_action( 'init', array ( $plugin, 'load_textdomain') );
-
-		add_action( 'plugins_loaded', array( $plugin, 'admin_notice' ) );
-
-		add_action( 'wp_enqueue_scripts', array( $plugin, 'localize_scripts' ) );
-
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $plugin, 'quick_settings_link' ) );
-
-		add_shortcode( 'facebook-page', array( $plugin, 'add_shortcode' ) );
-
-		register_activation_hook( __FILE__, array( $plugin, 'set_activation_key' ) );
-
-		register_activation_hook( __FILE__, array( $plugin, 'set_install_date' ) );
-
-		register_uninstall_hook( __FILE__, array( $plugin, 'remove_activation_key' ) );
-
-		register_uninstall_hook( __FILE__, array( $plugin, 'remove_install_date' ) );
+		if ( is_null( self::$instance ) )
+			self::$instance = new Simple_Facebook_Page_Plugin();
+		return self::$instance;
 
 	}
 
 	public function __construct() {
+
 		add_action( 'widgets_init', $this->register_widget() );
+
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
+
+		add_action( 'admin_init', array( $this, 'maybe_hide_notice' ) );
+
+		add_action( 'admin_menu', array( $this, 'admin_settings_menu') );
+
+		add_action( 'init', array ( $this, 'load_textdomain') );
+
+		add_action( 'plugins_loaded', array( $this, 'admin_notice' ) );
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'localize_scripts' ) );
+
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'quick_settings_link' ) );
+
+		add_shortcode( 'facebook-page', array( $this, 'add_shortcode' ) );
+
+		register_activation_hook( __FILE__, array( $this, 'set_activation_key' ) );
+
+		register_activation_hook( __FILE__, array( $this, 'set_install_date' ) );
+
+		register_uninstall_hook( __FILE__, array( $this, 'remove_activation_key' ) );
+
+		register_uninstall_hook( __FILE__, array( $this, 'remove_install_date' ) );
 	}
 
 
@@ -793,4 +797,67 @@ class Page_Plugin {
 	}
 
 }
-Page_Plugin::register();
+
+class Simple_Facebook {
+
+	protected $settings_page = 'sfpp_dashboard';
+
+	public static $instance;
+
+	public static function init() {
+
+		if ( is_null( self::$instance ) )
+			self::$instance = new Simple_Facebook();
+		return self::$instance;
+	}
+
+	public function __construct() {
+
+		new Simple_Facebook_Page_Plugin();
+		Simple_Facebook_Page_Plugin::init();
+
+		new Simple_Facebook_Language();
+		Simple_Facebook_Language::init();
+
+	}
+
+	public function admin_settings_menu() {
+
+		$page_title = 'Simple Facebook Settings';
+		$menu_title = 'Simple Facebook';
+		$capability = 'manage_options';
+		$callback   = array( $this, 'display_options_page' );
+		$page_plugin_callback = array( $this, 'display_page_plugin_options_page' );
+		$comments_callback = array ( $this, 'display_comments_options_page' );
+		$embedded_callback = array ( $this, 'display_embedded_options_page' );
+		$like_share_send_callback = array( $this, 'display_like_share_send_options_page' );
+		$follow_callback = array( $this, 'display_follow_options_page' );
+		$icon       = 'dashicons-facebook';
+		$position   = '95.1337';
+
+		$admin_settings_page = add_menu_page( $page_title, $menu_title, $capability, $this->settings_page, $callback, $icon, $position );
+
+		add_submenu_page( $this->settings_page, $page_title, __( 'General', Simple_Facebook_Language::translate() ), $capability, $this->settings_page, $callback );
+
+	}
+
+}
+
+class Simple_Facebook_Language {
+
+	public static $instance;
+
+	public static function init() {
+
+		if ( is_null( self::$instance ) )
+			self::$instance = new Simple_Facebook();
+		return self::$instance;
+	}
+
+	public static function translate() {
+		return 'sfpp-lang';
+	}
+
+}
+
+Simple_Facebook::init();
