@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.2
+ * Version:        1.4.3
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -27,7 +27,7 @@
  *
  * @package SFPP
  * @author  Dylan Ryan
- * @version 1.4.2
+ * @version 1.4.3
  */
 
 
@@ -50,9 +50,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.4.2 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.2' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.3' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.1' );
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.2' );
 }
 
 
@@ -912,8 +912,8 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'align' ); ?>"><?php _e( 'Alignment:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'align' ); ?>" name="<?php echo $this->get_field_name( 'align' ); ?>">
-				<?php foreach ( $align as $val ): ?>
-					<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $instance['align'], $val ); ?>><?php echo esc_html( $val ); ?></option>
+				<?php foreach ( $align as $key => $val ): ?>
+					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['align'], $key ); ?>><?php echo esc_html( $val ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</p>
