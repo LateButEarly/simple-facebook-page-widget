@@ -44,15 +44,13 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 
-class Simple_Facebook_Page_Plugin {
+class Simple_Facebook_Page_Plugin extends Simple_Facebook {
 
 	protected $plugin_name = 'Simple Facebook Page Plugin';
 
 	protected $plugin_slug = 'simple-facebook-page-plugin';
 
 	protected $previous_version = '1.4.1';
-
-	protected $current_version = '1.5.0';
 
 	protected $plugin_key = 'sfpp-version';
 
@@ -90,7 +88,7 @@ class Simple_Facebook_Page_Plugin {
 
 		add_action( 'admin_init', array( $this, 'maybe_hide_notice' ) );
 
-		add_action( 'admin_menu', array( $this, 'admin_settings_menu') );
+		add_action( 'admin_menu', array( $this, 'page_plugin_settings_menu') );
 
 		add_action( 'init', array ( $this, 'load_textdomain') );
 
@@ -137,7 +135,7 @@ class Simple_Facebook_Page_Plugin {
 		$options = $this->get_options();
 
 		//* Prepare the javascript for manipulation.
-		wp_enqueue_script( $this->plugin_slug, $this->get_plugin_directory() . 'js/simple-facebook-page-root.js', array( 'jquery' ) );
+		wp_enqueue_script( $this->plugin_slug, Simple_Facebook::get_plugin_directory() . 'js/simple-facebook-page-root.js', array( 'jquery' ) );
 
 		//* Pass the language option from the database to javascript.
 		wp_localize_script( $this->plugin_slug, 'sfpp_script_vars', array(
@@ -213,14 +211,6 @@ class Simple_Facebook_Page_Plugin {
 
 	private function get_options() {
 		return get_option( $this->settings );
-	}
-
-	private function get_plugin_directory() {
-		return plugin_dir_url( __FILE__ );
-	}
-
-	private function get_lib_directory() {
-		return plugin_dir_url( __FILE__ ) . 'lib/';
 	}
 
 
@@ -532,7 +522,7 @@ class Simple_Facebook_Page_Plugin {
 	 *
 	 * @since 1.4.0
 	 */
-	public function admin_settings_menu() {
+	public function page_plugin_settings_menu() {
 
 		$page_title = 'Simple Facebook Settings';
 		$menu_title = 'Simple Facebook';
@@ -546,9 +536,9 @@ class Simple_Facebook_Page_Plugin {
 		$icon       = 'dashicons-facebook';
 		$position   = '95.1337';
 
-		$admin_settings_page = add_menu_page( $page_title, $menu_title, $capability, $this->settings_page, $callback, $icon, $position );
+		//$admin_settings_page = add_menu_page( $page_title, $menu_title, $capability, $this->settings_page, $callback, $icon, $position );
 
-		add_submenu_page( $this->settings_page, $page_title, __( 'General', $this->i18n ), $capability, $this->settings_page, $callback );
+		//add_submenu_page( $this->settings_page, $page_title, __( 'General', $this->i18n ), $capability, $this->settings_page, $callback );
 
 		add_submenu_page( $this->settings_page, '', __( 'Page Plugin', $this->i18n ), $capability, 'sfpp_page_plugin', $page_plugin_callback );
 
@@ -560,89 +550,10 @@ class Simple_Facebook_Page_Plugin {
 
 		add_submenu_page( $this->settings_page, '', __( 'Like, Share, Send', $this->i18n ), $capability, 'sfpp_like_share_send', $like_share_send_callback );
 
-
-		/**
-		 * Only loads libraries required on the settings page.
-		 * http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
-		 *
-		 * @since 1.5.0
-		 */
-		add_action( 'admin_print_scripts-' . $admin_settings_page, array( $this, 'admin_enqueue_scripts' ) );
 	}
 
 
-	/**
-	 * Enqueue admin only scripts and styles on our settings page.
-	 * https://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts
-	 *
-	 * @uses http://harvesthq.github.io/chosen/
-	 *
-	 * @since 1.4.0
-	 */
-	public function admin_enqueue_scripts() {
-		//* Chosen script
-		wp_enqueue_script( 'chosen-js',     $this->get_lib_directory() .  'chosen/chosen.jquery.min.js', array( 'jquery' ) );
 
-		//* Chosen stylesheet
-		wp_enqueue_style( 'chosen-style',   $this->get_lib_directory() .  'chosen/chosen.min.css' );
-
-		//* Custom admin javascript
-		wp_enqueue_script( 'admin-js',      $this->get_plugin_directory() .  'js/admin.js', array( 'jquery' ) );
-
-		//* Custom admin stylesheet
-		wp_enqueue_style( 'admin-style',    $this->get_plugin_directory() .  'css/admin.css' );
-	}
-
-
-	/**
-	 * Displays the settings page.
-	 * https://developer.wordpress.org/plugins/settings/custom-settings-page/#creating-the-page
-	 *
-	 * @since 1.4.0
-	 *
-	 * @modified 1.5.0 Check if current user can manage_options.
-	 */
-	public function display_options_page() {
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( 'You do not have sufficient permissions to access this page.' );
-		}
-
-		ob_start();
-
-		?>
-
-		<div class="wrap">
-
-			<h2><?php echo esc_html( get_admin_page_title() ); ?> &mdash; <small>v<?php echo $this->current_version; ?></small></h2>
-
-			<form name="sfpp-form" method="post" action="options.php" enctype="multipart/form-data">
-
-				<h2 class="nav-tab-wrapper hide-if-no-js">
-					<a href="#tab_basic" class="nav-tab"><?php _e( 'Basic', $this->i18n ); ?></a>
-					<!-- <a href="#tab_extras" class="nav-tab"><?php //_e( 'Extras', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a> -->
-				</h2>
-
-				<div id="sfpptabs">
-
-					<?php settings_fields( $this->settings_group );   // settings group name. This should match the group name used in register_setting(). ?>
-
-					<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( $this->settings_page ); ?></div>
-
-					<div class="sfpp-tab" id="tab_extras"><?php //do_settings_sections( 'sfpp-extras' ); ?></div>
-
-				</div>
-
-				<?php submit_button(); ?>
-
-			</form>
-
-		</div>
-
-		<?php
-
-		echo ob_get_clean();
-	}
 
 
 	/**
@@ -802,6 +713,8 @@ class Simple_Facebook {
 
 	protected $settings_page = 'sfpp_dashboard';
 
+	protected $current_version = '1.5.0';
+
 	public static $instance;
 
 	public static function init() {
@@ -809,16 +722,21 @@ class Simple_Facebook {
 		if ( is_null( self::$instance ) )
 			self::$instance = new Simple_Facebook();
 		return self::$instance;
+
 	}
 
 	public function __construct() {
 
-		new Simple_Facebook_Page_Plugin();
-		Simple_Facebook_Page_Plugin::init();
+		add_action( 'admin_menu', array( $this, 'admin_settings_menu') );
 
-		new Simple_Facebook_Language();
-		Simple_Facebook_Language::init();
+	}
 
+	public function get_plugin_directory() {
+		return plugin_dir_url( __FILE__ );
+	}
+
+	public function get_lib_directory() {
+		return plugin_dir_url( __FILE__ ) . 'lib/';
 	}
 
 	public function admin_settings_menu() {
@@ -839,6 +757,86 @@ class Simple_Facebook {
 
 		add_submenu_page( $this->settings_page, $page_title, __( 'General', Simple_Facebook_Language::translate() ), $capability, $this->settings_page, $callback );
 
+		/**
+		 * Only loads libraries required on the settings page.
+		 * http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
+		 *
+		 * @since 1.5.0
+		 */
+		add_action( 'admin_print_scripts-' . $admin_settings_page, array( $this, 'admin_enqueue_scripts' ) );
+
+	}
+
+	/**
+	 * Enqueue admin only scripts and styles on our settings page.
+	 * https://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts
+	 *
+	 * @uses http://harvesthq.github.io/chosen/
+	 *
+	 * @since 1.4.0
+	 */
+	public function admin_enqueue_scripts() {
+		//* Chosen script
+		wp_enqueue_script( 'chosen-js',     $this->get_lib_directory() .  'chosen/chosen.jquery.min.js', array( 'jquery' ) );
+
+		//* Chosen stylesheet
+		wp_enqueue_style( 'chosen-style',   $this->get_lib_directory() .  'chosen/chosen.min.css' );
+
+		//* Custom admin javascript
+		wp_enqueue_script( 'admin-js',      $this->get_plugin_directory() .  'js/admin.js', array( 'jquery' ) );
+
+		//* Custom admin stylesheet
+		wp_enqueue_style( 'admin-style',    $this->get_plugin_directory() .  'css/admin.css' );
+	}
+
+	/**
+	 * Displays the settings page.
+	 * https://developer.wordpress.org/plugins/settings/custom-settings-page/#creating-the-page
+	 *
+	 * @since 1.4.0
+	 *
+	 * @modified 1.5.0 Check if current user can manage_options.
+	 */
+	public function display_options_page() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+
+		ob_start();
+
+		?>
+
+		<div class="wrap">
+
+			<h2><?php echo esc_html( get_admin_page_title() ); ?> &mdash; <small>v<?php echo $this->current_version; ?></small></h2>
+
+			<form name="sfpp-form" method="post" action="options.php" enctype="multipart/form-data">
+
+				<h2 class="nav-tab-wrapper hide-if-no-js">
+					<a href="#tab_basic" class="nav-tab"><?php _e( 'Basic', Simple_Facebook_Language::translate() ); ?></a>
+					<!-- <a href="#tab_extras" class="nav-tab"><?php //_e( 'Extras', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a> -->
+				</h2>
+
+				<div id="sfpptabs">
+
+					<?php settings_fields( $this->settings_group );   // settings group name. This should match the group name used in register_setting(). ?>
+
+					<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( $this->settings_page ); ?></div>
+
+					<div class="sfpp-tab" id="tab_extras"><?php //do_settings_sections( 'sfpp-extras' ); ?></div>
+
+				</div>
+
+				<?php submit_button(); ?>
+
+			</form>
+
+		</div>
+
+		<?php
+
+		echo ob_get_clean();
 	}
 
 }
@@ -861,3 +859,4 @@ class Simple_Facebook_Language {
 }
 
 Simple_Facebook::init();
+Simple_Facebook_Page_Plugin::init();
