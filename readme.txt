@@ -1,4 +1,4 @@
-=== Simple Facebook Page Plugin - Widget & Shortcode ===
+=== Simple Facebook Page Widget & Shortcode ===
 Contributors: irkanu
 Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
 Tags: facebook, social, widget, plugin, page, feed, shortcode, facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social media, social widget, social shortcode, free, wordpress
