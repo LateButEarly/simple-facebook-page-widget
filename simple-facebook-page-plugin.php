@@ -43,7 +43,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-
 class Simple_Facebook_Page_Plugin extends Simple_Facebook {
 
 	protected $plugin_name = 'Simple Facebook Page Plugin';
@@ -57,12 +56,6 @@ class Simple_Facebook_Page_Plugin extends Simple_Facebook {
 	protected $install_key = 'sfpp-install-date';
 
 	protected $notice_key = 'sfpp-hide-notice';
-
-	protected $settings = 'sfpp_settings';
-
-	protected $settings_group = 'sfpp_settings_group';
-
-	protected $settings_page = 'sfpp_dashboard';
 
 	protected $settings_basic_section = 'sfpp_basic_section';
 
@@ -87,8 +80,6 @@ class Simple_Facebook_Page_Plugin extends Simple_Facebook {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 
 		add_action( 'admin_init', array( $this, 'maybe_hide_notice' ) );
-
-		add_action( 'admin_menu', array( $this, 'page_plugin_settings_menu') );
 
 		add_action( 'init', array ( $this, 'load_textdomain') );
 
@@ -210,7 +201,7 @@ class Simple_Facebook_Page_Plugin extends Simple_Facebook {
 	}
 
 	private function get_options() {
-		return get_option( $this->settings );
+		return get_option( Simple_Facebook_Options::get_settings() );
 	}
 
 
@@ -289,8 +280,8 @@ class Simple_Facebook_Page_Plugin extends Simple_Facebook {
 	public function register_settings() {
 
 		register_setting(
-			$this->settings_group,          // settings section (group) - used on the admin page itself to setup fields
-			$this->settings                 // setting name - get_option() to retrieve from database - retrieve it and store it in global variable
+			Simple_Facebook_Options::get_settings_group(),          // settings section (group) - used on the admin page itself to setup fields
+			Simple_Facebook_Options::get_settings()                 // setting name - get_option() to retrieve from database - retrieve it and store it in global variable
 		);
 
 		add_settings_section(
@@ -308,7 +299,7 @@ class Simple_Facebook_Page_Plugin extends Simple_Facebook {
 		);
 
 		add_settings_field(
-			$this->settings,                         // setting name
+			Simple_Facebook_Options::get_settings(),                         // setting name
 			__( 'Select a language:', $this->i18n ), // text before the display
 			array( $this, 'language_setting_callback' ),             // displays the setting
 			$this->settings_page,                    // setting page
@@ -512,89 +503,6 @@ class Simple_Facebook_Page_Plugin extends Simple_Facebook {
 		return $actions;
 	}
 
-
-	/**
-	 * Registers the admin settings menu.
-	 * https://developer.wordpress.org/plugins/settings/custom-settings-page/#creating-the-menu-item
-	 *
-	 * Only loads libraries required on the settings page.
-	 * http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
-	 *
-	 * @since 1.4.0
-	 */
-	public function page_plugin_settings_menu() {
-
-		$page_title = 'Simple Facebook Settings';
-		$menu_title = 'Simple Facebook';
-		$capability = 'manage_options';
-		$callback   = array( $this, 'display_options_page' );
-		$page_plugin_callback = array( $this, 'display_page_plugin_options_page' );
-		$comments_callback = array ( $this, 'display_comments_options_page' );
-		$embedded_callback = array ( $this, 'display_embedded_options_page' );
-		$like_share_send_callback = array( $this, 'display_like_share_send_options_page' );
-		$follow_callback = array( $this, 'display_follow_options_page' );
-		$icon       = 'dashicons-facebook';
-		$position   = '95.1337';
-
-		//$admin_settings_page = add_menu_page( $page_title, $menu_title, $capability, $this->settings_page, $callback, $icon, $position );
-
-		//add_submenu_page( $this->settings_page, $page_title, __( 'General', $this->i18n ), $capability, $this->settings_page, $callback );
-
-		add_submenu_page( $this->settings_page, '', __( 'Page Plugin', $this->i18n ), $capability, 'sfpp_page_plugin', $page_plugin_callback );
-
-		add_submenu_page( $this->settings_page, '', __( 'Comments', $this->i18n ), $capability, 'sfpp_comments', $comments_callback );
-
-		add_submenu_page( $this->settings_page, '', __( 'Embedded', $this->i18n ), $capability, 'sfpp_embedded', $embedded_callback );
-
-		add_submenu_page( $this->settings_page, '', __( 'Follow', $this->i18n ), $capability, 'sfpp_follow', $follow_callback );
-
-		add_submenu_page( $this->settings_page, '', __( 'Like, Share, Send', $this->i18n ), $capability, 'sfpp_like_share_send', $like_share_send_callback );
-
-	}
-
-
-
-
-
-	/**
-	 * @todo
-	 */
-	public function display_page_plugin_options_page() {
-
-	}
-
-
-	/**
-	 * @todo
-	 */
-	public function display_comments_options_page() {
-
-	}
-
-	/**
-	 * @todo
-	 */
-	public function display_embedded_options_page() {
-
-	}
-
-
-	/**
-	 * @todo
-	 */
-	public function display_like_share_send_options_page() {
-
-	}
-
-
-	/**
-	 * @todo
-	 */
-	public function display_follow_options_page() {
-
-	}
-
-
 	/**
 	 * Check current user for admin & maybe hide notice.
 	 *
@@ -745,11 +653,6 @@ class Simple_Facebook {
 		$menu_title = 'Simple Facebook';
 		$capability = 'manage_options';
 		$callback   = array( $this, 'display_options_page' );
-		$page_plugin_callback = array( $this, 'display_page_plugin_options_page' );
-		$comments_callback = array ( $this, 'display_comments_options_page' );
-		$embedded_callback = array ( $this, 'display_embedded_options_page' );
-		$like_share_send_callback = array( $this, 'display_like_share_send_options_page' );
-		$follow_callback = array( $this, 'display_follow_options_page' );
 		$icon       = 'dashicons-facebook';
 		$position   = '95.1337';
 
@@ -811,7 +714,7 @@ class Simple_Facebook {
 
 			<h2><?php echo esc_html( get_admin_page_title() ); ?> &mdash; <small>v<?php echo $this->current_version; ?></small></h2>
 
-			<form name="sfpp-form" method="post" action="options.php" enctype="multipart/form-data">
+			<form id="main" name="sfpp-form" method="post" action="options.php" enctype="multipart/form-data">
 
 				<h2 class="nav-tab-wrapper hide-if-no-js">
 					<a href="#tab_basic" class="nav-tab"><?php _e( 'Basic', Simple_Facebook_Language::translate() ); ?></a>
@@ -820,7 +723,7 @@ class Simple_Facebook {
 
 				<div id="sfpptabs">
 
-					<?php settings_fields( $this->settings_group );   // settings group name. This should match the group name used in register_setting(). ?>
+					<?php settings_fields( Simple_Facebook_Options::get_settings() );   // settings group name. This should match the group name used in register_setting(). ?>
 
 					<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( $this->settings_page ); ?></div>
 
@@ -831,6 +734,24 @@ class Simple_Facebook {
 				<?php submit_button(); ?>
 
 			</form>
+
+			<div id="aside">
+
+				<h2><?php _e( 'Sponsors', Simple_Facebook_Language::translate() ); ?></h2>
+
+				<div id="banner">
+					<a href="http://www.siteground.com" onClick="this.href='http://bit.ly/1FffXrN'" >
+						<img src="https://ua.siteground.com/img/banners/application/wordpress/250x250.gif" alt="Web Hosting" width="250" height="250" border="0">
+					</a>
+				</div>
+
+				<div id="banner">
+					<a href="http://www.csshero.org" onClick="this.href='http://bit.ly/1Flr6sW'">
+						<img src="http://www.csshero.org/banners/250x250_01.png" alt="WordPress Theme Editor" width="250" height="250" border="0">
+					</a>
+				</div>
+
+			</div>
 
 		</div>
 
@@ -850,6 +771,7 @@ class Simple_Facebook_Language {
 		if ( is_null( self::$instance ) )
 			self::$instance = new Simple_Facebook();
 		return self::$instance;
+
 	}
 
 	public static function translate() {
@@ -858,5 +780,110 @@ class Simple_Facebook_Language {
 
 }
 
+class Simple_Facebook_Options {
+
+	public static function get_settings() {
+		return 'sfpp_settings';
+	}
+
+	public static function get_settings_group() {
+		return 'sfpp_settings_group';
+	}
+
+}
+
+class Simple_Facebook_Admin_Menu {
+
+	public static $instance;
+
+	private $settings_page = 'sfpp_dashboard';
+
+	private $capability = 'manage_options';
+
+	public function __construct() {
+
+		add_action( 'admin_menu', array( $this, 'extension_settings_menus') );
+
+	}
+
+
+	public static function init() {
+
+		if ( is_null( self::$instance ) )
+			self::$instance = new Simple_Facebook_Admin_Menu();
+		return self::$instance;
+
+	}
+
+	/**
+	 * Registers the admin settings menu.
+	 * https://developer.wordpress.org/plugins/settings/custom-settings-page/#creating-the-menu-item
+	 *
+	 * Only loads libraries required on the settings page.
+	 * http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
+	 *
+	 * @since 1.4.0
+	 */
+	public function extension_settings_menus() {
+
+		$page_plugin_callback = array( $this, 'display_page_plugin_options_page' );
+		$comments_callback = array ( $this, 'display_comments_options_page' );
+		$embedded_callback = array ( $this, 'display_embedded_options_page' );
+		$like_share_send_callback = array( $this, 'display_like_share_send_options_page' );
+		$follow_callback = array( $this, 'display_follow_options_page' );
+
+		add_submenu_page( $this->settings_page, '', __( 'Page Plugin', Simple_Facebook_Language::translate() ), $this->capability, 'sfpp_page_plugin', $page_plugin_callback );
+
+		add_submenu_page( $this->settings_page, '', __( 'Comments', Simple_Facebook_Language::translate() ), $this->capability, 'sfpp_comments', $comments_callback );
+
+		add_submenu_page( $this->settings_page, '', __( 'Embedded', Simple_Facebook_Language::translate() ), $this->capability, 'sfpp_embedded', $embedded_callback );
+
+		add_submenu_page( $this->settings_page, '', __( 'Follow', Simple_Facebook_Language::translate() ), $this->capability, 'sfpp_follow', $follow_callback );
+
+		add_submenu_page( $this->settings_page, '', __( 'Like, Share, Send', Simple_Facebook_Language::translate() ), $this->capability, 'sfpp_like_share_send', $like_share_send_callback );
+
+	}
+
+	/**
+	 * @todo
+	 */
+	public function display_page_plugin_options_page() {
+
+	}
+
+
+	/**
+	 * @todo
+	 */
+	public function display_comments_options_page() {
+
+	}
+
+	/**
+	 * @todo
+	 */
+	public function display_embedded_options_page() {
+
+	}
+
+
+	/**
+	 * @todo
+	 */
+	public function display_like_share_send_options_page() {
+
+	}
+
+
+	/**
+	 * @todo
+	 */
+	public function display_follow_options_page() {
+
+	}
+
+}
+
 Simple_Facebook::init();
+Simple_Facebook_Admin_Menu::init();
 Simple_Facebook_Page_Plugin::init();

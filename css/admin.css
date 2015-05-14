@@ -15,3 +15,6 @@ input[type=number].small-text{height:28px}
 .sfpp-tab-txt ol li h2{line-height:0.5em}
 .sfpp-tab-txt ol li h2 a{font-size:0.8em}
 .button-link:after{content:" \f310";font-size:1.1em;padding-left:3px}
+#banner{background: white;border: 1px solid rgb(204, 204, 204);padding: 25px;text-align: center;width: 100%;margin-bottom: 10px;}
+#main{width:70%;float:left;margin-right: 5%;}
+#aside{float: left;width: 20%;}
