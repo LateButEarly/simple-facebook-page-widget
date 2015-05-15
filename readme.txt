@@ -3,8 +3,8 @@ Contributors: irkanu
 Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
 Tags: facebook, social, widget, plugin, page, feed, shortcode, facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social media, social widget, social shortcode, free, wordpress
 Requires at least: 3.0.0
-Tested up to: 4.2.2
-Stable tag: 1.4.3
+Tested up to: 4.2.3
+Stable tag: 1.4.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -82,6 +82,10 @@ Nope, but you can if you'd like.
 4. Backend view of the Facebook Page shortcode.
 
 == Changelog ==
+
+= 1.4.4 =
+* Reworked settings page
+* Preparation for next plugin
 
 = 1.4.3 =
 * Fixed widget outputting invalid HTML

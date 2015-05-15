@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.3
+ * Version:        1.4.4
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -25,9 +25,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package SFPP
- * @author  Dylan Ryan
- * @version 1.4.3
+ * @package     Simple_Facebook
+ * @subpackage  Simple_Facebook_Page_Plugin
+ * @author      Dylan Ryan
+ * @version     1.4.4
  */
 
 
@@ -50,9 +51,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.4.2 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.3' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.4' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.2' );
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.3' );
 }
 
 
@@ -246,8 +247,8 @@ add_action( 'widgets_init',
 add_action( 'admin_menu', 'sfpp_admin_settings_menu' );
 function sfpp_admin_settings_menu() {
 
-	$page_title = 'Simple Facebook Page Plugin Settings';
-	$menu_title = 'Simple Facebook Page Plugin Options';
+	$page_title = 'Simple Facebook Settings';
+	$menu_title = 'Simple Facebook Options';
 	$capability = 'manage_options';
 	$menu_slug  = 'sfpp-settings';
 	$function   = 'sfpp_options_page';
@@ -283,6 +284,9 @@ function sfpp_admin_enqueue_scripts_chosen() {
 
 	//* Custom admin javascript
 	wp_enqueue_script( 'admin-js',      SIMPLE_FACEBOOK_PAGE_DIR .  'js/admin.js', array( 'jquery' ) );
+
+	//* Custom admin stylesheet
+	wp_enqueue_style( 'admin-css',      SIMPLE_FACEBOOK_PAGE_DIR .  'css/admin.css' );
 }
 
 
@@ -524,26 +528,50 @@ function sfpp_options_page() {
 
 	<div class="wrap">
 
-		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+		<h2><?php echo esc_html( get_admin_page_title() ); ?> &mdash; <small>v<?php echo SIMPLE_FACEBOOK_PAGE_VERSION ?></small></h2>
 
-		<form name="sfpp-form" method="post" action="options.php" enctype="multipart/form-data">
+		<form id="main" name="sfpp-form" method="post" action="options.php" enctype="multipart/form-data">
 
-			<?php
+			<h2 class="nav-tab-wrapper hide-if-no-js">
+				<a href="#tab_basic" class="nav-tab"><?php _e( 'Basic', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a>
+				<!-- <a href="#tab_extras" class="nav-tab"><?php //_e( 'Extras', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a> -->
+			</h2>
 
-			settings_fields( 'sfpp_settings_group' );   // settings group name. This should match the group name used in register_setting().
+			<div id="sfpptabs">
 
-			do_settings_sections( 'sfpp-settings' );    // iterate over all settings sections
+				<?php settings_fields( 'sfpp_settings_group' );   // settings group name. This should match the group name used in register_setting(). ?>
 
-			submit_button();
+				<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( 'sfpp-settings' ); ?></div>
 
-			?>
+				<div class="sfpp-tab" id="tab_extras"><?php //do_settings_sections( 'sfpp-extras' ); ?></div>
+
+			</div>
+
+			<?php submit_button(); ?>
 
 		</form>
+
+		<div id="aside">
+
+			<h2><?php _e( 'Sponsors', SIMPLE_FACEBOOK_PAGE_I18N ); ?></h2>
+
+			<div id="banner">
+				<a href="http://www.siteground.com" onClick="this.href='http://bit.ly/1FffXrN'" >
+					<img src="https://ua.siteground.com/img/banners/application/wordpress/250x250.gif" alt="Web Hosting" width="250" height="250" border="0">
+				</a>
+			</div>
+
+			<div id="banner">
+				<a href="http://www.csshero.org" onClick="this.href='http://bit.ly/1Flr6sW'">
+					<img src="http://www.csshero.org/banners/250x250_01.png" alt="WordPress Theme Editor" width="250" height="250" border="0">
+				</a>
+			</div>
+
+		</div>
 
 	</div>
 
 	<?php
-
 	echo ob_get_clean();
 }
 
