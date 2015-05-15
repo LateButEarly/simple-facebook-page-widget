@@ -128,7 +128,7 @@ function sfpp_activation() {
 add_action( 'init', 'sfpp_textdomain' );
 function sfpp_textdomain() {
 
-	load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
+	load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
 
