@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.4
+ * Version:        1.4.5
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -28,7 +28,7 @@
  * @package     Simple_Facebook
  * @subpackage  Simple_Facebook_Page_Plugin
  * @author      Dylan Ryan
- * @version     1.4.4
+ * @version     1.4.5
  */
 
 
@@ -51,9 +51,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.4.2 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.4' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.5' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.3' );
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.4' );
 }
 
 
@@ -95,8 +95,15 @@ define( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE',    'sfpp-install-date' );
  * Define global variables.
  *
  * @since 1.4.0
+ *
+ * @modified 1.4.5 Added defaults.
  */
-$sfpp_options = get_option( 'sfpp_settings' );
+$sfpp_defaults = array(
+    'language'  =>  'en_US',
+    'app_id'   =>  '872972519428691'
+);
+$options = get_option( 'sfpp_settings' );
+$sfpp_options = wp_parse_args( $options, $sfpp_defaults);
 
 
 /**
@@ -164,7 +171,8 @@ function sfpp_enqueue_scripts() {
 
 	//* Pass the language option from the database to javascript.
 	wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', array(
-			'language'  =>  ( $sfpp_options['language'] )
+			'language'  =>  ( $sfpp_options['language'] ),
+            'appid'    =>  ( $sfpp_options['app_id'] )
 		)
 	);
 }
@@ -329,7 +337,7 @@ function sfpp_register_settings() {
 	$basic_settings = 'sfpp_settings';
 	$settings_page  = 'sfpp-settings';
 	$basic_section  = 'sfpp_basic_section';
-    $adv_section    = 'sfpp_api_section';
+    $adv_section    = 'sfpp_adv_section';
 
 	register_setting(
 		'sfpp_settings_group',      // settings section (group) - used on the admin page itself to setup fields
@@ -360,7 +368,7 @@ function sfpp_register_settings() {
 
     add_settings_field(
         $basic_settings,                    // setting name
-        '(Optional) API Key:',              // text before the display
+        '<em>(Optional)</em> App ID:',      // text before the display
         'sfpp_api_callback',                // displays the setting
         $settings_page,                     // setting page
         $adv_section                        // setting section
@@ -388,7 +396,7 @@ function sfpp_language_select_callback() {
 
 	global $sfpp_options;
 
-	$sfpp_options['language'] = isset( $sfpp_options['language'] ) && ! empty( $sfpp_options['language'] ) ? $sfpp_options['language'] : 'en_US';
+	//$sfpp_options['language'] = isset( $sfpp_options['language'] ) && ! empty( $sfpp_options['language'] ) ? $sfpp_options['language'] : 'en_US';
 
 	?>
 
@@ -540,11 +548,11 @@ function sfpp_api_callback() {
 
     global $sfpp_options;
 
-    $sfpp_options['api_key'] = isset( $sfpp_options['api_key'] ) && ! empty( $sfpp_options['api_key'] ) ? $sfpp_options['api_key'] : '';
+    //$sfpp_options['app_id'] = isset( $sfpp_options['app_id'] ) && ! empty( $sfpp_options['app_id'] ) ? $sfpp_options['app_id'] : '';
 
     ?>
 
-    <input type="text" id="sfpp_settings[api_key]" value="<?php esc_attr( $sfpp_options['api_key'] ) ?>" name="sfpp_settings[api_key]" title="<?php esc_attr__( 'Enter API Key', SIMPLE_FACEBOOK_PAGE_I18N ) ?>" />
+    <input class="sfpp-api-key" type="text" id="sfpp_settings[app_id]" value="<?php echo esc_attr( $sfpp_options['app_id'] ) ?>" name="sfpp_settings[app_id]" title="<?php esc_attr__( 'Enter App ID', SIMPLE_FACEBOOK_PAGE_I18N ) ?>" />
 
     <?php
 }
@@ -558,6 +566,10 @@ function sfpp_api_callback() {
  * @modified 1.4.2 Check if current user can manage_options.
  */
 function sfpp_options_page() {
+
+    global $current_user;
+
+    get_currentuserinfo();
 
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( 'You do not have sufficient permissions to access this page.' );
@@ -583,7 +595,7 @@ function sfpp_options_page() {
 
 				<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( 'sfpp-settings' ); ?></div>
 
-			</div>
+            </div>
 
 			<?php submit_button(); ?>
 
@@ -591,15 +603,14 @@ function sfpp_options_page() {
 
 		<div id="aside">
 
-            <div id="banner" style="text-align:left;background: url('//dylanryan.co/wp-content/uploads/2015/05/email-icon.png') no-repeat;
-  background-position-x: 140px;">
+            <div id="banner" class="sfpp-email">
                 <h3 style="margin:0 0 5px 0;">Subscribe for Updates!</h3>
                 <div id="mc_embed_signup">
                     <form action="//seoconsultingnc.us5.list-manage.com/subscribe/post?u=6d731c1ad40970ed85cb66f03&amp;id=c0ecab8e1d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                         <div id="mc_embed_signup_scroll">
 
                             <div class="mc-field-group">
-                                <input style="width:100%;padding:5px;margin-bottom:5px;" type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                                <input style="width:100%;padding:5px;margin-bottom:5px;" type="email" value="<?php echo esc_attr( $current_user->user_email ); ?>" name="EMAIL" class="required email" id="mce-EMAIL">
                             </div>
                             <div id="mce-responses" class="clear">
                                 <div class="response" id="mce-error-response" style="display:none"></div>
