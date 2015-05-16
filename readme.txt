@@ -83,6 +83,10 @@ Nope, but you can if you'd like.
 
 == Changelog ==
 
+= 1.4.5 =
+* Updated settings page
+* Working on customizable App ID
+
 = 1.4.4 =
 * Reworked settings page
 * Preparation for next plugin
