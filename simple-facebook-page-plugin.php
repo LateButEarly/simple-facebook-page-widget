@@ -252,9 +252,18 @@ function sfpp_admin_settings_menu() {
 	$capability = 'manage_options';
 	$menu_slug  = 'sfpp-settings';
 	$function   = 'sfpp_options_page';
+    //$icon       = 'dashicons-facebook';
+    //$position   = '95.1337';
 
-	$admin_settings_page = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
+    //$upgrade = 'sfpp_display_upgrade';
 
+    //$admin_settings_page = add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon, $position );
+
+    $admin_settings_page = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
+
+    add_submenu_page( $menu_slug, $page_title, __( 'General', SIMPLE_FACEBOOK_PAGE_I18N ), $capability, $menu_slug, $function );
+
+    //add_submenu_page( $menu_slug, '', __( 'Upgrade to Pro', SIMPLE_FACEBOOK_PAGE_I18N ), $capability, 'sfpp_page_plugin', $upgrade );
 
 	/**
 	 * Only loads libraries required on the settings page.
@@ -317,29 +326,46 @@ function sfpp_quick_settings_link( $actions ) {
 add_action( 'admin_init', 'sfpp_register_settings' );
 function sfpp_register_settings() {
 
-	$settings = 'sfpp_settings';
-	$settings_page = 'sfpp-settings';
-	$language_section = 'sfpp_language_section';
+	$basic_settings = 'sfpp_settings';
+	$settings_page  = 'sfpp-settings';
+	$basic_section  = 'sfpp_basic_section';
+    $adv_section    = 'sfpp_api_section';
 
 	register_setting(
 		'sfpp_settings_group',      // settings section (group) - used on the admin page itself to setup fields
-		$settings                   // setting name - get_option() to retrieve from database - retrieve it and store it in global variable
+        $basic_settings             // setting name - get_option() to retrieve from database - retrieve it and store it in global variable
 	);
 
 	add_settings_section(
-		$language_section,                  // setup language section
-		'Language Settings',                // title of section
-		'sfpp_language_section_callback',   // display after the title & before the settings
-		$settings_page                      // setting page
+        $basic_section,                  // setup basic section
+		'',                              // title of section
+		'sfpp_basic_section_callback',   // display after the title & before the settings
+		$settings_page                   // settings page
 	);
 
 	add_settings_field(
-		$settings,                          // setting name
+        $basic_settings,                    // setting name
 		'Select a language:',               // text before the display
 		'sfpp_language_select_callback',    // displays the setting
 		$settings_page,                     // setting page
-		$language_section                   // setting section
+        $basic_section                      // setting section
 	);
+
+    add_settings_section(
+        $adv_section,                    // setup basic section
+        '',                              // title of section
+        'sfpp_basic_section_callback',   // display after the title & before the settings
+        $settings_page                   // settings page
+    );
+
+    add_settings_field(
+        $basic_settings,                    // setting name
+        '(Optional) API Key:',              // text before the display
+        'sfpp_api_callback',                // displays the setting
+        $settings_page,                     // setting page
+        $adv_section                        // setting section
+    );
+
 }
 
 /**
@@ -347,7 +373,7 @@ function sfpp_register_settings() {
  *
  * @since 1.4.0
  */
-function sfpp_language_section_callback() {
+function sfpp_basic_section_callback() {
 
 }
 
@@ -360,7 +386,7 @@ function sfpp_language_section_callback() {
  */
 function sfpp_language_select_callback() {
 
-	global $sfpp_options;   // get_option( 'sfpp_settings' );
+	global $sfpp_options;
 
 	$sfpp_options['language'] = isset( $sfpp_options['language'] ) && ! empty( $sfpp_options['language'] ) ? $sfpp_options['language'] : 'en_US';
 
@@ -507,6 +533,21 @@ function sfpp_language_select_callback() {
 <?php
 }
 
+/**
+ * TODO
+ */
+function sfpp_api_callback() {
+
+    global $sfpp_options;
+
+    $sfpp_options['api_key'] = isset( $sfpp_options['api_key'] ) && ! empty( $sfpp_options['api_key'] ) ? $sfpp_options['api_key'] : '';
+
+    ?>
+
+    <input type="text" id="sfpp_settings[api_key]" value="<?php esc_attr( $sfpp_options['api_key'] ) ?>" name="sfpp_settings[api_key]" title="<?php esc_attr__( 'Enter API Key', SIMPLE_FACEBOOK_PAGE_I18N ) ?>" />
+
+    <?php
+}
 
 /**
  * Displays the settings page
@@ -534,7 +575,6 @@ function sfpp_options_page() {
 
 			<h2 class="nav-tab-wrapper hide-if-no-js">
 				<a href="#tab_basic" class="nav-tab"><?php _e( 'Basic', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a>
-				<!-- <a href="#tab_extras" class="nav-tab"><?php //_e( 'Extras', SIMPLE_FACEBOOK_PAGE_I18N ); ?></a> -->
 			</h2>
 
 			<div id="sfpptabs">
@@ -542,8 +582,6 @@ function sfpp_options_page() {
 				<?php settings_fields( 'sfpp_settings_group' );   // settings group name. This should match the group name used in register_setting(). ?>
 
 				<div class="sfpp-tab" id="tab_basic"><?php do_settings_sections( 'sfpp-settings' ); ?></div>
-
-				<div class="sfpp-tab" id="tab_extras"><?php //do_settings_sections( 'sfpp-extras' ); ?></div>
 
 			</div>
 
@@ -553,7 +591,26 @@ function sfpp_options_page() {
 
 		<div id="aside">
 
-			<h2><?php _e( 'Sponsors', SIMPLE_FACEBOOK_PAGE_I18N ); ?></h2>
+            <div id="banner" style="text-align:left;background: url('//dylanryan.co/wp-content/uploads/2015/05/email-icon.png') no-repeat;
+  background-position-x: 140px;">
+                <h3 style="margin:0 0 5px 0;">Subscribe for Updates!</h3>
+                <div id="mc_embed_signup">
+                    <form action="//seoconsultingnc.us5.list-manage.com/subscribe/post?u=6d731c1ad40970ed85cb66f03&amp;id=c0ecab8e1d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                        <div id="mc_embed_signup_scroll">
+
+                            <div class="mc-field-group">
+                                <input style="width:100%;padding:5px;margin-bottom:5px;" type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                            </div>
+                            <div id="mce-responses" class="clear">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6d731c1ad40970ed85cb66f03_c0ecab8e1d" tabindex="-1" value=""></div>
+                            <div class="clear"><input style="height: auto;width:100%;padding:5px;" type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button button-primary"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
 			<div id="banner">
 				<a href="http://www.siteground.com" onClick="this.href='http://bit.ly/1FffXrN'" >
@@ -573,6 +630,10 @@ function sfpp_options_page() {
 
 	<?php
 	echo ob_get_clean();
+}
+
+function sfpp_display_upgrade() {
+
 }
 
 
