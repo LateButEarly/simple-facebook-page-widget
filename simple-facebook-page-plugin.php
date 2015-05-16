@@ -100,7 +100,7 @@ define( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE',    'sfpp-install-date' );
  */
 $sfpp_defaults = array(
     'language'  =>  'en_US',
-    'app_id'   =>  '872972519428691'
+    'app_id'    =>  '872972519428691'
 );
 $options = get_option( 'sfpp_settings' );
 $sfpp_options = wp_parse_args( $options, $sfpp_defaults);
@@ -172,7 +172,7 @@ function sfpp_enqueue_scripts() {
 	//* Pass the language option from the database to javascript.
 	wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', array(
 			'language'  =>  ( $sfpp_options['language'] ),
-            'appid'    =>  ( $sfpp_options['app_id'] )
+            'appid'     =>  ( $sfpp_options['app_id'] )
 		)
 	);
 }
@@ -319,7 +319,7 @@ function sfpp_admin_enqueue_scripts_chosen() {
 add_filter( 'plugin_action_links_' . plugin_basename( SIMPLE_FACEBOOK_PAGE_FILE ), 'sfpp_quick_settings_link' );
 function sfpp_quick_settings_link( $actions ) {
 
-	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=sfpp-settings' ), __( 'Settings' ) ) );
+	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=sfpp-settings' ), __( 'General Settings' ) ) );
 
 	return $actions;
 }
@@ -366,6 +366,7 @@ function sfpp_register_settings() {
         $settings_page                   // settings page
     );
 
+    /*
     add_settings_field(
         $basic_settings,                    // setting name
         '<em>(Optional)</em> App ID:',      // text before the display
@@ -373,6 +374,7 @@ function sfpp_register_settings() {
         $settings_page,                     // setting page
         $adv_section                        // setting section
     );
+    */
 
 }
 
@@ -548,7 +550,7 @@ function sfpp_api_callback() {
 
     global $sfpp_options;
 
-    //$sfpp_options['app_id'] = isset( $sfpp_options['app_id'] ) && ! empty( $sfpp_options['app_id'] ) ? $sfpp_options['app_id'] : '';
+    //$sfpp_options['app_id'] = isset( $sfpp_options['app_id'] ) && ! empty( $sfpp_options['app_id'] ) ? $sfpp_options['app_id'] : '872972519428691';
 
     ?>
 
