@@ -98,12 +98,7 @@ define( 'SIMPLE_FACEBOOK_PAGE_INSTALL_DATE',    'sfpp-install-date' );
  *
  * @modified 1.4.5 Added defaults.
  */
-$sfpp_defaults = array(
-    'language'  =>  'en_US',
-    'app_id'    =>  '872972519428691'
-);
-$options = get_option( 'sfpp_settings' );
-$sfpp_options = wp_parse_args( $options, $sfpp_defaults);
+$sfpp_options = get_option( 'sfpp_settings' );
 
 
 /**
@@ -171,8 +166,7 @@ function sfpp_enqueue_scripts() {
 
 	//* Pass the language option from the database to javascript.
 	wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', array(
-			'language'  =>  ( $sfpp_options['language'] ),
-            'appid'     =>  ( $sfpp_options['app_id'] )
+			'language'  =>  ( $sfpp_options['language'] )
 		)
 	);
 }
@@ -269,7 +263,7 @@ function sfpp_admin_settings_menu() {
 
     $admin_settings_page = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
 
-    add_submenu_page( $menu_slug, $page_title, __( 'General', SIMPLE_FACEBOOK_PAGE_I18N ), $capability, $menu_slug, $function );
+    //add_submenu_page( $menu_slug, $page_title, __( 'General', SIMPLE_FACEBOOK_PAGE_I18N ), $capability, $menu_slug, $function );
 
     //add_submenu_page( $menu_slug, '', __( 'Upgrade to Pro', SIMPLE_FACEBOOK_PAGE_I18N ), $capability, 'sfpp_page_plugin', $upgrade );
 
@@ -359,12 +353,14 @@ function sfpp_register_settings() {
         $basic_section                      // setting section
 	);
 
+	/*
     add_settings_section(
         $adv_section,                    // setup basic section
         '',                              // title of section
         'sfpp_basic_section_callback',   // display after the title & before the settings
         $settings_page                   // settings page
     );
+	*/
 
     /*
     add_settings_field(
@@ -554,7 +550,9 @@ function sfpp_api_callback() {
 
     ?>
 
+	<!--
     <input class="sfpp-api-key" type="text" id="sfpp_settings[app_id]" value="<?php echo esc_attr( $sfpp_options['app_id'] ) ?>" name="sfpp_settings[app_id]" title="<?php esc_attr__( 'Enter App ID', SIMPLE_FACEBOOK_PAGE_I18N ) ?>" />
+	-->
 
     <?php
 }
