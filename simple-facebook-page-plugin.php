@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.5
+ * Version:        1.4.6
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -28,7 +28,7 @@
  * @package     Simple_Facebook
  * @subpackage  Simple_Facebook_Page_Plugin
  * @author      Dylan Ryan
- * @version     1.4.5
+ * @version     1.4.6
  */
 
 
@@ -51,9 +51,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.4.2 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.5' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.6' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.4' );
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.5' );
 }
 
 
@@ -331,7 +331,7 @@ function sfpp_register_settings() {
 	$basic_settings = 'sfpp_settings';
 	$settings_page  = 'sfpp-settings';
 	$basic_section  = 'sfpp_basic_section';
-    $adv_section    = 'sfpp_adv_section';
+    //$adv_section    = 'sfpp_adv_section';
 
 	register_setting(
 		'sfpp_settings_group',      // settings section (group) - used on the admin page itself to setup fields
@@ -544,14 +544,12 @@ function sfpp_language_select_callback() {
  */
 function sfpp_api_callback() {
 
-    global $sfpp_options;
-
     //$sfpp_options['app_id'] = isset( $sfpp_options['app_id'] ) && ! empty( $sfpp_options['app_id'] ) ? $sfpp_options['app_id'] : '872972519428691';
 
     ?>
 
 	<!--
-    <input class="sfpp-api-key" type="text" id="sfpp_settings[app_id]" value="<?php echo esc_attr( $sfpp_options['app_id'] ) ?>" name="sfpp_settings[app_id]" title="<?php esc_attr__( 'Enter App ID', SIMPLE_FACEBOOK_PAGE_I18N ) ?>" />
+    <input class="sfpp-api-key" type="text" id="sfpp_settings[app_id]" value="<?php //echo esc_attr( $sfpp_options['app_id'] ) ?>" name="sfpp_settings[app_id]" title="<?php //esc_attr__( 'Enter App ID', SIMPLE_FACEBOOK_PAGE_I18N ) ?>" />
 	-->
 
     <?php
