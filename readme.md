@@ -16,6 +16,11 @@
 
 **License URI:**        [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
+[![Wordpress plugin](http://img.shields.io/wordpress/plugin/v/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/cmb2/)
+[![Wordpress](http://img.shields.io/wordpress/plugin/dt/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/cmb2/)
+[![Wordpress rating](http://img.shields.io/wordpress/plugin/r/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/cmb2/)
+
+
 Easily display Facebook's new Page feed using a customizable widget or shortcode - now supports 130+ languages!
 
 ## Description
