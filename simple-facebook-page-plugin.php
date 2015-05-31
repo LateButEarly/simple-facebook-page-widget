@@ -161,14 +161,15 @@ function sfpp_enqueue_scripts() {
 
 	global $sfpp_options;
 
+	$data = array(
+		'language'  =>  ( $sfpp_options['language'] )
+	);
+
 	//* Prepare the javascript for manipulation.
 	wp_enqueue_script( 'sfpp-fb-root', SIMPLE_FACEBOOK_PAGE_DIR . 'js/simple-facebook-page-root.js' , array( 'jquery' ) );
 
 	//* Pass the language option from the database to javascript.
-	wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', array(
-			'language'  =>  ( $sfpp_options['language'] )
-		)
-	);
+	wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', $data );
 }
 
 
@@ -608,13 +609,13 @@ function sfpp_options_page() {
                         <div id="mc_embed_signup_scroll">
 
                             <div class="mc-field-group">
-                                <input style="width:100%;padding:5px;margin-bottom:5px;" type="email" value="<?php echo esc_attr( $current_user->user_email ); ?>" name="EMAIL" class="required email" id="mce-EMAIL">
+                                <input style="width:100%;padding:5px;margin-bottom:5px;" type="email" value="<?php echo esc_attr( $current_user->user_email ); ?>" name="EMAIL" class="required email" id="mce-EMAIL" title="">
                             </div>
                             <div id="mce-responses" class="clear">
                                 <div class="response" id="mce-error-response" style="display:none"></div>
                                 <div class="response" id="mce-success-response" style="display:none"></div>
                             </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6d731c1ad40970ed85cb66f03_c0ecab8e1d" tabindex="-1" value=""></div>
+                            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6d731c1ad40970ed85cb66f03_c0ecab8e1d" tabindex="-1" value="" title=""></div>
                             <div class="clear"><input style="height: auto;width:100%;padding:5px;" type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button button-primary"></div>
                         </div>
                     </form>
