@@ -1,12 +1,19 @@
 # Simple Facebook Page Widget & Shortcode
 
 **Contributors:**       irkanu
+
 **Donate link:**        [http://dylanryan.co](http://dylanryan.co)
+
 **Tags:**               facebook, social, widget, plugin, page, feed, shortcode, facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social media, social widget, social shortcode, free, wordpress
+
 **Requires at least:**  3.0.0
+
 **Tested up to:**       4.2.3
+
 **Stable tag:**         1.4.6
+
 **License:**            GPLv2 or later
+
 **License URI:**        [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
 Easily display Facebook's new Page feed using a customizable widget or shortcode - now supports 130+ languages!
