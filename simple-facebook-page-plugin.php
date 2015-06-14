@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.6
+ * Version:        1.4.7
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -28,7 +28,7 @@
  * @package     Simple_Facebook
  * @subpackage  Simple_Facebook_Page_Plugin
  * @author      Dylan Ryan
- * @version     1.4.6
+ * @version     1.4.7
  */
 
 
@@ -51,9 +51,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.4.2 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.6' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.7' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.5' );
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.6' );
 }
 
 
@@ -255,18 +255,8 @@ function sfpp_admin_settings_menu() {
 	$capability = 'manage_options';
 	$menu_slug  = 'sfpp-settings';
 	$function   = 'sfpp_options_page';
-    //$icon       = 'dashicons-facebook';
-    //$position   = '95.1337';
-
-    //$upgrade = 'sfpp_display_upgrade';
-
-    //$admin_settings_page = add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon, $position );
 
     $admin_settings_page = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
-
-    //add_submenu_page( $menu_slug, $page_title, __( 'General', SIMPLE_FACEBOOK_PAGE_I18N ), $capability, $menu_slug, $function );
-
-    //add_submenu_page( $menu_slug, '', __( 'Upgrade to Pro', SIMPLE_FACEBOOK_PAGE_I18N ), $capability, 'sfpp_page_plugin', $upgrade );
 
 	/**
 	 * Only loads libraries required on the settings page.
@@ -332,7 +322,6 @@ function sfpp_register_settings() {
 	$basic_settings = 'sfpp_settings';
 	$settings_page  = 'sfpp-settings';
 	$basic_section  = 'sfpp_basic_section';
-    //$adv_section    = 'sfpp_adv_section';
 
 	register_setting(
 		'sfpp_settings_group',      // settings section (group) - used on the admin page itself to setup fields
@@ -353,26 +342,6 @@ function sfpp_register_settings() {
 		$settings_page,                     // setting page
         $basic_section                      // setting section
 	);
-
-	/*
-    add_settings_section(
-        $adv_section,                    // setup basic section
-        '',                              // title of section
-        'sfpp_basic_section_callback',   // display after the title & before the settings
-        $settings_page                   // settings page
-    );
-	*/
-
-    /*
-    add_settings_field(
-        $basic_settings,                    // setting name
-        '<em>(Optional)</em> App ID:',      // text before the display
-        'sfpp_api_callback',                // displays the setting
-        $settings_page,                     // setting page
-        $adv_section                        // setting section
-    );
-    */
-
 }
 
 /**
@@ -394,8 +363,6 @@ function sfpp_basic_section_callback() {
 function sfpp_language_select_callback() {
 
 	global $sfpp_options;
-
-	//$sfpp_options['language'] = isset( $sfpp_options['language'] ) && ! empty( $sfpp_options['language'] ) ? $sfpp_options['language'] : 'en_US';
 
 	?>
 
@@ -542,6 +509,8 @@ function sfpp_language_select_callback() {
 
 /**
  * TODO
+ *
+ * @since TODO
  */
 function sfpp_api_callback() {
 
@@ -642,6 +611,12 @@ function sfpp_options_page() {
 	echo ob_get_clean();
 }
 
+
+/**
+ * TODO
+ *
+ * @since 1.4.7
+ */
 function sfpp_display_upgrade() {
 
 }
@@ -787,15 +762,17 @@ function sfpp_get_admin_querystring_array() {
  * This admin notice is only displayed once 10 days after plugin activation.
  *
  * @since 1.4.2
+ *
+ * @modified 1.4.7 - Added bit.ly link for tracking.
  */
 function sfpp_display_admin_notice() {
 
 	$query_params = sfpp_get_admin_querystring_array();
 	$query_string = '?' . http_build_query( array_merge( $query_params, array( SIMPLE_FACEBOOK_PAGE_NOTICE_KEY => '1' ) ) );
 
-	echo '<div class="updated"><p>';
-	printf( __( "You've been using <b>Simple Facebook Page Plugin & Shortcode</b> for some time now, could you please give it a review at wordpress.org? <br /><br /> <a href='%s' target='_blank'>Yes, take me there!</a> - <a href='%s'>I've already done this!</a>" ), 'https://wordpress.org/support/view/plugin-reviews/simple-facebook-twitter-widget', $query_string );
-	echo "</p></div>";
+    echo '<div class="updated"><p>';
+    printf( __( "You've been using <b>Simple Facebook Page Plugin & Shortcode</b> for some time now. I hope you are enjoying it! Do you mind leaving a quick review at WordPress.org? <br /><br /> <a href='%s' class='button button-primary button-large' target='_blank'>Yes, take me there!</a> <a href='%s' class='button button-secondary button-large'>I've already done this!</a>" ), 'http://bit.ly/1ecfsVt', $query_string );
+    echo "</p></div>";
 }
 
 
