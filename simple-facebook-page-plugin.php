@@ -174,6 +174,23 @@ function sfpp_enqueue_scripts() {
 
 
 /**
+ * Async helper function.
+ *
+ * http://wordpress.stackexchange.com/questions/38319/how-to-add-defer-defer-tag-in-plugin-javascripts/38335#38335
+ *
+ * @since 1.4.7
+ */
+add_filter( 'script_loader_tag', 'sfpp_async_loader', 10, 2 );
+function sfpp_async_loader( $tag, $handle ) {
+
+    if ( 'sfpp-fb-root' !== $handle )
+        return $tag;
+
+    return str_replace( ' src', ' async="async" src', $tag );
+}
+
+
+/**
  * Create the [facebook-page] shortcode.
  *
  * @since 1.0.0
