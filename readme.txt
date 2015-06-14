@@ -84,6 +84,7 @@ Nope, but you can if you'd like.
 == Changelog ==
 
 = 1.4.7 =
+* Performance optimization (Facebook script called asynchronously.)
 * Code cleanup
 
 = 1.4.6 =
@@ -139,6 +140,9 @@ Nope, but you can if you'd like.
 * Widget & Shortcode Fully Functional
 
 == Upgrade Notice ==
+
+= 1.4.7 =
+* IMPORTANT: Major performance boost on Facebook script. (It's now called asynchronously!)
 
 = 1.4.3 =
 * IMPORTANT: Please update to fix widget alignment outputting invalid HTML.
