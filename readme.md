@@ -8,9 +8,9 @@
 
 **Requires at least:**  3.0.0
 
-**Tested up to:**       4.2.3
+**Tested up to:**       4.3.1
 
-**Stable tag:**         1.4.7
+**Stable tag:**         1.4.8
 
 **License:**            GPLv2 or later
 
