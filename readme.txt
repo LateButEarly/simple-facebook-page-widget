@@ -4,7 +4,7 @@ Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
 Tags: facebook, social, widget, plugin, page, feed, shortcode, facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social media, social widget, social shortcode, free, wordpress
 Requires at least: 3.0.0
 Tested up to: 4.3.1
-Stable tag: 1.4.8
+Stable tag: 1.4.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -83,7 +83,7 @@ Nope, but you can if you'd like.
 
 == Changelog ==
 
-= 1.4.8 =
+= 1.4.8.1 =
 * Tested WordPress 4.3.1
 * Removed Ads
 

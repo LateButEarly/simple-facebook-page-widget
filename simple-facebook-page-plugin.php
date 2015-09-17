@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.8
+ * Version:        1.4.8.1
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -28,7 +28,7 @@
  * @package     Simple_Facebook
  * @subpackage  Simple_Facebook_Page_Plugin
  * @author      Dylan Ryan
- * @version     1.4.8
+ * @version     1.4.8.1
  */
 
 
