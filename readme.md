@@ -1,31 +1,14 @@
 # Simple Facebook Page Widget & Shortcode
-
-**Contributors:**       irkanu
-
-**Donate link:**        [http://dylanryan.co](http://dylanryan.co)
-
-**Tags:**               facebook, social, widget, plugin, page, feed, shortcode, facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social media, social widget, social shortcode, free, wordpress
-
-**Requires at least:**  3.0.0
-
-**Tested up to:**       4.3.1
-
-**Stable tag:**         1.4.8
-
-**License:**            GPLv2 or later
-
-**License URI:**        [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
-
-[![Wordpress plugin](http://img.shields.io/wordpress/plugin/v/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/simple-facebook-twitter-widget/)
-[![Wordpress](http://img.shields.io/wordpress/plugin/dt/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/simple-facebook-twitter-widget/)
-[![Wordpress rating](http://img.shields.io/wordpress/plugin/r/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/simple-facebook-twitter-widget/)
+ Author | Version | Downloads | Rating | License
+----- | ----- | ----- | ----- | -----
+ Dylan Ryan | [![Wordpress plugin](http://img.shields.io/wordpress/plugin/v/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/simple-facebook-twitter-widget/) | [![Wordpress](http://img.shields.io/wordpress/plugin/dt/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/simple-facebook-twitter-widget/) | [![Wordpress rating](http://img.shields.io/wordpress/plugin/r/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/simple-facebook-twitter-widget/) | GPLv2 or later 
 
 
 Easily display Facebook's new Page feed using a customizable widget or shortcode - now supports 130+ languages!
 
 ## Description
 ### Overview
-This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. Many sites are currently running Facebook Like Boxes which will become **deprecated on June 23rd, 2015**. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
+This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
 
 ### Widget Instructions
 1. Add a customizable Facebook widget through Appearance -> Widgets.
