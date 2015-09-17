@@ -40,7 +40,7 @@
  * @since 1.0.0
  */
 if ( ! defined( 'WPINC' ) ) {
-	die;
+    die;
 }
 
 
@@ -53,7 +53,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.8' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.7' );
+    define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.7' );
 }
 
 
@@ -112,10 +112,10 @@ $sfpp_options = get_option( 'sfpp_settings' );
 register_activation_hook( __FILE__, 'sfpp_activation' );
 function sfpp_activation() {
 
-	//* Last constants
-	define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME',  'Simple Facebook Page Widget & Shortcode' );
+    //* Last constants
+    define( 'SIMPLE_FACEBOOK_PAGE_WIDGET_PLUGIN_NAME',  'Simple Facebook Page Widget & Shortcode' );
 
-	add_option( SIMPLE_FACEBOOK_PAGE_KEY, SIMPLE_FACEBOOK_PAGE_VERSION );
+    add_option( SIMPLE_FACEBOOK_PAGE_KEY, SIMPLE_FACEBOOK_PAGE_VERSION );
 }
 
 
@@ -130,7 +130,7 @@ function sfpp_activation() {
 add_action( 'init', 'sfpp_textdomain' );
 function sfpp_textdomain() {
 
-	load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    load_plugin_textdomain( SIMPLE_FACEBOOK_PAGE_I18N, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
 
@@ -144,9 +144,9 @@ function sfpp_textdomain() {
 register_uninstall_hook( SIMPLE_FACEBOOK_PAGE_FILE, 'sfpp_uninstall' );
 function sfpp_uninstall() {
 
-	delete_option( SIMPLE_FACEBOOK_PAGE_KEY ); // remove footprint
+    delete_option( SIMPLE_FACEBOOK_PAGE_KEY ); // remove footprint
 
-	delete_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE ); // remove install date
+    delete_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE ); // remove install date
 }
 
 /**
@@ -159,17 +159,17 @@ function sfpp_uninstall() {
 add_action( 'wp_enqueue_scripts', 'sfpp_enqueue_scripts' );
 function sfpp_enqueue_scripts() {
 
-	global $sfpp_options;
+    global $sfpp_options;
 
-	$data = array(
-		'language'  =>  ( $sfpp_options['language'] )
-	);
+    $data = array(
+        'language'  =>  ( $sfpp_options['language'] )
+    );
 
-	//* Prepare the javascript for manipulation.
-	wp_enqueue_script( 'sfpp-fb-root', SIMPLE_FACEBOOK_PAGE_DIR . 'js/simple-facebook-page-root.js' , array( 'jquery' ) );
+    //* Prepare the javascript for manipulation.
+    wp_enqueue_script( 'sfpp-fb-root', SIMPLE_FACEBOOK_PAGE_DIR . 'js/simple-facebook-page-root.js' , array( 'jquery' ) );
 
-	//* Pass the language option from the database to javascript.
-	wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', $data );
+    //* Pass the language option from the database to javascript.
+    wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', $data );
 }
 
 
@@ -206,38 +206,38 @@ function sfpp_async_loader( $tag, $handle ) {
 add_shortcode( 'facebook-page', 'sfpp_shortcode' );
 function sfpp_shortcode( $atts ) {
 
-	$output = '';
+    $output = '';
 
-	$facebook_page_atts = shortcode_atts( array(
-		'href'          => '',
-		'width'         => '340',
-		'height'        => '500',
-		'hide_cover'    => 'false',
-		'show_facepile' => 'false',
-		'show_posts'    => 'true',
-		'align'         => 'initial',
-	), $atts );
+    $facebook_page_atts = shortcode_atts( array(
+        'href'          => '',
+        'width'         => '340',
+        'height'        => '500',
+        'hide_cover'    => 'false',
+        'show_facepile' => 'false',
+        'show_posts'    => 'true',
+        'align'         => 'initial',
+    ), $atts );
 
-	$output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
+    $output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
 
-	//* Wrapper for alignment
-	$output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $facebook_page_atts['align'] ) . ';">';
+    //* Wrapper for alignment
+    $output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $facebook_page_atts['align'] ) . ';">';
 
-	//* Main Facebook Feed
-	$output .= '<div class="fb-page" ';
-	$output .= 'data-href="https://facebook.com/' . esc_attr( $facebook_page_atts['href'] ) . '" ';
-	$output .= 'data-width="' . esc_attr( $facebook_page_atts['width'] ) . '" ';
-	$output .= 'data-height="' . esc_attr( $facebook_page_atts['height'] ) . '" ';
-	$output .= 'data-hide-cover="' . esc_attr( $facebook_page_atts['hide_cover'] ) . '" ';
-	$output .= 'data-show-facepile="' . esc_attr( $facebook_page_atts['show_facepile'] ) . '" ';
-	$output .= 'data-show-posts="' . esc_attr( $facebook_page_atts['show_posts'] ) . '">';
-	$output .= '</div>';
+    //* Main Facebook Feed
+    $output .= '<div class="fb-page" ';
+    $output .= 'data-href="https://facebook.com/' . esc_attr( $facebook_page_atts['href'] ) . '" ';
+    $output .= 'data-width="' . esc_attr( $facebook_page_atts['width'] ) . '" ';
+    $output .= 'data-height="' . esc_attr( $facebook_page_atts['height'] ) . '" ';
+    $output .= 'data-hide-cover="' . esc_attr( $facebook_page_atts['hide_cover'] ) . '" ';
+    $output .= 'data-show-facepile="' . esc_attr( $facebook_page_atts['show_facepile'] ) . '" ';
+    $output .= 'data-show-posts="' . esc_attr( $facebook_page_atts['show_posts'] ) . '">';
+    $output .= '</div>';
 
-	$output .= '</div>';
+    $output .= '</div>';
 
-	$output .= '<!-- End Simple Facebook Page Plugin (Shortcode) -->';
+    $output .= '<!-- End Simple Facebook Page Plugin (Shortcode) -->';
 
-	return $output;
+    return $output;
 }
 
 
@@ -251,7 +251,7 @@ function sfpp_shortcode( $atts ) {
  */
 add_action( 'widgets_init',
 
-	create_function( '', 'return register_widget("Simple_Facebook_Page_Feed_Widget");' )
+    create_function( '', 'return register_widget("Simple_Facebook_Page_Feed_Widget");' )
 );
 
 
@@ -267,21 +267,21 @@ add_action( 'widgets_init',
 add_action( 'admin_menu', 'sfpp_admin_settings_menu' );
 function sfpp_admin_settings_menu() {
 
-	$page_title = 'Simple Facebook Settings';
-	$menu_title = 'Simple Facebook Options';
-	$capability = 'manage_options';
-	$menu_slug  = 'sfpp-settings';
-	$function   = 'sfpp_options_page';
+    $page_title = 'Simple Facebook Settings';
+    $menu_title = 'Simple Facebook Options';
+    $capability = 'manage_options';
+    $menu_slug  = 'sfpp-settings';
+    $function   = 'sfpp_options_page';
 
     $admin_settings_page = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
 
-	/**
-	 * Only loads libraries required on the settings page.
-	 * http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
-	 *
-	 * @since 1.4.2
-	 */
-	add_action( 'admin_print_scripts-' . $admin_settings_page, 'sfpp_admin_enqueue_scripts_chosen' );
+    /**
+     * Only loads libraries required on the settings page.
+     * http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
+     *
+     * @since 1.4.2
+     */
+    add_action( 'admin_print_scripts-' . $admin_settings_page, 'sfpp_admin_enqueue_scripts_chosen' );
 }
 
 
@@ -295,17 +295,17 @@ function sfpp_admin_settings_menu() {
  */
 function sfpp_admin_enqueue_scripts_chosen() {
 
-	//* Chosen script
-	wp_enqueue_script( 'chosen-js',     SIMPLE_FACEBOOK_PAGE_LIB .  'chosen/chosen.jquery.min.js', array( 'jquery' ) );
+    //* Chosen script
+    wp_enqueue_script( 'chosen-js',     SIMPLE_FACEBOOK_PAGE_LIB .  'chosen/chosen.jquery.min.js', array( 'jquery' ) );
 
-	//* Chosen stylesheet
-	wp_enqueue_style( 'chosen-style',   SIMPLE_FACEBOOK_PAGE_LIB .  'chosen/chosen.min.css' );
+    //* Chosen stylesheet
+    wp_enqueue_style( 'chosen-style',   SIMPLE_FACEBOOK_PAGE_LIB .  'chosen/chosen.min.css' );
 
-	//* Custom admin javascript
-	wp_enqueue_script( 'admin-js',      SIMPLE_FACEBOOK_PAGE_DIR .  'js/admin.js', array( 'jquery' ) );
+    //* Custom admin javascript
+    wp_enqueue_script( 'admin-js',      SIMPLE_FACEBOOK_PAGE_DIR .  'js/admin.js', array( 'jquery' ) );
 
-	//* Custom admin stylesheet
-	wp_enqueue_style( 'admin-css',      SIMPLE_FACEBOOK_PAGE_DIR .  'css/admin.css' );
+    //* Custom admin stylesheet
+    wp_enqueue_style( 'admin-css',      SIMPLE_FACEBOOK_PAGE_DIR .  'css/admin.css' );
 }
 
 
@@ -321,9 +321,9 @@ function sfpp_admin_enqueue_scripts_chosen() {
 add_filter( 'plugin_action_links_' . plugin_basename( SIMPLE_FACEBOOK_PAGE_FILE ), 'sfpp_quick_settings_link' );
 function sfpp_quick_settings_link( $actions ) {
 
-	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=sfpp-settings' ), __( 'General Settings' ) ) );
+    array_unshift( $actions, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=sfpp-settings' ), __( 'General Settings' ) ) );
 
-	return $actions;
+    return $actions;
 }
 
 
@@ -336,29 +336,29 @@ function sfpp_quick_settings_link( $actions ) {
 add_action( 'admin_init', 'sfpp_register_settings' );
 function sfpp_register_settings() {
 
-	$basic_settings = 'sfpp_settings';
-	$settings_page  = 'sfpp-settings';
-	$basic_section  = 'sfpp_basic_section';
+    $basic_settings = 'sfpp_settings';
+    $settings_page  = 'sfpp-settings';
+    $basic_section  = 'sfpp_basic_section';
 
-	register_setting(
-		'sfpp_settings_group',      // settings section (group) - used on the admin page itself to setup fields
+    register_setting(
+        'sfpp_settings_group',      // settings section (group) - used on the admin page itself to setup fields
         $basic_settings             // setting name - get_option() to retrieve from database - retrieve it and store it in global variable
-	);
+    );
 
-	add_settings_section(
+    add_settings_section(
         $basic_section,                  // setup basic section
-		'',                              // title of section
-		'sfpp_basic_section_callback',   // display after the title & before the settings
-		$settings_page                   // settings page
-	);
+        '',                              // title of section
+        'sfpp_basic_section_callback',   // display after the title & before the settings
+        $settings_page                   // settings page
+    );
 
-	add_settings_field(
+    add_settings_field(
         $basic_settings,                    // setting name
-		'Select a language:',               // text before the display
-		'sfpp_language_select_callback',    // displays the setting
-		$settings_page,                     // setting page
+        'Select a language:',               // text before the display
+        'sfpp_language_select_callback',    // displays the setting
+        $settings_page,                     // setting page
         $basic_section                      // setting section
-	);
+    );
 }
 
 /**
@@ -379,9 +379,9 @@ function sfpp_basic_section_callback() {
  */
 function sfpp_language_select_callback() {
 
-	global $sfpp_options;
+    global $sfpp_options;
 
-	?>
+    ?>
 
 	<select id="sfpp_settings[language]" class="chosen-select" name="sfpp_settings[language]" title="<?php esc_attr__( 'Select language', SIMPLE_FACEBOOK_PAGE_I18N ) ?>">
 		<option value="af_ZA" <?php selected( $sfpp_options['language'], 'af_ZA' ); ?>>Afrikaans</option>
@@ -556,13 +556,13 @@ function sfpp_options_page() {
 
     get_currentuserinfo();
 
-	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( 'You do not have sufficient permissions to access this page.' );
-	}
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_die( 'You do not have sufficient permissions to access this page.' );
+    }
 
-	ob_start();
+    ob_start();
 
-	?>
+    ?>
 
 	<div class="wrap">
 
@@ -613,7 +613,7 @@ function sfpp_options_page() {
 	</div>
 
 	<?php
-	echo ob_get_clean();
+    echo ob_get_clean();
 }
 
 
@@ -635,12 +635,12 @@ function sfpp_display_upgrade() {
 register_activation_hook( __FILE__, 'sfpp_insert_install_date' );
 function sfpp_insert_install_date() {
 
-	$datetime_now = new DateTime();     // get the current date
-	$date_string  = $datetime_now->format( 'Y-m-d' );   // make it pretty
+    $datetime_now = new DateTime();     // get the current date
+    $date_string  = $datetime_now->format( 'Y-m-d' );   // make it pretty
 
-	add_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, $date_string, '', 'no' );   // add the install date into the site options
+    add_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, $date_string, '', 'no' );   // add the install date into the site options
 
-	return $date_string;    // insert install date on plugin activation
+    return $date_string;    // insert install date on plugin activation
 }
 
 
@@ -651,15 +651,15 @@ function sfpp_insert_install_date() {
  */
 function sfpp_get_install_date() {
 
-	$date_string = get_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, '' );    // retrieve activation date
+    $date_string = get_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE, '' );    // retrieve activation date
 
-	if ( $date_string == '' ) {
+    if ( $date_string == '' ) {
 
-		$date_string = sfpp_insert_install_date();  // there is no install date, plugin was installed before version 1.2.0. add it now.
+        $date_string = sfpp_insert_install_date();  // there is no install date, plugin was installed before version 1.2.0. add it now.
 
-	}
+    }
 
-	return new DateTime( $date_string );    // return plugin activation date
+    return new DateTime( $date_string );    // return plugin activation date
 }
 
 
@@ -673,36 +673,36 @@ function sfpp_get_install_date() {
 add_action( 'plugins_loaded', 'sfpp_admin_notices' );
 function sfpp_admin_notices() {
 
-	/**
-	 * Check if current user is an admin & abort if they are not.
-	 */
-	if ( ! current_user_can( 'manage_options' ) ) {
-		return false;
-	}
+    /**
+     * Check if current user is an admin & abort if they are not.
+     */
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return false;
+    }
 
-	add_action( 'admin_init', 'sfpp_catch_hide_notice' );  // admin notice hide catch
+    add_action( 'admin_init', 'sfpp_catch_hide_notice' );  // admin notice hide catch
 
-	/**
-	 * Check if admin notice has already been hidden.
-	 */
-	$current_user = wp_get_current_user();
-	$hide_notice  = get_user_meta( $current_user->ID, SIMPLE_FACEBOOK_PAGE_NOTICE_KEY, true );
+    /**
+     * Check if admin notice has already been hidden.
+     */
+    $current_user = wp_get_current_user();
+    $hide_notice  = get_user_meta( $current_user->ID, SIMPLE_FACEBOOK_PAGE_NOTICE_KEY, true );
 
-	if ( current_user_can( 'install_plugins' ) && $hide_notice == '' ) {
+    if ( current_user_can( 'install_plugins' ) && $hide_notice == '' ) {
 
-		$datetime_install = sfpp_get_install_date();    // get installation date
-		$datetime_past    = new DateTime( '-10 days' ); // set 10 day difference
+        $datetime_install = sfpp_get_install_date();    // get installation date
+        $datetime_past    = new DateTime( '-10 days' ); // set 10 day difference
 
-		if ( $datetime_past >= $datetime_install ) {
+        if ( $datetime_past >= $datetime_install ) {
 
-			/**
-			 * Display admin notice 10 days after activation.
-			 */
-			add_action( 'admin_notices', 'sfpp_display_admin_notice' );
+            /**
+             * Display admin notice 10 days after activation.
+             */
+            add_action( 'admin_notices', 'sfpp_display_admin_notice' );
 
-		} // end install date check
+        } // end install date check
 
-	} // end admin check & hidden notice check
+    } // end admin check & hidden notice check
 
 }
 
@@ -714,35 +714,35 @@ function sfpp_admin_notices() {
  */
 function sfpp_catch_hide_notice() {
 
-	if ( isset( $_GET[SIMPLE_FACEBOOK_PAGE_NOTICE_KEY] ) && current_user_can( 'install_plugins' ) ) {
+    if ( isset( $_GET[SIMPLE_FACEBOOK_PAGE_NOTICE_KEY] ) && current_user_can( 'install_plugins' ) ) {
 
-		//* Add user meta
-		global $current_user;
+        //* Add user meta
+        global $current_user;
 
-		add_user_meta( $current_user->ID, SIMPLE_FACEBOOK_PAGE_NOTICE_KEY, '1', true );
+        add_user_meta( $current_user->ID, SIMPLE_FACEBOOK_PAGE_NOTICE_KEY, '1', true );
 
-		//* Build redirect URL
-		$query_params = sfpp_get_admin_querystring_array();
+        //* Build redirect URL
+        $query_params = sfpp_get_admin_querystring_array();
 
-		unset( $query_params[SIMPLE_FACEBOOK_PAGE_NOTICE_KEY] );
+        unset( $query_params[SIMPLE_FACEBOOK_PAGE_NOTICE_KEY] );
 
-		$query_string = http_build_query( $query_params );
+        $query_string = http_build_query( $query_params );
 
-		if ( $query_string != '' ) {
-			$query_string = '?' . $query_string;
-		}
+        if ( $query_string != '' ) {
+            $query_string = '?' . $query_string;
+        }
 
-		$redirect_url = 'http';
-		if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) {
-			$redirect_url .= 's';
-		}
+        $redirect_url = 'http';
+        if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) {
+            $redirect_url .= 's';
+        }
 
-		$redirect_url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . $query_string;
+        $redirect_url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . $query_string;
 
-		//* Redirect
-		wp_redirect( $redirect_url );
-		exit;
-	}
+        //* Redirect
+        wp_redirect( $redirect_url );
+        exit;
+    }
 }
 
 
@@ -755,9 +755,9 @@ function sfpp_catch_hide_notice() {
  */
 function sfpp_get_admin_querystring_array() {
 
-	parse_str( $_SERVER['QUERY_STRING'], $params );
+    parse_str( $_SERVER['QUERY_STRING'], $params );
 
-	return $params;
+    return $params;
 }
 
 
@@ -772,8 +772,8 @@ function sfpp_get_admin_querystring_array() {
  */
 function sfpp_display_admin_notice() {
 
-	$query_params = sfpp_get_admin_querystring_array();
-	$query_string = '?' . http_build_query( array_merge( $query_params, array( SIMPLE_FACEBOOK_PAGE_NOTICE_KEY => '1' ) ) );
+    $query_params = sfpp_get_admin_querystring_array();
+    $query_string = '?' . http_build_query( array_merge( $query_params, array( SIMPLE_FACEBOOK_PAGE_NOTICE_KEY => '1' ) ) );
 
     echo '<div class="updated"><p>';
     printf( __( "You've been using <b>Simple Facebook Page Plugin & Shortcode</b> for some time now. I hope you are enjoying it! Do you mind leaving a quick review at WordPress.org? <br /><br /> <a href='%s' class='button button-primary button-large' target='_blank'>Yes, take me there!</a> <a href='%s' class='button button-secondary button-large'>I've already done this!</a>" ), 'http://bit.ly/1ecfsVt', $query_string );
@@ -792,156 +792,156 @@ function sfpp_display_admin_notice() {
  */
 class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 
-	/**
-	 * Register widget with WordPress.
-	 */
-	function __construct() {
-		parent::__construct(
-			'Simple_Facebook_Page_Feed_Widget',
-			__( 'Simple Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ),
-			array( 'description' => __( 'Easily display your Facebook Page feed.', SIMPLE_FACEBOOK_PAGE_I18N ), )
-		);
-	}
+    /**
+     * Register widget with WordPress.
+     */
+    function __construct() {
+        parent::__construct(
+            'Simple_Facebook_Page_Feed_Widget',
+            __( 'Simple Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ),
+            array( 'description' => __( 'Easily display your Facebook Page feed.', SIMPLE_FACEBOOK_PAGE_I18N ), )
+        );
+    }
 
-	/**
-	 * Front-end display of widget.
-	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
-	 */
-	public function widget( $args, $instance ) {
+    /**
+     * Front-end display of widget.
+     *
+     * @see WP_Widget::widget()
+     *
+     * @param array $args     Widget arguments.
+     * @param array $instance Saved values from database.
+     */
+    public function widget( $args, $instance ) {
 
 
-		//* Apply any styles before the widget.
-		if ( array_key_exists( 'before_widget', $args ) ) {
-			echo $args['before_widget'];
-		}
+        //* Apply any styles before the widget.
+        if ( array_key_exists( 'before_widget', $args ) ) {
+            echo $args['before_widget'];
+        }
 
-		//* Apply any styles before & after widget title.
-		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
-		}
+        //* Apply any styles before & after widget title.
+        if ( ! empty( $instance['title'] ) ) {
+            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+        }
 
-		$output = '';
+        $output = '';
 
-		//* Comment for tracking/debugging
-		$output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
+        //* Comment for tracking/debugging
+        $output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
 
-		//* Wrapper for alignment
-		$output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $instance['align'] ) . ';">';
+        //* Wrapper for alignment
+        $output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $instance['align'] ) . ';">';
 
-		//* Main Facebook Feed
-		$output .= '<div class="fb-page" ';
-		$output .= 'data-href="' . esc_attr( $instance['href'] ) . '" ';
-		$output .= 'data-width="' . esc_attr( $instance['width'] ) . '" ';
-		$output .= 'data-height="' . esc_attr( $instance['height'] ) . '" ';
-		$output .= 'data-hide-cover="' . esc_attr( $instance['show_cover'] ) . '" ';
-		$output .= 'data-show-facepile="' . esc_attr( $instance['show_facepile'] ) . '" ';
-		$output .= 'data-show-posts="' . esc_attr( $instance['show_posts'] ) . '">';
-		$output .= '</div>';
+        //* Main Facebook Feed
+        $output .= '<div class="fb-page" ';
+        $output .= 'data-href="' . esc_attr( $instance['href'] ) . '" ';
+        $output .= 'data-width="' . esc_attr( $instance['width'] ) . '" ';
+        $output .= 'data-height="' . esc_attr( $instance['height'] ) . '" ';
+        $output .= 'data-hide-cover="' . esc_attr( $instance['show_cover'] ) . '" ';
+        $output .= 'data-show-facepile="' . esc_attr( $instance['show_facepile'] ) . '" ';
+        $output .= 'data-show-posts="' . esc_attr( $instance['show_posts'] ) . '">';
+        $output .= '</div>';
 
-		// end wrapper
-		$output .= '</div>';
+        // end wrapper
+        $output .= '</div>';
 
-		// end comment
-		$output .= '<!-- End Simple Facebook Page Plugin (Widget) -->';
+        // end comment
+        $output .= '<!-- End Simple Facebook Page Plugin (Widget) -->';
 
-		echo $output;
+        echo $output;
 
-		if ( array_key_exists( 'after_widget', $args ) ) {
-			echo $args['after_widget'];
-		}
+        if ( array_key_exists( 'after_widget', $args ) ) {
+            echo $args['after_widget'];
+        }
 
-	}
+    }
 
-	/**
-	 * Back-end widget form.
-	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
-	 *
-	 * @return string|void
-	 */
-	public function form( $instance ) {
+    /**
+     * Back-end widget form.
+     *
+     * @see WP_Widget::form()
+     *
+     * @param array $instance Previously saved values from database.
+     *
+     * @return string|void
+     */
+    public function form( $instance ) {
 
-		/**
-		 * Set up the default form values.
-		 *
-		 * @var $defaults
-		 */
-		$defaults = $this->sfpp_defaults();
+        /**
+         * Set up the default form values.
+         *
+         * @var $defaults
+         */
+        $defaults = $this->sfpp_defaults();
 
-		/**
-		 * Merge the user-selected arguments with the defaults.
-		 *
-		 * @var $instance
-		 */
-		$instance = wp_parse_args( (array) $instance, $defaults );
+        /**
+         * Merge the user-selected arguments with the defaults.
+         *
+         * @var $instance
+         */
+        $instance = wp_parse_args( (array) $instance, $defaults );
 
-		/**
-		 * The Widget Title (optional)
-		 *
-		 * @var string $title
-		 */
-		$title = strip_tags( $instance['title'] );
+        /**
+         * The Widget Title (optional)
+         *
+         * @var string $title
+         */
+        $title = strip_tags( $instance['title'] );
 
-		/**
-		 * The URL of the Facebook Page (required)
-		 *
-		 * @var $href string This is the only required value.
-		 */
-		$href = strip_tags( $instance['href'] );
+        /**
+         * The URL of the Facebook Page (required)
+         *
+         * @var $href string This is the only required value.
+         */
+        $href = strip_tags( $instance['href'] );
 
-		/**
-		 * The pixel width of the plugin.
-		 * Min. is 280
-		 * Max. is 500
-		 *
-		 * @var $width array Defaults to 340.
-		 */
-		$width = range( 280, 500, 20 );
+        /**
+         * The pixel width of the plugin.
+         * Min. is 280
+         * Max. is 500
+         *
+         * @var $width array Defaults to 340.
+         */
+        $width = range( 280, 500, 20 );
 
-		/**
-		 * The maximum pixel height of the plugin.
-		 * Min. is 130
-		 *
-		 * @var $height array Defaults to 500.
-		 */
-		$height = range( 125, 800, 25 );
+        /**
+         * The maximum pixel height of the plugin.
+         * Min. is 130
+         *
+         * @var $height array Defaults to 500.
+         */
+        $height = range( 125, 800, 25 );
 
-		/**
-		 * Show cover photo in the header
-		 */
-		$show_cover = array( 'true' => 'Yes', 'false' => 'No' );
+        /**
+         * Show cover photo in the header
+         */
+        $show_cover = array( 'true' => 'Yes', 'false' => 'No' );
 
-		/**
-		 * Show profile photos when friends like this
-		 */
-		$show_facepile = array( 'true' => 'Yes', 'false' => 'No' );
+        /**
+         * Show profile photos when friends like this
+         */
+        $show_facepile = array( 'true' => 'Yes', 'false' => 'No' );
 
-		/**
-		 * Show posts from the Page's timeline.
-		 */
-		$show_posts = array( 'true' => 'Yes', 'false' => 'No' );
+        /**
+         * Show posts from the Page's timeline.
+         */
+        $show_posts = array( 'true' => 'Yes', 'false' => 'No' );
 
-		/**
-		 * Alignment of the widget.
-		 *
-		 * @var $align array Allows initial, left, center, and right text-align.
-		 */
-		$align = array( 'initial' => 'None', 'left' => 'Left', 'center' => 'Center', 'right' => 'Right' );
+        /**
+         * Alignment of the widget.
+         *
+         * @var $align array Allows initial, left, center, and right text-align.
+         */
+        $align = array( 'initial' => 'None', 'left' => 'Left', 'center' => 'Center', 'right' => 'Right' );
 
-		/**
-		 * Facebook wants to be difficult and use the term "Hide Cover" instead of show cover.
-		 */
-		$reverse_boolean = array ( 0 => 'Yes', 1 => 'No' );
+        /**
+         * Facebook wants to be difficult and use the term "Hide Cover" instead of show cover.
+         */
+        $reverse_boolean = array ( 0 => 'Yes', 1 => 'No' );
 
-		$boolean = array( 1 => 'Yes', 0 => 'No' );
+        $boolean = array( 1 => 'Yes', 0 => 'No' );
 
-		?>
+        ?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
@@ -999,59 +999,59 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 			</select>
 		</p>
 	<?php
-	}
+    }
 
-	/**
-	 * Sanitize widget form values as they are saved.
-	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
-	 */
-	public function update( $new_instance, $old_instance ) {
+    /**
+     * Sanitize widget form values as they are saved.
+     *
+     * @see WP_Widget::update()
+     *
+     * @param array $new_instance Values just sent to be saved.
+     * @param array $old_instance Previously saved values from database.
+     *
+     * @return array Updated safe values to be saved.
+     */
+    public function update( $new_instance, $old_instance ) {
 
-		/**
-		 * Default arguments.
-		 *
-		 * @var array $defaults
-		 */
-		$defaults = $this->sfpp_defaults();
+        /**
+         * Default arguments.
+         *
+         * @var array $defaults
+         */
+        $defaults = $this->sfpp_defaults();
 
-		/**
-		 * Update logic.
-		 *
-		 * @var array $instance
-		 */
-		$instance = $old_instance;
-		foreach ( $defaults as $key => $val ) {
-			$instance[ $key ] = strip_tags( $new_instance[ $key ] );
-		}
+        /**
+         * Update logic.
+         *
+         * @var array $instance
+         */
+        $instance = $old_instance;
+        foreach ( $defaults as $key => $val ) {
+            $instance[ $key ] = strip_tags( $new_instance[ $key ] );
+        }
 
-		return $instance;
-	}
+        return $instance;
+    }
 
-	/**
-	 * Set up defaults form values in an array.
-	 *
-	 * @return array
-	 */
-	function sfpp_defaults() {
+    /**
+     * Set up defaults form values in an array.
+     *
+     * @return array
+     */
+    function sfpp_defaults() {
 
-		$defaults = array(
-			'title'         => esc_attr__( 'Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ),
-			'href'          => 'https://www.facebook.com/facebook',
-			'width'         => '340',
-			'height'        => '500',
-			'show_cover'    => '0',
-			'show_facepile' => '0',
-			'show_posts'    => '1',
-			'align'         => 'initial',
-		);
+        $defaults = array(
+            'title'         => esc_attr__( 'Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ),
+            'href'          => 'https://www.facebook.com/facebook',
+            'width'         => '340',
+            'height'        => '500',
+            'show_cover'    => '0',
+            'show_facepile' => '0',
+            'show_posts'    => '1',
+            'align'         => 'initial',
+        );
 
-		return $defaults;
-	}
+        return $defaults;
+    }
 
 }
