@@ -162,7 +162,7 @@ function sfpp_enqueue_scripts() {
 	global $sfpp_options;
 
 	$data = array(
-		'language' => ( $sfpp_options['sfpp_language'] )
+		'language' => ( $sfpp_options['language'] )
 	);
 
 	if ( ! isset( $sfpp_options['sfpp_facebook_sdk'] ) ) :
@@ -657,36 +657,37 @@ function sfpp_options_page() {
 			<div id="banner" class="sfpp-align-left">
 				<h3>Subscribe for Updates!</h3>
 
-				<div id="mc_embed_signup">
-					<form action="//seoconsultingnc.us5.list-manage.com/subscribe/post?u=6d731c1ad40970ed85cb66f03&amp;id=c0ecab8e1d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-						<div id="mc_embed_signup_scroll">
-							<div class="mc-field-group">
-								<input style="width:100%;padding:10px;margin: 1em 0;" type="email" value="<?php echo esc_attr( $current_user->user_email ); ?>" name="EMAIL" class="required email" id="mce-EMAIL" title="">
+				<div class="banner_wrap">
+					<div id="mc_embed_signup">
+						<form action="//seoconsultingnc.us5.list-manage.com/subscribe/post?u=6d731c1ad40970ed85cb66f03&amp;id=c0ecab8e1d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+							<div id="mc_embed_signup_scroll">
+								<div class="mc-field-group">
+									<input style="width:100%;padding:10px;margin: 1em 0;" type="email" value="<?php echo esc_attr( $current_user->user_email ); ?>" name="EMAIL" class="required email" id="mce-EMAIL" title="">
+								</div>
+								<div id="mce-responses" class="clear">
+									<div class="response" id="mce-error-response" style="display:none"></div>
+									<div class="response" id="mce-success-response" style="display:none"></div>
+								</div>
+								<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+								<div style="position: absolute; left: -5000px;">
+									<input type="text" name="b_6d731c1ad40970ed85cb66f03_c0ecab8e1d" tabindex="-1" value="" title="">
+								</div>
+								<div class="clear">
+									<input style="height: auto;width:100%;padding:5px;" type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button button-primary">
+								</div>
 							</div>
-							<div id="mce-responses" class="clear">
-								<div class="response" id="mce-error-response" style="display:none"></div>
-								<div class="response" id="mce-success-response" style="display:none"></div>
-							</div>
-							<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-							<div style="position: absolute; left: -5000px;">
-								<input type="text" name="b_6d731c1ad40970ed85cb66f03_c0ecab8e1d" tabindex="-1" value="" title="">
-							</div>
-							<div class="clear">
-								<input style="height: auto;width:100%;padding:5px;" type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button button-primary">
-							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
 			</div>
 
 			<div id="banner" class="sfpp-align-left">
-				<h3 style="margin:0 0 5px 0;">Rate 5 Stars</h3>
+				<h3>Rate 5 Stars</h3>
 
-				<p>Thanks for choosing Simple Facebook Page Plugin for your website. If you've enjoyed it so far, then please take a few seconds to let me know!</p>
-
-				<p>
-					<a target="_blank" style="height: auto;width:100%;padding:5px;text-align: center!important;" class="button button-secondary" href="http://bit.ly/1KYbibO">&#9733; &#9733; &#9733; &#9733; &#9733;</a>
-				</p>
+				<div class="banner_wrap">
+					<p>Thanks for choosing Simple Facebook Page Plugin for your website. If you've enjoyed it so far, then please take a few seconds to let me know!</p>
+					<p><a target="_blank" style="height: auto;width:100%;padding:5px;text-align: center!important;" class="button button-secondary" href="http://bit.ly/1KYbibO">&#9733; &#9733; &#9733; &#9733; &#9733;</a></p>
+				</div>
 			</div>
 
 		</div>

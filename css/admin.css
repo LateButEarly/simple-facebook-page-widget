@@ -54,10 +54,18 @@ input[type=number].small-text {
 #banner {
 	background: white;
 	border: 1px solid rgb(204, 204, 204);
-	padding: 25px;
 	text-align: center;
-	width: 100%;
 	margin-bottom: 10px;
+}
+
+#banner h3 {
+	background: #F5F5F5;
+	padding: 15px 25px;
+	border-bottom: 1px solid #DFDFDF;
+}
+
+#banner .banner_wrap {
+	padding: 0 25px 25px 25px;
 }
 
 #main {
@@ -68,7 +76,7 @@ input[type=number].small-text {
 
 #aside {
 	float: left;
-	width: 250px;
+	width: 25%;
 }
 
 .sfpp-api-key {
