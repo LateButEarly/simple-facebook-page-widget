@@ -1,10 +1,10 @@
 === Simple Facebook Page Widget & Shortcode ===
-Contributors: irkanu
+Contributors: irkanu, freemius
 Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
-Tags: facebook, social, widget, plugin, page, feed, shortcode, facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social media, social widget, social shortcode, free, wordpress
+Tags: facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social widget, social shortcode
 Requires at least: 3.0.0
-Tested up to: 4.3.1
-Stable tag: 1.4.8.1
+Tested up to: 4.4.2
+Stable tag: 1.4.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -13,6 +13,15 @@ Easily display Facebook's new Page feed using a customizable widget or shortcode
 == Description ==
 = Overview =
 This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. Many sites are currently running Facebook Like Boxes which will become **deprecated on June 23rd, 2015**. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
+
+= Features =
+1. Facebook Page Widget
+2. Facebook Page Shortcode
+3. Optional Facebook script enqueue
+4. Facebook script loads asynchronosly
+5. Displays Facebook Page in over 130+ languages
+6. Every support request receives a response
+7. Highest rated Facebook Page plugin
 
 = Widget Instructions =
 1. Add a customizable Facebook widget through Appearance -> Widgets.
@@ -35,6 +44,8 @@ Custom Shortcode Example:
 = Support =
 
 Support is offered on the [WordPress Support Forum](https://wordpress.org/support/plugin/simple-facebook-twitter-widget) for free, but please provide as much detail as possible as well as a link to where the issue is occurring. If you are comfortable with GitHub, then feel free to submit an [issue](https://github.com/irkanu/simple-facebook-page-widget/issues). I'll do my best to answer all support threads and issues.
+
+> **Powered with ❤ by [Freemius Insights - Analytics for Plugin Developers](https://freemius.com/wordpress/insights/?utm_source=wordpress&utm_medium=link&utm_content=simple-facebook-twitter-widget&utm_campaign=insights)**
 
 == Installation ==
 
@@ -82,6 +93,11 @@ Nope, but you can if you'd like.
 4. Backend view of the Facebook Page shortcode.
 
 == Changelog ==
+
+= 1.4.9 =
+* Tested WordPress 4.4.2
+* Cleaner UI
+* Freemius Insights integration for Analytics (new users only)
 
 = 1.4.8.1 =
 * Tested WordPress 4.3.1
@@ -144,6 +160,9 @@ Nope, but you can if you'd like.
 * Widget & Shortcode Fully Functional
 
 == Upgrade Notice ==
+
+= 1.4.8.2 =
+* COMPATIBILITY: This is just a compatibility update to ensure everything is still working properly.
 
 = 1.4.7 =
 * IMPORTANT: Major performance boost on Facebook script. (It's now called asynchronously!)

@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.8.1
+ * Version:        1.4.9
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -25,11 +25,72 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ * @todo        Integrate Facebook Page features
+ * @see         https://developers.facebook.com/docs/plugins/page-plugin
  * @package     Simple_Facebook
  * @subpackage  Simple_Facebook_Page_Plugin
  * @author      Dylan Ryan
- * @version     1.4.8.1
+ * @version     1.4.9
  */
+
+
+/**
+ * Create a helper function for easy SDK access.
+ *
+ * @since 1.4.9
+ *
+ * @return Freemius
+ */
+function sftw_fs() {
+	global $sftw_fs;
+
+	if ( ! isset( $sftw_fs ) ) {
+		// Include Freemius SDK.
+		require_once dirname( __FILE__ ) . '/lib/freemius/start.php';
+
+		$sftw_fs = fs_dynamic_init( array(
+			'id'             => '197',
+			'slug'           => 'simple-facebook-twitter-widget',
+			'public_key'     => 'pk_6aaa312a52f8d7925482e4bba74fb',
+			'is_premium'     => false,
+			'has_addons'     => false,
+			'has_paid_plans' => false,
+			'menu'           => array(
+				'slug'    => 'simple-facebook-twitter-widget',
+				'parent'  => array(
+					'slug' => 'options-general.php',
+				),
+				'account' => false,
+				'contact' => false,
+				'support' => false,
+			),
+		) );
+	}
+
+	return $sftw_fs;
+}
+
+/**
+ * Temporary workaround for new users to not opt-in.
+ *
+ * @param $is_on
+ * @param $is_plugin_update
+ * @param $version
+ *
+ * @return bool
+ */
+function fs_inactive_for_updates( $is_on, $is_plugin_update, $version ) {
+	if ( ! $is_on ) {
+		return false;
+	}
+
+	return ! $is_plugin_update;
+}
+
+add_filter( 'fs_is_on_simple-facebook-twitter-widget', 'fs_inactive_for_updates', 10, 3 );
+
+// Init Freemius.
+sftw_fs();
 
 
 /**
@@ -51,9 +112,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.4.2 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.8.1' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.9' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.8' );
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.8.2' );
 }
 
 
@@ -276,10 +337,11 @@ function sfpp_admin_settings_menu() {
 	$page_title = 'Simple Facebook Settings';
 	$menu_title = 'Simple Facebook Options';
 	$capability = 'manage_options';
-	$menu_slug  = 'sfpp-settings';
+	$menu_slug  = 'simple-facebook-twitter-widget';
 	$function   = 'sfpp_options_page';
 
-	$admin_settings_page = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
+	$admin_settings_page = add_options_page( $page_title, $page_title, $capability, $menu_slug, $function );
+	// add_submenu_page( $menu_slug, $page_title, 'Plugin Settings', $capability, $menu_slug, $function );
 
 	/**
 	 * Only loads libraries required on the settings page.
@@ -328,7 +390,7 @@ function sfpp_admin_enqueue_scripts_chosen() {
 add_filter( 'plugin_action_links_' . plugin_basename( SIMPLE_FACEBOOK_PAGE_FILE ), 'sfpp_quick_settings_link' );
 function sfpp_quick_settings_link( $actions ) {
 
-	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=sfpp-settings' ), __( 'General Settings' ) ) );
+	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=simple-facebook-twitter-widget' ), __( 'General Settings' ) ) );
 
 	return $actions;
 }
@@ -686,7 +748,9 @@ function sfpp_options_page() {
 
 				<div class="banner_wrap">
 					<p>Thanks for choosing Simple Facebook Page Plugin for your website. If you've enjoyed it so far, then please take a few seconds to let me know!</p>
-					<p><a target="_blank" style="height: auto;width:100%;padding:5px;text-align: center!important;" class="button button-secondary" href="http://bit.ly/1KYbibO">&#9733; &#9733; &#9733; &#9733; &#9733;</a></p>
+					<p>
+						<a target="_blank" style="height: auto;width:100%;padding:5px;text-align: center!important;" class="button button-secondary" href="http://bit.ly/1KYbibO">&#9733; &#9733; &#9733; &#9733; &#9733;</a>
+					</p>
 				</div>
 			</div>
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c9bdc1ee-1d4b-4ac4-a737-2268cbb2a110" name="ac-local" url="http://localhost">
+        <fileTransfer mountedRoot="$PROJECT_DIR$/../../Websites/www.ac.dev" accessType="MOUNT" />
+      </webServer>
+    </option>
+  </component>
+</project>
