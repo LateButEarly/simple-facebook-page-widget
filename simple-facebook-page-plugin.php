@@ -196,21 +196,6 @@ function sfpp_textdomain() {
 
 
 /**
- * Delete options on uninstall.
- *
- * This function makes sure we clean up after ourselves.
- *
- * @since 1.4.2
- */
-register_uninstall_hook( SIMPLE_FACEBOOK_PAGE_FILE, 'sfpp_uninstall' );
-function sfpp_uninstall() {
-
-	delete_option( SIMPLE_FACEBOOK_PAGE_KEY ); // remove footprint
-
-	delete_site_option( SIMPLE_FACEBOOK_PAGE_INSTALL_DATE ); // remove install date
-}
-
-/**
  * Enqueue Facebook script required for the plugin.
  *
  * @since    1.0.0

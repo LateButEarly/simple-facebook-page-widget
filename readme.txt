@@ -12,16 +12,16 @@ Easily display Facebook's new Page feed using a customizable widget or shortcode
 
 == Description ==
 = Overview =
-This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. Many sites are currently running Facebook Like Boxes which will become **deprecated on June 23rd, 2015**. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
+This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
 
 = Features =
-1. Facebook Page Widget
-2. Facebook Page Shortcode
-3. Optional Facebook script enqueue
-4. Facebook script loads asynchronosly
-5. Displays Facebook Page in over 130+ languages
-6. Every support request receives a response
-7. Highest rated Facebook Page plugin
+* Facebook Page Widget
+* Facebook Page Shortcode
+* Optional Facebook script enqueue
+* Facebook script loads asynchronously
+* Displays Facebook Page in over 130+ languages
+* Every support request receives a response
+* Highest rated Facebook Page plugin
 
 = Widget Instructions =
 1. Add a customizable Facebook widget through Appearance -> Widgets.
