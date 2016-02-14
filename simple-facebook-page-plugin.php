@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.9
+ * Version:        1.4.10
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -25,12 +25,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @todo        Integrate Facebook Page features
+ * @todo        Maybe use an iframe with URL structure for performance - https://www.facebook.com/v2.3/plugins/page.php?adapt_container_width=true&app_id=&channel=http%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D42%23cb%3Df2a4d0a2e%26domain%3Dfacebook.dev%26origin%3Dhttp%253A%252F%252Ffacebook.dev%252Ff1d21c094%26relation%3Dparent.parent&container_width=600&height=500&hide_cover=false&hide_cta=true&href=facebook.com%2Fwearevalet&locale=en_US&sdk=joey&show_facepile=false&small_header=false&tabs=timeline%2C%20events%2C%20messages&width=340
  * @see         https://developers.facebook.com/docs/plugins/page-plugin
  * @package     Simple_Facebook
  * @subpackage  Simple_Facebook_Page_Plugin
  * @author      Dylan Ryan
- * @version     1.4.9
+ * @version     1.4.10
  */
 
 
@@ -73,6 +73,8 @@ function sftw_fs() {
 /**
  * Temporary workaround for new users to not opt-in.
  *
+ * @since 1.4.9
+ *
  * @param $is_on
  * @param $is_plugin_update
  * @param $version
@@ -112,9 +114,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.4.2 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.9' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.10' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.8.2' );
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.9' );
 }
 
 
@@ -250,39 +252,51 @@ function sfpp_async_loader( $tag, $handle ) {
  * @modified 1.2.0 Wrapped shortcode in comment for debug/tracking.
  * @modified 1.3.0 Added alignment parameter.
  * @modified 1.4.2 Added version to debug comment.
+ * @modified 1.4.10 Deprecated show_posts attribute & added tabs, show_cta, small_header, adapt_container_width
+ *                  Checks that facebook.com is in the href & modifies if it doesn't
  *
- * @param   $atts   array   href, width, height, hide_cover, show_facepile, show_posts, align
+ * @param   $atts   array   href, width, height, hide_cover, show_facepile, align, tabs, show_cta, small_header, adapt_container_width
  *
  * @return  string  Outputs the Facebook Page feed via shortcode.
  */
 add_shortcode( 'facebook-page', 'sfpp_shortcode' );
 function sfpp_shortcode( $atts ) {
 
-	$output = '';
-
 	$facebook_page_atts = shortcode_atts( array(
-		'href'          => '',
-		'width'         => '340',
-		'height'        => '500',
-		'hide_cover'    => 'false',
-		'show_facepile' => 'false',
-		'show_posts'    => 'true',
-		'align'         => 'initial',
+		'href'                  => '',
+		'width'                 => '340',
+		'height'                => '500',
+		'hide_cover'            => 'false',
+		'show_facepile'         => 'false',
+		// Deprecated 1.4.10: 'show_posts'    => 'true',
+		'align'                 => 'initial',
+		'tabs'                  => 'timeline',
+		'show_cta'              => 'true',
+		'small_header'          => 'false',
+		'adapt_container_width' => 'true',
 	), $atts );
 
-	$output .= '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
+	$output = '<!-- This Facebook Page Feed was generated with Simple Facebook Page Widget & Shortcode plugin v' . SIMPLE_FACEBOOK_PAGE_VERSION . ' - https://wordpress.org/plugins/simple-facebook-twitter-widget/ -->';
 
 	//* Wrapper for alignment
 	$output .= '<div id="simple-facebook-widget" style="text-align:' . esc_attr( $facebook_page_atts['align'] ) . ';">';
 
 	//* Main Facebook Feed
 	$output .= '<div class="fb-page" ';
-	$output .= 'data-href="https://facebook.com/' . esc_attr( $facebook_page_atts['href'] ) . '" ';
+	if ( false !== strpos( $facebook_page_atts['href'], 'facebook.com' ) ) {
+		$output .= 'data-href="' . esc_attr( $facebook_page_atts['href'] ) . '" ';
+	} else {
+		$output .= 'data-href="https://facebook.com/' . esc_attr( $facebook_page_atts['href'] ) . '" ';
+	}
 	$output .= 'data-width="' . esc_attr( $facebook_page_atts['width'] ) . '" ';
 	$output .= 'data-height="' . esc_attr( $facebook_page_atts['height'] ) . '" ';
 	$output .= 'data-hide-cover="' . esc_attr( $facebook_page_atts['hide_cover'] ) . '" ';
 	$output .= 'data-show-facepile="' . esc_attr( $facebook_page_atts['show_facepile'] ) . '" ';
-	$output .= 'data-show-posts="' . esc_attr( $facebook_page_atts['show_posts'] ) . '">';
+	$output .= 'data-tabs="' . esc_attr( $facebook_page_atts['tabs'] ) . '" ';
+	$output .= 'data-hide-cta="' . esc_attr( $facebook_page_atts['show_cta'] ) . '" ';
+	$output .= 'data-small-header="' . esc_attr( $facebook_page_atts['small_header'] ) . '" ';
+	$output .= 'data-adapt-container-width="' . esc_attr( $facebook_page_atts['adapt_container_width'] ) . '">';
+	//$output .= 'data-show-posts="' . esc_attr( $facebook_page_atts['show_posts'] ) . '">';
 	$output .= '</div>';
 
 	$output .= '</div>';
@@ -499,7 +513,8 @@ function sfpp_language_select_callback() {
 
 	?>
 
-	<select id="sfpp_settings[language]" class="chosen-select" name="sfpp_settings[language]" title="<?php esc_attr__( 'Select language', SIMPLE_FACEBOOK_PAGE_I18N ) ?>">
+	<select id="sfpp_settings[language]" class="chosen-select" name="sfpp_settings[language]"
+	        title="<?php esc_attr__( 'Select language', SIMPLE_FACEBOOK_PAGE_I18N ) ?>">
 		<option value="af_ZA" <?php selected( $language, 'af_ZA' ); ?>>Afrikaans</option>
 		<option value="ak_GH" <?php selected( $language, 'ak_GH' ); ?>>Akan</option>
 		<option value="am_ET" <?php selected( $language, 'am_ET' ); ?>>Amharic</option>
@@ -706,10 +721,15 @@ function sfpp_options_page() {
 
 				<div class="banner_wrap">
 					<div id="mc_embed_signup">
-						<form action="//seoconsultingnc.us5.list-manage.com/subscribe/post?u=6d731c1ad40970ed85cb66f03&amp;id=c0ecab8e1d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+						<form
+							action="//seoconsultingnc.us5.list-manage.com/subscribe/post?u=6d731c1ad40970ed85cb66f03&amp;id=c0ecab8e1d"
+							method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
+							class="validate" target="_blank" novalidate>
 							<div id="mc_embed_signup_scroll">
 								<div class="mc-field-group">
-									<input style="width:100%;padding:10px;margin: 1em 0;" type="email" value="<?php echo esc_attr( $current_user->user_email ); ?>" name="EMAIL" class="required email" id="mce-EMAIL" title="">
+									<input style="width:100%;padding:10px;margin: 1em 0;" type="email"
+									       value="<?php echo esc_attr( $current_user->user_email ); ?>" name="EMAIL"
+									       class="required email" id="mce-EMAIL" title="">
 								</div>
 								<div id="mce-responses" class="clear">
 									<div class="response" id="mce-error-response" style="display:none"></div>
@@ -717,10 +737,12 @@ function sfpp_options_page() {
 								</div>
 								<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
 								<div style="position: absolute; left: -5000px;">
-									<input type="text" name="b_6d731c1ad40970ed85cb66f03_c0ecab8e1d" tabindex="-1" value="" title="">
+									<input type="text" name="b_6d731c1ad40970ed85cb66f03_c0ecab8e1d" tabindex="-1"
+									       value="" title="">
 								</div>
 								<div class="clear">
-									<input style="height: auto;width:100%;padding:5px;" type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button button-primary">
+									<input style="height: auto;width:100%;padding:5px;" type="submit" value="Subscribe"
+									       name="subscribe" id="mc-embedded-subscribe" class="button button-primary">
 								</div>
 							</div>
 						</form>
@@ -732,9 +754,12 @@ function sfpp_options_page() {
 				<h3>Rate 5 Stars</h3>
 
 				<div class="banner_wrap">
-					<p>Thanks for choosing Simple Facebook Page Plugin for your website. If you've enjoyed it so far, then please take a few seconds to let me know!</p>
+					<p>Thanks for choosing Simple Facebook Page Plugin for your website. If you've enjoyed it so far,
+						then please take a few seconds to let me know!</p>
 					<p>
-						<a target="_blank" style="height: auto;width:100%;padding:5px;text-align: center!important;" class="button button-secondary" href="http://bit.ly/1KYbibO">&#9733; &#9733; &#9733; &#9733; &#9733;</a>
+						<a target="_blank" style="height: auto;width:100%;padding:5px;text-align: center!important;"
+						   class="button button-secondary" href="http://bit.ly/1KYbibO">&#9733; &#9733; &#9733; &#9733;
+							&#9733;</a>
 					</p>
 				</div>
 			</div>
@@ -920,6 +945,8 @@ function sfpp_display_admin_notice() {
  * @modified 1.2.0 Wrapped shortcode in comment for debug/tracking.
  * @modified 1.3.0 Added alignment parameter.
  * @modified 1.4.2 Added version to debug comment.
+ * @modified 1.4.10 Deprecated show_posts attribute & added tabs, show_cta, small_header, adapt_container_width
+ *                  Checks that facebook.com is in the href & modifies if it doesn't
  */
 class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 
@@ -941,7 +968,7 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::widget()
 	 *
-	 * @param array $args     Widget arguments.
+	 * @param array $args Widget arguments.
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
@@ -956,6 +983,18 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
 
+		$tab_output = array();
+
+		if ( $instance['timeline_tab'] == 1 ) {
+			array_push( $tab_output, 'timeline' );
+		}
+		if ( $instance['events_tab'] == 1 ) {
+			array_push( $tab_output, 'events' );
+		}
+		if ( $instance['messages_tab'] == 1 ) {
+			array_push( $tab_output, 'messages' );
+		}
+
 		$output = '';
 
 		//* Comment for tracking/debugging
@@ -966,12 +1005,20 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 
 		//* Main Facebook Feed
 		$output .= '<div class="fb-page" ';
-		$output .= 'data-href="' . esc_attr( $instance['href'] ) . '" ';
+		if ( false !== strpos( $instance['href'], 'facebook.com' ) ) {
+			$output .= 'data-href="' . esc_attr( $instance['href'] ) . '" ';
+		} else {
+			$output .= 'data-href="https://facebook.com/' . esc_attr( $instance['href'] ) . '" ';
+		}
 		$output .= 'data-width="' . esc_attr( $instance['width'] ) . '" ';
 		$output .= 'data-height="' . esc_attr( $instance['height'] ) . '" ';
+		$output .= 'data-tabs="' . implode( ', ', $tab_output ) . '" ';
 		$output .= 'data-hide-cover="' . esc_attr( $instance['show_cover'] ) . '" ';
 		$output .= 'data-show-facepile="' . esc_attr( $instance['show_facepile'] ) . '" ';
-		$output .= 'data-show-posts="' . esc_attr( $instance['show_posts'] ) . '">';
+		$output .= 'data-hide-cta="' . esc_attr( $instance['show_cta'] ) . '" ';
+		$output .= 'data-small-header="' . esc_attr( $instance['small_header'] ) . '" ';
+		$output .= 'data-adapt-container-width="' . esc_attr( $instance['adapt_container_width'] ) . '">';
+		// Deprecated v1.4.10: $output .= 'data-show-posts="' . esc_attr( $instance['show_posts'] ) . '">';
 		$output .= '</div>';
 
 		// end wrapper
@@ -1068,6 +1115,18 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 		 */
 		$align = array( 'initial' => 'None', 'left' => 'Left', 'center' => 'Center', 'right' => 'Right' );
 
+		$timeline_tab = array( 'true' => 'Yes', 'false' => 'No' );
+
+		$events_tab = array( 'true' => 'Yes', 'false' => 'No' );
+
+		$messages_tab = array( 'true' => 'Yes', 'false' => 'No' );
+
+		$show_cta = array( 'true' => 'Yes', 'false' => 'No' );
+
+		$small_header = array( 'true' => 'Yes', 'false' => 'No' );
+
+		$adapt_container_width = array( 'true' => 'Yes', 'false' => 'No' );
+
 		/**
 		 * Facebook wants to be difficult and use the term "Hide Cover" instead of show cover.
 		 */
@@ -1077,60 +1136,143 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
-			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
+			<label
+				for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
+			       name="<?php echo $this->get_field_name( 'title' ); ?>"
+			       value="<?php echo esc_attr( $instance['title'] ); ?>"/>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Facebook Page URL:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
-			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo esc_attr( $instance['href'] ); ?>" />
+			<label
+				for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Facebook Page URL:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'href' ); ?>"
+			       name="<?php echo $this->get_field_name( 'href' ); ?>"
+			       value="<?php echo esc_attr( $instance['href'] ); ?>"/>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'width' ); ?>"><?php _e( 'Width:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
-			<select class="widefat" id="<?php echo $this->get_field_id( 'width' ); ?>" name="<?php echo $this->get_field_name( 'width' ); ?>">
+			<label
+				for="<?php echo $this->get_field_id( 'width' ); ?>"><?php _e( 'Width:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'width' ); ?>"
+			        name="<?php echo $this->get_field_name( 'width' ); ?>">
 				<?php foreach ( $width as $val ): ?>
-					<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $instance['width'], $val ); ?>><?php echo esc_html( $val ); ?></option>
+					<option
+						value="<?php echo esc_attr( $val ); ?>" <?php selected( $instance['width'], $val ); ?>><?php echo esc_html( $val ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Height:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
-			<select class="widefat" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>">
+			<label
+				for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Height:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'height' ); ?>"
+			        name="<?php echo $this->get_field_name( 'height' ); ?>">
 				<?php foreach ( $height as $val ): ?>
-					<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $instance['height'], $val ); ?>><?php echo esc_html( $val ); ?></option>
+					<option
+						value="<?php echo esc_attr( $val ); ?>" <?php selected( $instance['height'], $val ); ?>><?php echo esc_html( $val ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'show_cover' ); ?>"><?php _e( 'Show Cover Photo?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
-			<select class="widefat" id="<?php echo $this->get_field_id( 'show_cover' ); ?>" name="<?php echo $this->get_field_name( 'show_cover' ); ?>">
+			<label
+				for="<?php echo $this->get_field_id( 'show_cover' ); ?>"><?php _e( 'Show Cover Photo?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'show_cover' ); ?>"
+			        name="<?php echo $this->get_field_name( 'show_cover' ); ?>">
 				<?php foreach ( $reverse_boolean as $key => $val ): ?>
-					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['show_cover'], $key ); ?>><?php echo esc_html( $val ); ?></option>
+					<option
+						value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['show_cover'], $key ); ?>><?php echo esc_html( $val ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'show_facepile' ); ?>"><?php _e( 'Show Facepile?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
-			<select class="widefat" id="<?php echo $this->get_field_id( 'show_facepile' ); ?>" name="<?php echo $this->get_field_name( 'show_facepile' ); ?>">
+			<label
+				for="<?php echo $this->get_field_id( 'show_facepile' ); ?>"><?php _e( 'Show Facepile?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'show_facepile' ); ?>"
+			        name="<?php echo $this->get_field_name( 'show_facepile' ); ?>">
 				<?php foreach ( $boolean as $key => $val ): ?>
-					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['show_facepile'], $key ); ?>><?php echo esc_html( $val ); ?></option>
+					<option
+						value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['show_facepile'], $key ); ?>><?php echo esc_html( $val ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'show_posts' ); ?>"><?php _e( 'Show Posts?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
-			<select class="widefat" id="<?php echo $this->get_field_id( 'show_posts' ); ?>" name="<?php echo $this->get_field_name( 'show_posts' ); ?>">
+			<label
+				for="<?php echo $this->get_field_id( 'show_cta' ); ?>"><?php _e( 'Show Call to Action button?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'show_cta' ); ?>"
+			        name="<?php echo $this->get_field_name( 'show_cta' ); ?>">
+				<?php foreach ( $reverse_boolean as $key => $val ): ?>
+					<option
+						value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['show_cta'], $key ) ?>><?php echo esc_html( $val ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<p>
+			<label
+				for="<?php echo $this->get_field_id( 'small_header' ); ?>"><?php _e( 'Small Header?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'small_header' ); ?>"
+			        name="<?php echo $this->get_field_name( 'small_header' ); ?>">
 				<?php foreach ( $boolean as $key => $val ): ?>
-					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['show_posts'], $key ); ?>><?php echo esc_html( $val ); ?></option>
+					<option
+						value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['small_header'], $key ); ?>><?php echo esc_html( $val ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'align' ); ?>"><?php _e( 'Alignment:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
-			<select class="widefat" id="<?php echo $this->get_field_id( 'align' ); ?>" name="<?php echo $this->get_field_name( 'align' ); ?>">
+			<label
+				for="<?php echo $this->get_field_id( 'timeline_tab' ); ?>"><?php _e( 'Show Timeline Tab?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'timeline_tab' ); ?>"
+			        name="<?php echo $this->get_field_name( 'timeline_tab' ); ?>">
+				<?php foreach ( $boolean as $key => $val ): ?>
+					<option
+						value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['timeline_tab'], $key ); ?>><?php echo esc_html( $val ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<p>
+			<label
+				for="<?php echo $this->get_field_id( 'events_tab' ); ?>"><?php _e( 'Show Events Tab?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'events_tab' ); ?>"
+			        name="<?php echo $this->get_field_name( 'events_tab' ); ?>">
+				<?php foreach ( $boolean as $key => $val ): ?>
+					<option
+						value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['events_tab'], $key ); ?>><?php echo esc_html( $val ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<p>
+			<label
+				for="<?php echo $this->get_field_id( 'messages_tab' ); ?>"><?php _e( 'Show Messages Tab?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'messages_tab' ); ?>"
+			        name="<?php echo $this->get_field_name( 'messages_tab' ); ?>">
+				<?php foreach ( $boolean as $key => $val ): ?>
+					<option
+						value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['messages_tab'], $key ); ?>><?php echo esc_html( $val ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<p>
+			<label
+				for="<?php echo $this->get_field_id( 'adapt_container_width' ); ?>"><?php _e( 'Beta: Auto-responsive?', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'adapt_container_width' ); ?>"
+			        name="<?php echo $this->get_field_name( 'adapt_container_width' ); ?>">
+				<?php foreach ( $boolean as $key => $val ): ?>
+					<option
+						value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['adapt_container_width'], $key ); ?>><?php echo esc_html( $val ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<p>
+			<label
+				for="<?php echo $this->get_field_id( 'align' ); ?>"><?php _e( 'Alignment:', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'align' ); ?>"
+			        name="<?php echo $this->get_field_name( 'align' ); ?>">
 				<?php foreach ( $align as $key => $val ): ?>
-					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['align'], $key ); ?>><?php echo esc_html( $val ); ?></option>
+					<option
+						value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['align'], $key ); ?>><?php echo esc_html( $val ); ?></option>
 				<?php endforeach; ?>
 			</select>
+		</p>
+		<p>
+			<label
+				style="font-style:italic;"><?php _e( 'Notice: Show Posts is deprecated - make sure you use "Timeline" in the tabs section.', SIMPLE_FACEBOOK_PAGE_I18N ); ?></label>
 		</p>
 		<?php
 	}
@@ -1175,14 +1317,20 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 	function sfpp_defaults() {
 
 		$defaults = array(
-			'title'         => esc_attr__( 'Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ),
-			'href'          => 'https://www.facebook.com/facebook',
-			'width'         => '340',
-			'height'        => '500',
-			'show_cover'    => '0',
-			'show_facepile' => '0',
-			'show_posts'    => '1',
-			'align'         => 'initial',
+			'title'                 => esc_attr__( 'Facebook Page Widget', SIMPLE_FACEBOOK_PAGE_I18N ),
+			'href'                  => 'https://www.facebook.com/facebook',
+			'width'                 => '340',
+			'height'                => '500',
+			'show_cover'            => '0',
+			'show_facepile'         => '0',
+			// Deprecated v1.4.10: 'show_posts'    => '1',
+			'align'                 => 'initial',
+			'timeline_tab'          => '1',
+			'events_tab'            => '0',
+			'messages_tab'          => '0',
+			'show_cta'              => '0',
+			'small_header'          => '0',
+			'adapt_container_width' => '1'
 		);
 
 		return $defaults;

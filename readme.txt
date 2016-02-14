@@ -4,11 +4,11 @@ Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
 Tags: facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social widget, social shortcode
 Requires at least: 3.0.0
 Tested up to: 4.4.2
-Stable tag: 1.4.9
+Stable tag: 1.4.10
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
-Easily display Facebook's new Page feed using a customizable widget or shortcode - now supports 130+ languages!
+Easily display a Facebook Page's feed using a customizable widget or shortcode - now supports Page tabs & CTA!
 
 == Description ==
 = Overview =
@@ -22,6 +22,8 @@ This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. The P
 * Displays Facebook Page in over 130+ languages
 * Every support request receives a response
 * Highest rated Facebook Page plugin
+* NEW: Display Page timeline, events, messages tabs
+* NEW: Display Page call to action
 
 = Widget Instructions =
 1. Add a customizable Facebook widget through Appearance -> Widgets.
@@ -33,13 +35,11 @@ See the [screenshots](https://wordpress.org/plugins/simple-facebook-twitter-widg
 = Shortcode Instructions =
 Basic Shortcode Example:
 
-`[facebook-page href="facebook"]`
+`[facebook-page href="https://facebook.com/facebook" tabs="timeline"]`
 
 Custom Shortcode Example:
 
-`[facebook-page href="facebook" width="300" height="800" align="left" hide_cover="false" show_facepile="false" show_posts="true"]`
-
-**Note:** If your *Facebook Page URL* is https://facebook.com/facebook then please enter `facebook` as the href argument.
+`[facebook-page href="https://facebook.com/facebook" width="300" height="800" tabs="timeline, events, messages" show_cta="true" small_header="false" align="left" hide_cover="false" show_facepile="false"]`
 
 = Support =
 
@@ -93,6 +93,10 @@ Nope, but you can if you'd like.
 4. Backend view of the Facebook Page shortcode.
 
 == Changelog ==
+
+= 1.4.10 =
+* Facebook TABS!!
+* Validate href attributes on shortcode & widgets
 
 = 1.4.9 =
 * Tested WordPress 4.4.2
@@ -160,6 +164,9 @@ Nope, but you can if you'd like.
 * Widget & Shortcode Fully Functional
 
 == Upgrade Notice ==
+
+= 1.4.10 =
+* FEATURE: Now integrates with Facebook Tabs - use tabs="timeline, events, messages" to in the shortcode.
 
 = 1.4.8.2 =
 * COMPATIBILITY: This is just a compatibility update to ensure everything is still working properly.

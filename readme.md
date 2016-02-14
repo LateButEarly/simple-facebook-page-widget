@@ -4,7 +4,7 @@
  Dylan Ryan | [![Wordpress plugin](http://img.shields.io/wordpress/plugin/v/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/simple-facebook-twitter-widget/) | [![Wordpress](http://img.shields.io/wordpress/plugin/dt/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/simple-facebook-twitter-widget/) | [![Wordpress rating](http://img.shields.io/wordpress/plugin/r/simple-facebook-twitter-widget.svg?style=flat)](https://wordpress.org/plugins/simple-facebook-twitter-widget/) | GPLv2 or later 
 
 
-Easily display Facebook's new Page feed using a customizable widget or shortcode - now supports 130+ languages!
+Easily display a Facebook Page's feed using a customizable widget or shortcode - now supports Page tabs & CTA!
 
 ## Description
 ### Overview
@@ -20,13 +20,11 @@ See the [screenshots](https://wordpress.org/plugins/simple-facebook-twitter-widg
 ### Shortcode Instructions
 Basic Shortcode Example:
 
-`[facebook-page href="facebook"]`
+`[facebook-page href="https://facebook.com/facebook" tabs="timeline"]`
 
 Custom Shortcode Example:
 
-`[facebook-page href="facebook" width="300" height="800" align="left" hide_cover="false" show_facepile="false" show_posts="true"]`
-
-**Note:** If your *Facebook Page URL* is https://facebook.com/facebook then please enter `facebook` as the href argument.
+`[facebook-page href="https://facebook.com/facebook" width="300" height="800" tabs="timeline, events, messages" show_cta="true" small_header="false" align="left" hide_cover="false" show_facepile="false"]`
 
 ### Support
 
