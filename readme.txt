@@ -166,7 +166,7 @@ Nope, but you can if you'd like.
 == Upgrade Notice ==
 
 = 1.4.10 =
-* FEATURE: Now integrates with Facebook Tabs - use tabs="timeline, events, messages" to in the shortcode.
+* FEATURE: Now integrates with Facebook Tabs - use tabs="timeline, events, messages" in the shortcode.
 
 = 1.4.8.2 =
 * COMPATIBILITY: This is just a compatibility update to ensure everything is still working properly.
