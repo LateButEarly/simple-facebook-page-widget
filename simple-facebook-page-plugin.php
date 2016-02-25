@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.10
+ * Version:        1.4.11
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -30,7 +30,7 @@
  * @package     Simple_Facebook
  * @subpackage  Simple_Facebook_Page_Plugin
  * @author      Dylan Ryan
- * @version     1.4.10
+ * @version     1.4.11
  */
 
 
@@ -114,9 +114,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.4.2 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.10' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.11' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.9' );
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.10' );
 }
 
 
@@ -201,6 +201,7 @@ function sfpp_textdomain() {
  * Enqueue Facebook script required for the plugin.
  *
  * @since    1.0.0
+ * @modified 1.4.11 Make sure language & appId aren't null
  *
  * @modified 1.4.0 Localized the script for language option.
  */
@@ -209,19 +210,31 @@ function sfpp_enqueue_scripts() {
 
 	global $sfpp_options;
 
+	// Fallback to WordPress language constant
+	if ( null == $sfpp_options['language'] && defined( WPLANG ) ) {
+		$sfpp_options['language'] = WPLANG;
+	}
+
+	// Fallback to plugin author's default appId
+	if ( !isset( $sfpp_options['appId'] ) || null == $sfpp_options['appId'] ) {
+		// TODO: Make this better.
+		$sfpp_options['appId'] = 297186066963865;
+	}
+
 	$data = array(
-		'language' => ( $sfpp_options['language'] )
+		'language' => $sfpp_options['language'],
+		'appId'    => $sfpp_options['appId']
 	);
 
-	if ( ! isset( $sfpp_options['sfpp_facebook_sdk'] ) ) :
+	if ( ! isset( $sfpp_options['sfpp_facebook_sdk'] ) ) {
 
 		//* Prepare the javascript for manipulation.
-		wp_enqueue_script( 'sfpp-fb-root', SIMPLE_FACEBOOK_PAGE_DIR . 'js/simple-facebook-page-root.js', array( 'jquery' ), true );
+		wp_enqueue_script( 'sfpp-fb-root', SIMPLE_FACEBOOK_PAGE_DIR . 'js/simple-facebook-page-root.js', array(), SIMPLE_FACEBOOK_PAGE_VERSION );
 
 		//* Pass the language option from the database to javascript.
 		wp_localize_script( 'sfpp-fb-root', 'sfpp_script_vars', $data );
 
-	endif;
+	}
 
 }
 
@@ -416,14 +429,6 @@ function sfpp_register_settings() {
 		$basic_settings             // setting name - get_option() to retrieve from database - retrieve it and store it in global variable
 	);
 
-//  TODO
-//	add_settings_section(
-//		'sfpp-getting-started',
-//		'',
-//		'sfpp_getting_started_callback',
-//		$settings_page
-//	);
-
 	add_settings_section(
 		$basic_section,                  // setup basic section
 		'',                              // title of section
@@ -453,6 +458,15 @@ function sfpp_register_settings() {
 		$adv_settings_page,
 		$adv_section
 	);
+
+	add_settings_field(
+		'sfpp_settings',
+		'Facebook App ID:',
+		'sfpp_app_id_callback',
+		$adv_settings_page,
+		$adv_section
+	);
+
 }
 
 /**
@@ -491,12 +505,25 @@ function sfpp_facebook_sdk_callback() {
 	global $sfpp_options;
 
 	printf(
-		'<input type="checkbox" value="1" %s id="sfpp_settings[sfpp_facebook_sdk]" name="sfpp_settings[sfpp_facebook_sdk]">
+		'<input type="checkbox" value="1" %s id="sfpp_settings[sfpp_facebook_sdk]" name="sfpp_settings[sfpp_facebook_sdk]" />
 		<label for="sfpp_settings[sfpp_facebook_sdk]" class="sfpp_help_label">Check this box if your theme or another plugin already enqueues the Facebook SDK.</label>',
 		isset( $sfpp_options['sfpp_facebook_sdk'] ) ? esc_attr( $sfpp_options['sfpp_facebook_sdk'] ) : ''
 	);
 }
 
+/**
+ * Facebook App ID callback.
+ */
+function sfpp_app_id_callback() {
+	global $sfpp_options;
+
+	printf(
+		'<input type="text" id="sfpp_settings[appId]" name="sfpp_settings[appId]" value="%s" />
+		<label for="sfpp_settings[appId]" class="sfpp_help_label">Configure a <a href="https://developers.facebook.com/apps/" target="_blank">Facebook App</a> to enable the Share functionality.</label>',
+		isset( $sfpp_options['appId'] ) ? esc_attr( $sfpp_options['appId'] ) : ''
+	);
+
+}
 
 /**
  * Function that fills the field with the desired form inputs. The function should echo its output.
@@ -698,13 +725,15 @@ function sfpp_options_page() {
 
 				<div class="sfpp-tab" id="tab_basic">
 
-					<?php // do_settings_sections( 'sfpp-getting-started' ); ?>
-
 					<?php do_settings_sections( 'sfpp-settings' ); ?>
 
 				</div>
 
-				<div class="sfpp-tab" id="tab_adv"><?php do_settings_sections( 'sfpp-adv-settings' ); ?></div>
+				<div class="sfpp-tab" id="tab_adv">
+
+					<?php do_settings_sections( 'sfpp-adv-settings' ); ?>
+
+				</div>
 
 			</div>
 

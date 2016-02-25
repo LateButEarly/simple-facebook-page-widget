@@ -4,7 +4,7 @@ Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
 Tags: facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social widget, social shortcode
 Requires at least: 3.0.0
 Tested up to: 4.4.2
-Stable tag: 1.4.10
+Stable tag: 1.4.11
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -12,7 +12,7 @@ Easily display a Facebook Page's feed using a customizable widget or shortcode -
 
 == Description ==
 = Overview =
-This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
+This plugin uses Facebook Graph API v2.5 to generate a Facebook Page feed. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
 
 = Features =
 * Facebook Page Widget
@@ -22,6 +22,7 @@ This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. The P
 * Displays Facebook Page in over 130+ languages
 * Every support request receives a response
 * Highest rated Facebook Page plugin
+* NEW: Configure custom App ID (Advanced)
 * NEW: Display Page timeline, events, messages tabs
 * NEW: Display Page call to action
 
@@ -94,6 +95,16 @@ Nope, but you can if you'd like.
 
 == Changelog ==
 
+= 1.4.11 =
+*Release Date 2/24/2016*
+
+* Fixes [Share bug](https://wordpress.org/support/topic/share-button-error-message) (app not configured)
+* Fixes [wp_enqueue_script invalid arguments](https://github.com/irkanu/simple-facebook-page-widget/issues/11) - Thanks Česlav!
+* Language now gracefully fails to WPLANG
+* New option to add custom App ID
+* App ID gracefully fails to plugin author's App ID
+* Facebook SDK API v2.5
+
 = 1.4.10 =
 * Facebook TABS!!
 * Validate href attributes on shortcode & widgets
@@ -164,6 +175,9 @@ Nope, but you can if you'd like.
 * Widget & Shortcode Fully Functional
 
 == Upgrade Notice ==
+
+= 1.4.11 =
+* IMPORTANT: Fixes an [issue with the Share button](https://wordpress.org/support/topic/share-button-error-message) inside the like box. Also, Facebook SDK API v2.5.
 
 = 1.4.10 =
 * FEATURE: Now integrates with Facebook Tabs - use tabs="timeline, events, messages" in the shortcode.
