@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.12
+ * Version:        1.4.13
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -30,7 +30,7 @@
  * @package     Simple_Facebook
  * @subpackage  Simple_Facebook_Page_Plugin
  * @author      Dylan Ryan
- * @version     1.4.12
+ * @version     1.4.13
  */
 
 
@@ -204,6 +204,7 @@ function sfpp_textdomain() {
  * @modified 1.4.11 Make sure language & appId aren't null
  *
  * @modified 1.4.0 Localized the script for language option.
+ * @modified 1.4.13 Fixed bugged fallback to check for WPLANG, then check get_locale(). Thanks drtonyb!
  */
 add_action( 'wp_enqueue_scripts', 'sfpp_enqueue_scripts' );
 function sfpp_enqueue_scripts() {
@@ -211,8 +212,8 @@ function sfpp_enqueue_scripts() {
 	global $sfpp_options;
 
 	// Fallback to WordPress language constant
-	if ( null == $sfpp_options['language'] && defined( WPLANG ) ) {
-		$sfpp_options['language'] = WPLANG;
+	if ( null == $sfpp_options['language'] ) {
+		$sfpp_options['language'] = defined( 'WPLANG' ) ? WPLANG : get_locale();
 	}
 
 	// Fallback to plugin author's default appId
