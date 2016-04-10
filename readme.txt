@@ -3,7 +3,7 @@ Contributors: irkanu, freemius
 Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
 Tags: facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social widget, social shortcode
 Requires at least: 3.0.0
-Tested up to: 4.4.2
+Tested up to: 4.4.3
 Stable tag: 1.4.13
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -95,6 +95,11 @@ Nope, but you can if you'd like.
 
 == Changelog ==
 
+= 1.4.13 =
+*Release Date 4/10/2016*
+* Fixed WPLANG fallback - Thanks drtonyb!
+* Tested WordPress 4.4.3
+
 = 1.4.12 =
 *Release Date 2/24/2016*
 * Updated Freemius SDK v1.7.3
@@ -179,6 +184,9 @@ Nope, but you can if you'd like.
 * Widget & Shortcode Fully Functional
 
 == Upgrade Notice ==
+
+= 1.4.13 =
+* COMPATIBILITY: This is just a compatibility update to ensure everything is still working properly.
 
 = 1.4.11 =
 * IMPORTANT: Fixes an [issue with the Share button](https://wordpress.org/support/topic/share-button-error-message) inside the like box. Also, Facebook SDK API v2.5.
