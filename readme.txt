@@ -99,6 +99,7 @@ Nope, but you can if you'd like.
 *Release Date 6/6/2016*
 
 * Fixes current user deprecation
+* Fixes a bug where disabling the SDK wouldn't display the setting properly
 * Tested WordPress 4.5.3
 
 = 1.4.13 =
