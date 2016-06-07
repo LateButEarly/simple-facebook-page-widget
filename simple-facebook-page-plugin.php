@@ -508,7 +508,7 @@ function sfpp_facebook_sdk_callback() {
 	printf(
 		'<input type="checkbox" value="1" %s id="sfpp_settings[sfpp_facebook_sdk]" name="sfpp_settings[sfpp_facebook_sdk]" />
 		<label for="sfpp_settings[sfpp_facebook_sdk]" class="sfpp_help_label">Check this box if your theme or another plugin already enqueues the Facebook SDK.</label>',
-		isset( $sfpp_options['sfpp_facebook_sdk'] ) ? esc_attr( $sfpp_options['sfpp_facebook_sdk'] ) : ''
+		isset( $sfpp_options['sfpp_facebook_sdk'] ) ? checked( $sfpp_options['sfpp_facebook_sdk'], true, false ) : ''
 	);
 }
 
@@ -516,6 +516,7 @@ function sfpp_facebook_sdk_callback() {
  * Facebook App ID callback.
  */
 function sfpp_app_id_callback() {
+
 	global $sfpp_options;
 
 	printf(
@@ -701,6 +702,10 @@ function sfpp_options_page() {
 
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( 'You do not have sufficient permissions to access this page.' );
+	}
+
+	if ( !( $current_user instanceof WP_User ) ) {
+		return;
 	}
 
 	ob_start();
