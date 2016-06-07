@@ -1,10 +1,10 @@
 === Simple Facebook Page Widget & Shortcode ===
-Contributors: irkanu, freemius
-Donate link: https://donorbox.org/dylan-ryan-simple-facebook-page-widget
+Contributors: irkanu
+Donate link: http://dylanryan.co/
 Tags: facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social widget, social shortcode
 Requires at least: 3.0.0
-Tested up to: 4.4.3
-Stable tag: 1.4.13
+Tested up to: 4.5.2
+Stable tag: 1.4.14
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -95,13 +95,21 @@ Nope, but you can if you'd like.
 
 == Changelog ==
 
+= 1.4.14 =
+*Release Date 6/6/2016*
+
+* Fixes current user deprecation
+* Tested WordPress 4.5.3
+
 = 1.4.13 =
 *Release Date 4/10/2016*
+
 * Fixed WPLANG fallback - Thanks drtonyb!
 * Tested WordPress 4.4.3
 
 = 1.4.12 =
 *Release Date 2/24/2016*
+
 * Updated Freemius SDK v1.7.3
 
 = 1.4.11 =
@@ -184,6 +192,9 @@ Nope, but you can if you'd like.
 * Widget & Shortcode Fully Functional
 
 == Upgrade Notice ==
+
+= 1.4.14 =
+* COMPATIBILITY: This is just a compatibility update to ensure everything is still working properly.
 
 = 1.4.13 =
 * COMPATIBILITY: This is just a compatibility update to ensure everything is still working properly.

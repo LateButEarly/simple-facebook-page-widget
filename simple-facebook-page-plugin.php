@@ -3,7 +3,7 @@
  * Plugin Name:    Simple Facebook Page Plugin
  * Plugin URI:     https://wordpress.org/plugins/simple-facebook-twitter-widget/
  * Description:    Shows the Facebook Page feed in a sidebar widget and/or via shortcode.
- * Version:        1.4.13
+ * Version:        1.4.14
  * Author:         Dylan Ryan
  * Author URI:     https://profiles.wordpress.org/irkanu
  * Domain Path:    /languages
@@ -25,12 +25,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @todo        Maybe use an iframe with URL structure for performance - https://www.facebook.com/v2.3/plugins/page.php?adapt_container_width=true&app_id=&channel=http%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D42%23cb%3Df2a4d0a2e%26domain%3Dfacebook.dev%26origin%3Dhttp%253A%252F%252Ffacebook.dev%252Ff1d21c094%26relation%3Dparent.parent&container_width=600&height=500&hide_cover=false&hide_cta=true&href=facebook.com%2Fwearevalet&locale=en_US&sdk=joey&show_facepile=false&small_header=false&tabs=timeline%2C%20events%2C%20messages&width=340
+ * @todo        Maybe use an iframe with URL structure for performance - http://bit.ly/1TShms5
  * @see         https://developers.facebook.com/docs/plugins/page-plugin
  * @package     Simple_Facebook
  * @subpackage  Simple_Facebook_Page_Plugin
  * @author      Dylan Ryan
- * @version     1.4.13
+ * @version     1.4.14
  */
 
 
@@ -114,9 +114,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @modified 1.4.2 Organized definitions.
  */
-define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.11' );
+define( 'SIMPLE_FACEBOOK_PAGE_VERSION', '1.4.14' );
 if ( ! defined( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION' ) ) {
-	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.10' );
+	define( 'SIMPLE_FACEBOOK_PAGE_LAST_VERSION', '1.4.13' );
 }
 
 
@@ -697,7 +697,7 @@ function sfpp_options_page() {
 
 	global $current_user;
 
-	get_currentuserinfo();
+	$current_user = wp_get_current_user();
 
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( 'You do not have sufficient permissions to access this page.' );

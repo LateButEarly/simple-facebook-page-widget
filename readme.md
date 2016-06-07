@@ -8,7 +8,19 @@ Easily display a Facebook Page's feed using a customizable widget or shortcode -
 
 ## Description
 ### Overview
-This plugin uses Facebook Graph API v2.3 to generate a Facebook Page feed. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
+This plugin uses Facebook Graph API v2.5 to generate a Facebook Page feed. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.
+
+### Features
+* Facebook Page Widget
+* Facebook Page Shortcode
+* Optional Facebook script enqueue
+* Facebook script loads asynchronously
+* Displays Facebook Page in over 130+ languages
+* Every support request receives a response
+* Highest rated Facebook Page plugin
+* NEW: Configure custom App ID (Advanced)
+* NEW: Display Page timeline, events, messages tabs
+* NEW: Display Page call to action
 
 ### Widget Instructions
 1. Add a customizable Facebook widget through Appearance -> Widgets.
