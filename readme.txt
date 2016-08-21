@@ -3,8 +3,8 @@ Contributors: irkanu
 Donate link: http://dylanryan.co/
 Tags: facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social widget, social shortcode
 Requires at least: 3.0.0
-Tested up to: 4.5.2
-Stable tag: 1.4.14
+Tested up to: 4.6.0
+Stable tag: 1.4.15
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -94,6 +94,11 @@ Nope, but you can if you'd like.
 4. Backend view of the Facebook Page shortcode.
 
 == Changelog ==
+
+= 1.4.15 =
+*Release Date 8/21/2016*
+
+* Tested WordPress 4.6.0
 
 = 1.4.14 =
 *Release Date 6/6/2016*
