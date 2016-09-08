@@ -274,6 +274,7 @@ function sfpp_async_loader( $tag, $handle ) {
  * @return  string  Outputs the Facebook Page feed via shortcode.
  */
 add_shortcode( 'facebook-page', 'sfpp_shortcode' );
+add_shortcode( 'facebook_page', 'sfpp_shortcode' );
 function sfpp_shortcode( $atts ) {
 
 	$facebook_page_atts = shortcode_atts( array(
