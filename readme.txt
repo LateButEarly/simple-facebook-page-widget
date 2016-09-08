@@ -3,7 +3,7 @@ Contributors: irkanu
 Donate link: http://dylanryan.co/
 Tags: facebook page, facebook widget, facebook shortcode, facebook page widget, facebook page shortcode, social widget, social shortcode
 Requires at least: 3.0.0
-Tested up to: 4.6.0
+Tested up to: 4.6.1
 Stable tag: 1.4.15
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -25,6 +25,7 @@ This plugin uses Facebook Graph API v2.5 to generate a Facebook Page feed. The P
 * NEW: Configure custom App ID (Advanced)
 * NEW: Display Page timeline, events, messages tabs
 * NEW: Display Page call to action
+* NEW: Visual Composer support
 
 = Widget Instructions =
 1. Add a customizable Facebook widget through Appearance -> Widgets.
@@ -94,6 +95,12 @@ Nope, but you can if you'd like.
 4. Backend view of the Facebook Page shortcode.
 
 == Changelog ==
+
+= 1.4.16 =
+*Release Date 9/8/2016*
+
+* Tested WordPress 4.6.1
+* Adds support for Visual Composer - thanks Hendrik!
 
 = 1.4.15 =
 *Release Date 8/21/2016*
@@ -198,6 +205,9 @@ Nope, but you can if you'd like.
 * Widget & Shortcode Fully Functional
 
 == Upgrade Notice ==
+
+= 1.4.16 =
+* COMPATIBILITY & FEATURE: This is a compatibility update to ensure everything is still working properly - it also adds support for Visual Composer modules.
 
 = 1.4.14 =
 * COMPATIBILITY: This is just a compatibility update to ensure everything is still working properly.
