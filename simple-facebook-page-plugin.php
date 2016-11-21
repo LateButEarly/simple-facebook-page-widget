@@ -91,6 +91,12 @@ function fs_inactive_for_updates( $is_on, $is_plugin_update, $version ) {
 
 add_filter( 'fs_is_on_simple-facebook-twitter-widget', 'fs_inactive_for_updates', 10, 3 );
 
+function sfpp_fs_custom_connect_message_on_update( $message ) {
+	return 'Never miss an important update -- opt-in to our security and feature updates notifications, and non-sensitive diagnostic tracking with <a href="https://freemius.com" target="_blank">freemius.com</a>.';
+}
+
+sftw_fs()->add_filter( 'connect_message_on_update', 'sfpp_fs_custom_connect_message_on_update', 10, 6 );
+
 // Init Freemius.
 sftw_fs();
 
@@ -217,7 +223,7 @@ function sfpp_enqueue_scripts() {
 	}
 
 	// Fallback to plugin author's default appId
-	if ( !isset( $sfpp_options['appId'] ) || null == $sfpp_options['appId'] ) {
+	if ( ! isset( $sfpp_options['appId'] ) || null == $sfpp_options['appId'] ) {
 		// TODO: Make this better.
 		$sfpp_options['appId'] = 297186066963865;
 	}
@@ -705,7 +711,7 @@ function sfpp_options_page() {
 		wp_die( 'You do not have sufficient permissions to access this page.' );
 	}
 
-	if ( !( $current_user instanceof WP_User ) ) {
+	if ( ! ( $current_user instanceof WP_User ) ) {
 		return;
 	}
 
