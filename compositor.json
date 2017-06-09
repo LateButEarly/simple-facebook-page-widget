@@ -1,0 +1,88 @@
+{
+  "name": "irkanu/simple-facebook-page-widget",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "Simple Facebook",
+  "branch": "",
+  "style": {
+    "name": "Humanist",
+    "componentSet": {
+      "nav": "nav/BasicNav",
+      "header": "header/LightBannerHeader",
+      "article": "article/ReaderArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "Athelas, Georgia, serif",
+    "heading": {
+      "fontWeight": 400,
+      "textTransform": "uppercase",
+      "letterSpacing": "0.1em"
+    },
+    "colors": {
+      "text": "#121212",
+      "background": "#fff",
+      "primary": "#ee5544",
+      "secondary": "#005499",
+      "highlight": "#00bd78",
+      "border": "#ddd",
+      "muted": "#f3f3f3"
+    },
+    "layout": {
+      "maxWidth": 768
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "https://wordpress.org/plugins/simple-facebook-twitter-widget/",
+          "text": "Home"
+        },
+        {
+          "href": "https://github.com/irkanu/simple-facebook-page-widget",
+          "text": "GitHub"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "simple-facebook-page-widget",
+      "subhead": "Shows the Facebook Page feed in a sidebar widget and/or via shortcode.",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "simple-facebook-page-widget: Shows the Facebook Page feed in a sidebar widget and/or via shortcode.",
+          "url": "https://wordpress.org/plugins/simple-facebook-twitter-widget/"
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "irkanu",
+          "repo": "simple-facebook-page-widget"
+        }
+      ]
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "<h1>Simple Facebook Page Widget &amp; Shortcode</h1>\n<table>\n<thead>\n<tr>\n<th>Author</th>\n<th>Version</th>\n<th>Downloads</th>\n<th>Rating</th>\n<th>License</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td> Dylan Ryan</td>\n<td><a href=\"https://wordpress.org/plugins/simple-facebook-twitter-widget/\"><img src=\"http://img.shields.io/wordpress/plugin/v/simple-facebook-twitter-widget.svg?style=flat\"></a></td>\n<td><a href=\"https://wordpress.org/plugins/simple-facebook-twitter-widget/\"><img src=\"http://img.shields.io/wordpress/plugin/dt/simple-facebook-twitter-widget.svg?style=flat\"></a></td>\n<td><a href=\"https://wordpress.org/plugins/simple-facebook-twitter-widget/\"><img src=\"http://img.shields.io/wordpress/plugin/r/simple-facebook-twitter-widget.svg?style=flat\"></a></td>\n<td>GPLv2 or later </td>\n</tr>\n</tbody>\n</table>\n<p>Easily display a Facebook Page&apos;s feed using a customizable widget or shortcode - now supports Page tabs &amp; CTA!</p>\n<h2>Description</h2>\n<h3>Overview</h3>\n<p>This plugin uses Facebook Graph API v2.5 to generate a Facebook Page feed. The Page Plugin lets you easily embed and promote any Facebook Page on your website. Just like on Facebook, your visitors can like and share the Page without having to leave your site.</p>\n<h3>Features</h3>\n<ul>\n<li>Facebook Page Widget</li>\n<li>Facebook Page Shortcode</li>\n<li>Optional Facebook script enqueue</li>\n<li>Facebook script loads asynchronously</li>\n<li>Displays Facebook Page in over 130+ languages</li>\n<li>Every support request receives a response</li>\n<li>Highest rated Facebook Page plugin</li>\n<li>NEW: Configure custom App ID (Advanced)</li>\n<li>NEW: Display Page timeline, events, messages tabs</li>\n<li>NEW: Display Page call to action</li>\n</ul>\n<h3>Widget Instructions</h3>\n<ol>\n<li>Add a customizable Facebook widget through Appearance -&gt; Widgets.</li>\n<li>Choose <em>Simple Facebook Page Widget</em>.</li>\n<li>Update the <em>Facebook Page URL</em> and click Save.</li>\n</ol>\n<p>See the <a href=\"https://wordpress.org/plugins/simple-facebook-twitter-widget/screenshots/\">screenshots</a> for examples.</p>\n<h3>Shortcode Instructions</h3>\n<p>Basic Shortcode Example:</p>\n<p><code>[facebook-page href=&quot;https://facebook.com/facebook&quot; tabs=&quot;timeline&quot;]</code></p>\n<p>Custom Shortcode Example:</p>\n<p><code>[facebook-page href=&quot;https://facebook.com/facebook&quot; width=&quot;300&quot; height=&quot;800&quot; tabs=&quot;timeline, events, messages&quot; show_cta=&quot;true&quot; small_header=&quot;false&quot; align=&quot;left&quot; hide_cover=&quot;false&quot; show_facepile=&quot;false&quot;]</code></p>\n<h3>Support</h3>\n<p>Support is offered on the <a href=\"https://wordpress.org/support/plugin/simple-facebook-twitter-widget\">WordPress Support Forum</a> for free, but please provide as much detail as possible as well as a link to where the issue is occurring. If you are comfortable with GitHub, then feel free to submit an <a href=\"https://github.com/irkanu/simple-facebook-page-widget/issues\">issue</a>. I&apos;ll do my best to answer all support threads and issues.</p>\n"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/irkanu/simple-facebook-page-widget",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/irkanu",
+          "text": "irkanu"
+        }
+      ]
+    }
+  ]
+}
