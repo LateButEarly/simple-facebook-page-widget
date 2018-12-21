@@ -1,0 +1,64 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Facebook Page Widget & Shortcode\n"
+"POT-Creation-Date: 2015-04-27 00:14-0500\n"
+"PO-Revision-Date: 2015-04-27 00:18-0500\n"
+"Last-Translator: Dylan Ryan <drryan@ncsu.edu>\n"
+"Language-Team: Dylan Ryan <drryan@ncsu.edu>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.5\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:15
+msgid "Simple Facebook Page Widget"
+msgstr "Einfach Facebook Seite Widget"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:16
+msgid "Easily display your Facebook Page feed."
+msgstr "Einfaches Anzeigen Ihrer Facebook-Seite -Feed."
+
+#: includes/class-simple-facebook-page-plugin-widget.php:160
+msgid "Title:"
+msgstr "Titel:"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:164
+msgid "Facebook Page URL:"
+msgstr "Facebook Seiten URL"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:168
+msgid "Width:"
+msgstr "Breite:"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:176
+msgid "Height:"
+msgstr "Höhe:"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:184
+msgid "Show Cover Photo?"
+msgstr "Artikelbild Foto?"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:192
+msgid "Show Facepile?"
+msgstr "Zeigen Facepile?"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:200
+msgid "Show Posts?"
+msgstr "Zeige Beiträge?"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:208
+msgid "Alignment:"
+msgstr "Ausrichtung:"
+
+#: includes/class-simple-facebook-page-plugin-widget.php:258
+msgid "Facebook Page Widget"
+msgstr "Facebook Seite Widget"
