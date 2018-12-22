@@ -336,20 +336,6 @@ function sfpp_shortcode( $atts ) {
 
 
 /**
- * Registers the SFPP_Widget widget class.
- *
- * @since    1.0.0
- *
- * @modified 1.2.1 Added compatibility for PHP 5.2 with create_function
- * https://wordpress.org/support/topic/plugin-activation-error-9
- */
-add_action( 'widgets_init',
-
-	create_function( '', 'return register_widget("Simple_Facebook_Page_Feed_Widget");' )
-);
-
-
-/**
  * Registers the admin settings menu.
  * https://developer.wordpress.org/plugins/settings/custom-settings-page/#creating-the-menu-item
  *
@@ -1386,3 +1372,19 @@ class Simple_Facebook_Page_Feed_Widget extends WP_Widget {
 	}
 
 }
+
+
+/**
+ * Registers the SFPP_Widget widget class.
+ *
+ * @since    1.0.0
+ *
+ * @modified 1.2.1 Added compatibility for PHP 5.2 with create_function
+ * https://wordpress.org/support/topic/plugin-activation-error-9
+ *
+ * @modified 1.6.0 Removed anonymous function throwing deprecated error
+ */
+function sfpp_register_widget() {
+    register_widget('Simple_Facebook_Page_Feed_Widget' );
+}
+add_action( 'widgets_init', 'sfpp_register_widget' );
