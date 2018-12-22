@@ -97,6 +97,14 @@ Nope, but you can if you'd like.
 
 == Changelog ==
 
+= 1.6.0 =
+*Release Date 12/21/2018*
+
+* Tested WordPress 5.0.2
+* Updated Freemius SDK 2.2.2
+* Fixed deprecated call to create_function
+* Also, updated images. :)
+
 = 1.5.0 =
 *Release Date 10/6/2017*
 
