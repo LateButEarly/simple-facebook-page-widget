@@ -8,7 +8,7 @@ Stable tag: 1.6.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
-Easily display a Facebook Page's feed using a customizable widget or shortcode - now supports Page tabs & CTA!
+Easily display a Facebook Page's feed using a customizable widget or shortcode - now supports Page tabs & CTA! WP 5.0+ compatible.
 
 == Description ==
 = Overview =
@@ -22,10 +22,11 @@ This plugin uses Facebook Graph API v2.5 to generate a Facebook Page feed. The P
 * Displays Facebook Page in over 130+ languages
 * Every support request receives a response
 * Highest rated Facebook Page plugin
-* NEW: Configure custom App ID (Advanced)
-* NEW: Display Page timeline, events, messages tabs
-* NEW: Display Page call to action
-* NEW: Visual Composer support
+* Configure custom App ID (Advanced)
+* Display Page timeline, events, messages tabs
+* Display Page call to action
+* Visual Composer support
+* NEW: WordPress 5.0+ compatible
 
 = Widget Instructions =
 1. Add a customizable Facebook widget through Appearance -> Widgets.
